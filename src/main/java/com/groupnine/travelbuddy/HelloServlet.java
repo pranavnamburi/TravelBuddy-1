@@ -9,7 +9,7 @@ public class HelloServlet extends HttpServlet {
     private String message;
 
     public void init() {
-        message = "Welcome to Travel Buddy";
+        message = "Hello!!....Welcome to travel buddy";
     }
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
