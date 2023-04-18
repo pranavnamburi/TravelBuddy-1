@@ -31,8 +31,8 @@ public class Authentication  extends HttpServlet {
             String acquiredPass = req.getParameter("password");
             boolean userValid = false;
             while(resultSet.next() && !userValid) {
-                boolean emailFound = acquiredEmail.equals(req.getParameter("email"));
-                boolean passValid = acquiredPass.equals(req.getParameter("password"));
+                boolean emailFound = acquiredEmail.equals(resultSet.getString("email"));
+                boolean passValid = acquiredPass.equals(resultSet.getString("password"));
                 if(emailFound && passValid) {
                     userValid = true;
                 }

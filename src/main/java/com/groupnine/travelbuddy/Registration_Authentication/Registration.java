@@ -4,6 +4,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.annotation.WebServlet;
+
+import java.io.IOException;
 import java.sql.*;
 
 import java.sql.DriverManager;
@@ -35,7 +37,8 @@ public class Registration extends HttpServlet {
             statement.close();
             // Closing the connection to the database
             connection.close();
-        } catch (ClassNotFoundException | SQLException e) {
+            resp.sendRedirect("/Authentication.jsp");
+        } catch (ClassNotFoundException | SQLException | IOException e) {
             throw new RuntimeException(e);
         }
     }
