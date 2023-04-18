@@ -2,11 +2,17 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>JSP - Hello World</title>
+  <title>Home-Travel Buddy</title>
 </head>
 <body>
 <h1><%= "Hello World!" %></h1>
 <br/>
 <a href="hello-servlet">Hello Servlet</a>
+<a href="sharing-auto">Sharing Auto</a>
+<a href="friend-pool">Friend Pool</a>
+<a href="co-traveller">Co-Traveller</a>
+
+
+
 </body>
 </html>
