@@ -1,8 +1,42 @@
 package com.groupnine.travelbuddy.Registration_Authentication;
 
-import jakarta.servlet.http.*;
-import jakarta.servlet.annotation.*;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.annotation.WebServlet;
+import java.sql.*;
 
+import java.sql.DriverManager;
+
+@WebServlet(name = "jdbc", value = "/registration")
 public class Registration extends HttpServlet {
-
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
+        // Attributes of Server-url, Host-name, and Host-pass to access the database
+        String dBURL = "jdbc:mysql://localhost:3306/travelbuddy";
+        String hostName = "root";
+        String hostPass = "Sql.tmc@01";
+        try {
+            // Checking if JDBC driver for MySQL exist in the project
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            // Making a new connection to MySQL server
+            Connection connection = DriverManager.getConnection(dBURL, hostName, hostPass);
+            // Instantiating a new Prepared Statement (known as pre-compiled statement) to insert the acquired data
+            PreparedStatement statement = connection.prepareStatement("INSERT INTO Users(firstName, lastName, mobile, email, password) VALUES (?,?,?,?,?)");
+            // Moving the data into the statement
+            statement.setString(1, req.getParameter("firstName"));
+            statement.setString(2, req.getParameter("lastName"));
+            statement.setString(3, req.getParameter("mobile"));
+            statement.setString(4, req.getParameter("email"));
+            statement.setString(5, req.getParameter("password"));
+            // Executing the statement with all the data provided
+            statement.executeUpdate();
+            // Closing the statement
+            statement.close();
+            // Closing the connection to the database
+            connection.close();
+        } catch (ClassNotFoundException | SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
