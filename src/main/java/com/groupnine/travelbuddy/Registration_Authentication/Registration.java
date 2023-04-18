@@ -8,7 +8,7 @@ import java.sql.*;
 
 import java.sql.DriverManager;
 
-@WebServlet(name = "jdbc", value = "/registration")
+@WebServlet(name = "registration", value = "/reg")
 public class Registration extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
