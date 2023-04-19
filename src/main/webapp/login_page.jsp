@@ -10,7 +10,7 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <style>
-    @import url('/LoginPage.jsp');
+    @import url('/fonts.css');
     *{
         margin: 0;
         padding: 0;
