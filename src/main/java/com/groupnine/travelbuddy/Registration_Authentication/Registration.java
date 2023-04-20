@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.annotation.WebServlet;
 
 import java.io.IOException;
+
 import java.sql.*;
 
 import java.sql.DriverManager;
@@ -24,10 +25,10 @@ public class Registration extends HttpServlet {
             // Making a new connection to MySQL server
             Connection connection = DriverManager.getConnection(dBURL, hostName, hostPass);
             // Instantiating a new Prepared Statement (known as pre-compiled statement) to insert the acquired data
-            PreparedStatement statement = connection.prepareStatement("INSERT INTO Users(firstName, lastName, mobile, email, password) VALUES (?,?,?,?,?)");
+            PreparedStatement statement = connection.prepareStatement("INSERT INTO Users(firstName, lastName, mobile, email, userpass) VALUES (?,?,?,?,?)");
             // Moving the data into the statement
-            statement.setString(1, req.getParameter("firstName"));
-            statement.setString(2, req.getParameter("lastName"));
+            statement.setString(1, req.getParameter("firstname"));
+            statement.setString(2, req.getParameter("lastname"));
             statement.setString(3, req.getParameter("mobile"));
             statement.setString(4, req.getParameter("email"));
             statement.setString(5, req.getParameter("password"));
@@ -37,7 +38,7 @@ public class Registration extends HttpServlet {
             statement.close();
             // Closing the connection to the database
             connection.close();
-            resp.sendRedirect("/Authentication.jsp");
+            resp.sendRedirect("login_page.jsp");
         } catch (ClassNotFoundException | SQLException | IOException e) {
             throw new RuntimeException(e);
         }

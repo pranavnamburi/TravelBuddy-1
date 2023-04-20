@@ -10,7 +10,7 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <style>
-    @import url('/fonts.css');
+    @import url('fonts.css');
     *{
         margin: 0;
         padding: 0;
@@ -22,7 +22,7 @@
         height: 100%;
         width: 100%;
         place-items: center;
-        background-image: url('/images/login_background.png');
+        background-image: url('images/login_background.png');
         background-repeat: no-repeat;
         background-position: center center;
         background-color: #d7ffbf;
@@ -208,8 +208,8 @@
 <body>
 <div class="wrapper">
     <div class="title-text">
-        <div class="title login">Login</div>
-        <div class="title signup">Signup</div>
+        <div class="title login" id="loginid">Login</div>
+        <div class="title signup" id="signupid" style="visibility: hidden">Signup</div>
     </div>
     <div class="form-container">
         <div class="slide-controls">
@@ -220,7 +220,7 @@
             <div class="slider-tab"></div>
         </div>
         <div class="form-inner">
-            <form action="auth" class="login">
+            <form action="auth" class="login" method="POST">
                 <div class="field">
                     <input type="text"  name="email" placeholder="Email Address" required>
                 </div>
@@ -234,7 +234,7 @@
                 </div>
                 <div class="signup-link">Not a member? <a href="">Signup now</a></div>
             </form>
-            <form action="reg" class="signup">
+            <form action="reg" class="signup" method="POST">
                 <div class="field">
                     <input type="text" name="firstname" placeholder="First Name" required>
                 </div>
@@ -268,10 +268,14 @@
     signupBtn.onclick = (()=>{
         loginForm.style.marginLeft = "-50%";
         loginText.style.marginLeft = "-50%";
+        document.getElementById("signupid").style.visibility = "visible";
+        document.getElementById("loginid").style.visibility = "hidden";
     });
     loginBtn.onclick = (()=>{
         loginForm.style.marginLeft = "0%";
         loginText.style.marginLeft = "0%";
+        document.getElementById("loginid").style.visibility = "visible";
+        document.getElementById("signupid").style.visibility = "hidden";
     });
     signupLink.onclick = (()=>{
         signupBtn.click();
