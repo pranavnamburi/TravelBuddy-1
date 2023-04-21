@@ -22,7 +22,7 @@
         height: 100%;
         width: 100%;
         place-items: center;
-        background-image: url('images/login_background.png');
+        background-image: url('images/login_background.gif');
         background-repeat: no-repeat;
         background-position: center center;
         background-color: #d7ffbf;
