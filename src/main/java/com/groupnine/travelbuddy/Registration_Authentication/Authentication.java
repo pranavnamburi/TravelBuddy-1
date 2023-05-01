@@ -32,16 +32,16 @@ public class Authentication  extends HttpServlet {
             boolean userValid = false;
             while(resultSet.next() && !userValid) {
                 boolean emailFound = acquiredEmail.equals(resultSet.getString("email"));
-                boolean passValid = acquiredPass.equals(resultSet.getString("password"));
+                boolean passValid = acquiredPass.equals(resultSet.getString("userpass"));
                 if(emailFound && passValid) {
                     userValid = true;
                 }
             }
             if(userValid) {
-                resp.sendRedirect("home.jsp");
+                resp.sendRedirect("index.jsp");
             } else {
                 req.setAttribute("errorMessage", "Invalid email or password!");
-                req.getRequestDispatcher("login.jsp").forward(req, resp);
+                req.getRequestDispatcher("login_page.jsp").forward(req, resp);
             }
             // Closing the statement
             statement.close();
