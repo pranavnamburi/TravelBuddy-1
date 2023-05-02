@@ -53,10 +53,9 @@
       /*box-shadow: 1px 5px 3px 1px #557321;*/
       border-right: 1px solid black;
       padding-right: 8px;
-      flex: 1;
     }
     @keyframes slide_left {
-      0% {}
+      0% {transform: translate(0%, 0); flex: 1;}
       100% {transform: translate(-100%, 0); flex: 0;}
     }
     @keyframes slide_right {
@@ -261,9 +260,9 @@
     <div class="class_menu_bar_items_top">
       <button onclick="window.location.href='practice.html';" class="class_home_nav">Home</button>
       <button onclick="window.location.href='#';" class="class_profile">Profile</button><br>
-      <button onclick="window.location.href='friends_pool.html';" class="class_friend_pool">F-POOL</button><br>
-      <button onclick="window.location.href='co-traveller.html';" class="class_co_travel">Co-Travel</button><br>
-      <button onclick="window.location.href='share_auto.html';" class="class_share_auto">Share Auto</button><br>
+      <button onclick="window.location.href='friends_pool.html';" class="class_friend_pool">Friend Pooling</button><br>
+      <button onclick="window.location.href='co-traveller.html';" class="class_co_travel">Co-Traveller</button><br>
+      <button onclick="window.location.href='auto_share.jsp';" class="class_share_auto">Auto Share</button><br>
     </div>
     <div class="class_menu_bar_items_bottom">
       <button class="class_sos">SOS</button><br>
@@ -272,7 +271,6 @@
   <div class="class_contents">
     <div class="class_contents_friend_pool">
       <div class="class_friend_pool_heading">
-        <!-- <button class="random">Friend Pooling</button> -->
         <button class="Button" onclick="window.location.href='https://www.google.com';"><h1>Friend Pooling</h1></button>
         <hr class="content_horizontal">
         <div class="hide">this is hidden section</div>
@@ -294,7 +292,7 @@
     </div>
     <div class="class_contents_share_auto">
       <div class="class_share_auto_heading">
-        <button class="Button" onclick="window.location.href='https://www.google.com';"><h1>Share-Auto</h1></button>
+        <button class="Button" onclick="window.location.href='auto_share.jsp';"><h1>Auto Share</h1></button>
         <hr class="content_horizontal">
         <div class="hide">this is hidden section</div>
       </div>
@@ -311,8 +309,9 @@
   let menu = document.getElementById("menu");
   let menu_icon_out = document.getElementById("menu_icon_out");
   let menu_icon_in = document.getElementById("menu_icon_in");
+  menu.style.setProperty("animation", "0ms linear 0s slide_left forwards");
   menu_icon_in.onclick = ()  => {
-    menu.style.setProperty("animation", "300ms linear 0s slide_left forwards")
+    menu.style.setProperty("animation", "300ms linear 0s slide_left forwards");
   }
   menu_icon_out.onclick = () => {
     menu.style.setProperty("animation", "300ms linear 0s slide_right forwards");

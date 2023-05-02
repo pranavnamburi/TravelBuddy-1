@@ -1,4 +1,4 @@
-package com.groupnine.travelbuddy.Sharing_Auto;
+package com.groupnine.travelbuddy.Auto_Share;
 
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
@@ -6,9 +6,9 @@ import jakarta.servlet.annotation.*;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebServlet(name = "sharingAuto", value = "/sharing-auto")
-public class Sharing_Auto extends HttpServlet{
-    String automsg="Sharing Auto Page";
+@WebServlet(name = "autoshare", value = "/auto-share")
+public class Auto_Share extends HttpServlet{
+    String automsg="Auto Share Page";
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
