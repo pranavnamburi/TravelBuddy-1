@@ -25,12 +25,12 @@ public class Registration extends HttpServlet {
             // Making a new connection to MySQL server
             Connection connection = DriverManager.getConnection(dBURL, hostName, hostPass);
             // Instantiating a new Prepared Statement (known as pre-compiled statement) to insert the acquired data
-            PreparedStatement statement = connection.prepareStatement("INSERT INTO Users(firstName, lastName, mobile, email, userpass) VALUES (?,?,?,?,?)");
+            PreparedStatement statement = connection.prepareStatement("INSERT INTO Users(fullname, email, alt_email, contact, userpass) VALUES (?,?,?,?,?)");
             // Moving the data into the statement
-            statement.setString(1, req.getParameter("firstname"));
-            statement.setString(2, req.getParameter("lastname"));
-            statement.setString(3, req.getParameter("mobile"));
-            statement.setString(4, req.getParameter("email"));
+            statement.setString(1, req.getParameter("fullname"));
+            statement.setString(2, req.getParameter("email"));
+            statement.setString(3, req.getParameter("alt_email"));
+            statement.setString(4, req.getParameter("mobile"));
             statement.setString(5, req.getParameter("password"));
             // Executing the statement with all the data provided
             statement.executeUpdate();

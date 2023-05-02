@@ -38,10 +38,13 @@ public class Authentication  extends HttpServlet {
                 }
             }
             if(userValid) {
+                req.getSession().setAttribute("logged_in", "true");
                 resp.sendRedirect("index.jsp");
+                System.out.println("Successfully logged in");
             } else {
-                req.setAttribute("errorMessage", "Invalid email or password!");
-                req.getRequestDispatcher("login_page.jsp").forward(req, resp);
+                req.getSession().setAttribute("foundError", Boolean.valueOf(true));
+                System.out.println("Got error!");
+                resp.sendRedirect("login_page.jsp");
             }
             // Closing the statement
             statement.close();
