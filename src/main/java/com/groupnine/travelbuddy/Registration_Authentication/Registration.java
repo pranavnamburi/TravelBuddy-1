@@ -19,6 +19,7 @@ public class Registration extends HttpServlet {
         String host = "jdbc:mysql://34.143.179.189:3306/travelbuddy";
         String userName = "admin";
         String userPass = "admintravel123";
+        DriverManager.setLoginTimeout(30);
         try {
             // Checking if JDBC driver for MySQL exist in the project
             Class.forName("com.mysql.cj.jdbc.Driver");
