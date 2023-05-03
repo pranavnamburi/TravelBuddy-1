@@ -1,6 +1,5 @@
 package com.groupnine.travelbuddy.Registration_Authentication;
 
-import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -14,18 +13,18 @@ import java.sql.DriverManager;
 @WebServlet(name = "authentication", value = "/auth")
 public class Authentication  extends HttpServlet {
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         // Attributes of Server-url, Host-name, and Host-pass to access the database
-        String dBURL = "jdbc:mysql://localhost:3306/travelbuddy";
-        String hostName = "root";
-        String hostPass = "Sql.tmc@01";
+        String host = "jdbc:mysql://34.143.179.189:3306/travelbuddy";
+        String userName = "admin";
+        String userPass = "admintravel123";
         try {
             // Checking if JDBC driver for MySQL exist in the project
             Class.forName("com.mysql.cj.jdbc.Driver");
             // Making a new connection to MySQL server
-            Connection connection = DriverManager.getConnection(dBURL, hostName, hostPass);
+            Connection connection = DriverManager.getConnection(host, userName, userPass);
             // Instantiating a new Prepared Statement (known as pre-compiled statement) to insert the acquired data
-            PreparedStatement statement = connection.prepareStatement("SELECT email, userpass FROM Users");
+            PreparedStatement statement = connection.prepareStatement("SELECT email, userpass FROM users");
             ResultSet resultSet = statement.executeQuery();
             String acquiredEmail =  req.getParameter("email");
             String acquiredPass = req.getParameter("password");
