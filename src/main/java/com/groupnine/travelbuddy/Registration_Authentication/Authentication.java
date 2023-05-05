@@ -15,8 +15,8 @@ public class Authentication  extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         // Attributes of Server-url, Host-name, and Host-pass to access the database
-        String host = "jdbc:mysql://34.143.179.189:3306/travelbuddy";
-        String userName = "admin";
+        String host = "jdbc:mysql://db4free.net:3306/tb_base";
+        String userName = "tbadmin";
         String userPass = "admintravel123";
         DriverManager.setLoginTimeout(30);
         try {
