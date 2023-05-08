@@ -271,7 +271,7 @@
   <div class="class_contents">
     <div class="class_contents_friend_pool">
       <div class="class_friend_pool_heading">
-        <button class="Button" onclick="window.location.href='https://www.google.com';"><h1>Friend Pooling</h1></button>
+        <button class="Button" onclick="window.location.href='/co_traveller/display_journey.jsp';"><h1>Friend Pooling</h1></button>
         <hr class="content_horizontal">
         <div class="hide">this is hidden section</div>
       </div>
@@ -282,7 +282,7 @@
     </div>
     <div class="class_contents_co_travel">
       <div class="class_co_travel_heading">
-        <button class="Button" onclick="window.location.href='https://www.google.com';"><h1>Co-Traveller</h1></button>
+        <button class="Button" onclick="window.location.href='co_traveller/display_journey.jsp';"><h1>Co-Traveller</h1></button>
         <hr class="content_horizontal">
         <div class="hide">this is hidden section</div>
       </div>

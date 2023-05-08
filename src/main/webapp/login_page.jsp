@@ -23,7 +23,7 @@
     <!-- <link rel="stylesheet" href="style.css"> -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-        @import url('../fonts.css');
+        @import url('webapp/fonts.css');
         *{
             margin: 0;
             padding: 0;
@@ -35,7 +35,7 @@
             height: 100%;
             width: 100%;
             place-items: center;
-            background-image: url('../images/login_background.gif');
+            background-image: url('images/login_background.gif');
             background-repeat: no-repeat;
             background-position: center center;
             background-color: #d7ffbf;

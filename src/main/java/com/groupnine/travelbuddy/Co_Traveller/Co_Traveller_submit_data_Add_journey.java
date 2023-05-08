@@ -35,7 +35,6 @@ public class Co_Traveller_submit_data_Add_journey extends HttpServlet{
         }catch (ClassNotFoundException | SQLException | IOException e) {
             throw new RuntimeException(e);
         }
-
     }
 
 }

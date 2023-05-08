@@ -1,13 +1,8 @@
-<%@ page import="jakarta.resource.cci.ResultSet" %><%--
-  Created by IntelliJ IDEA.
-  User: DELL
-  Date: 5/6/2023
-  Time: 7:16 PM
-  To change this template use File | Settings | File Templates.
---%>
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
+<%@ page import="java.sql.ResultSet" %>
+
 <html lang="en">
 <head>
     <meta charset="UTF-8"/>
@@ -173,7 +168,7 @@
 <button class="class_menu_icon_out" id="menu_icon_out">!TB</button>
 <div class="class_home">
     <div>
-        <button class="Button" id="adj" onclick="window.location.href= 'add_journey_form.html'">Add-journey</button>
+        <button class="Button" id="adj" onclick="window.location.href= 'add_journey_form.jsp'">Add-journey</button>
     </div>
     <div class="class_menu" id="menu">
         <div class="class_menu_bar_items_head">
@@ -190,25 +185,25 @@
             <button class="class_sos">SOS</button><br>
         </div>
     </div>
-    <div>
-        <% ResultSet rs = (ResultSet) request.getAttribute("passengerData"); %>
-        <%
-            while (rs.next()) {
-        %>
-        <div class="card">
-            <h2><%= rs.getString("name") %></h2>
-            <p><strong>Source:</strong> <%= rs.getString("source") %></p>
-            <p><strong>Destination:</strong> <%= rs.getString("destination") %></p>
-            <p><strong>Transport Mode:</strong> <%= rs.getString("transport") %></p>
-            <p><strong>Date:</strong> <%= rs.getString("date") %></p>
-            <p><strong>Time:</strong> <%= rs.getString("time") %></p>
-            <p><strong>Registration Number:</strong> <%= rs.getString("registration") %></p>
-            <p><strong>Branch:</strong> <%= rs.getString("branch") %></p>
-        </div>
-        <%
-            }
-        %>
-    </div>
+<%--    <div>--%>
+<%--        <% ResultSet rs = (ResultSet) request.getAttribute("passengerData"); %>--%>
+<%--        <%--%>
+<%--            while (rs.next()) {--%>
+<%--        %>--%>
+<%--        <div class="card">--%>
+<%--            <h2><%= rs.getString("name") %></h2>--%>
+<%--            <p><strong>Source:</strong> <%= rs.getString("source") %></p>--%>
+<%--            <p><strong>Destination:</strong> <%= rs.getString("destination") %></p>--%>
+<%--            <p><strong>Transport Mode:</strong> <%= rs.getString("transport") %></p>--%>
+<%--            <p><strong>Date:</strong> <%= rs.getString("date") %></p>--%>
+<%--            <p><strong>Time:</strong> <%= rs.getString("time") %></p>--%>
+<%--            <p><strong>Registration Number:</strong> <%= rs.getString("registration") %></p>--%>
+<%--            <p><strong>Branch:</strong> <%= rs.getString("branch") %></p>--%>
+<%--        </div>--%>
+<%--        <%--%>
+<%--            }--%>
+<%--        %>--%>
+<%--    </div>--%>
 </div>
 <script>
     let menu = document.getElementById("menu");

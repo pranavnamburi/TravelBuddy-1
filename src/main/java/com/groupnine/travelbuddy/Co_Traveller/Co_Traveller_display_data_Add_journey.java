@@ -16,16 +16,16 @@ public class Co_Traveller_display_data_Add_journey extends HttpServlet{
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         // Set up the database connection
-        String dbUrl = "jdbc:mysql://localhost:3306/mydatabase";
-        String dbUser = "username";
-        String dbPassword = "password";
+        String dbUrl = "jdbc:mysql://localhost:3306/tb_base";
+        String dbUser = "tbadmin";
+        String dbPassword = "admintravel123";
         Connection conn = null;
 
         // Retrieve data from the database
         try {
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(dbUrl, dbUser, dbPassword);
-            String query = "SELECT * FROM passengers";
+            String query = "SELECT * FROM Copassengers";
             PreparedStatement pstmt = conn.prepareStatement(query);
             ResultSet rs = pstmt.executeQuery();
 
@@ -34,9 +34,7 @@ public class Co_Traveller_display_data_Add_journey extends HttpServlet{
             RequestDispatcher view = request.getRequestDispatcher("display_journey.jsp");
             view.forward(request, response);
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         } finally {
             if (conn != null) {
