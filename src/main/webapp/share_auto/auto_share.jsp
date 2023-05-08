@@ -1,4 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <%
     response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
@@ -8,10 +9,8 @@
     if(session.getAttribute("logged_in") == null) {
         session.setAttribute("logged_in", "false");
     }
-    if(session.getAttribute("logged_in").equals("false")) {
-        response.sendRedirect("login_page.jsp");
-    }
 %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -167,7 +166,9 @@
         </div>
     </div>
     <div class="class_contents">
-
+        <c:forEach begin="1" end="2">
+            Yeah
+        </c:forEach>
     </div>
 </div>
 <script>

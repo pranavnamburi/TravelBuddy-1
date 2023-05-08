@@ -292,7 +292,7 @@
     </div>
     <div class="class_contents_share_auto">
       <div class="class_share_auto_heading">
-        <button class="Button" onclick="window.location.href='auto_share.jsp';"><h1>Auto Share</h1></button>
+        <button class="Button" onclick="window.location.href='/share_auto/auto_share.jsp';"><h1>Auto Share</h1></button>
         <hr class="content_horizontal">
         <div class="hide">this is hidden section</div>
       </div>
