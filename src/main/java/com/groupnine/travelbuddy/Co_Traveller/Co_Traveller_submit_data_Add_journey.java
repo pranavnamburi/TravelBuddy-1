@@ -12,7 +12,7 @@ import jakarta.servlet.annotation.WebServlet;
 
 
 @WebServlet(name = "coTraveller", value = "/co-traveller")
-public class Co_Traveller_submit_data extends HttpServlet{
+public class Co_Traveller_submit_data_Add_journey extends HttpServlet{
     // Attributes of Server-url, Host-name, and Host-pass to access the database
 @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) {

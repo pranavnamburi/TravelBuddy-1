@@ -11,7 +11,7 @@ import jakarta.servlet.annotation.WebServlet;
 
 
 @WebServlet(name = "coTraveller", value = "/co-traveller")
-public class Co_Traveller_display_data extends HttpServlet{
+public class Co_Traveller_display_data_Add_journey extends HttpServlet{
     // Attributes of Server-url, Host-name, and Host-pass to access the database
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
