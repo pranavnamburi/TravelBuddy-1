@@ -33,7 +33,7 @@ public class Co_Traveller_submit_data_Add_journey extends HttpServlet{
             pst.setString(8, branch);
             pst.executeUpdate();
             con.close();
-            resp.sendRedirect("co-traveller.jsp");
+            resp.sendRedirect("display_journey.jsp");
         }catch (ClassNotFoundException | SQLException | IOException e) {
             throw new RuntimeException(e);
         }
