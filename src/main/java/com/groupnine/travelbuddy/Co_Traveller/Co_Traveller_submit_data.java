@@ -22,18 +22,16 @@ public class Co_Traveller_submit_data extends HttpServlet{
         try {
             Class.forName("com.mysql.jdbc.Driver");
             Connection con = DriverManager.getConnection(host, userName, userPass);
-            PreparedStatement pst = con.prepareStatement("INSERT INTO passengers(name, source, destination, transport, date, time, regno, branch) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-            pst.setString(1, name);
-            pst.setString(2, source);
-            pst.setString(3, destination);
-            pst.setString(4, transport);
-            pst.setString(5, date);
-            pst.setString(6, time);
-            pst.setString(7, regno);
-            pst.setString(8, branch);
+            PreparedStatement pst = con.prepareStatement("INSERT INTO tb_base.Copassengers(Transportation,Serviceno,Fromplace,Toplace,Date,Time) VALUES (?, ?, ?, ?, ?, ?)");
+            pst.setString(1, "transportation");
+            pst.setString(2, "service_number");
+            pst.setString(3, "from");
+            pst.setString(4, "to");
+            pst.setString(5, "date");
+            pst.setString(6, "time");
             pst.executeUpdate();
             con.close();
-            resp.sendRedirect("co-traveller.jsp");
+            resp.sendRedirect("display_journey.jsp");
         }catch (ClassNotFoundException | SQLException | IOException e) {
             throw new RuntimeException(e);
         }
