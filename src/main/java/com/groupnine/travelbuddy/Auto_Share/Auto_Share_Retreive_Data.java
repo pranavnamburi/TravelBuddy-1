@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.sql.*;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 
 @WebServlet(name = "AutoShareRetreiveData", value = "/auto_share_retreive_data")
 public class Auto_Share_Retreive_Data extends HttpServlet {
@@ -28,12 +29,15 @@ public class Auto_Share_Retreive_Data extends HttpServlet {
             // Moving the data into the statement
             // Executing the statement with all the data provided
             ResultSet resultSet = statement.executeQuery();
+            ArrayList<AutoShareInfo> autoShareInfos = new ArrayList<>();
             while(resultSet.next()) {
                 String fullname = resultSet.getString("fullname");
                 String place = resultSet.getString("place");
                 int no_of_vacs = resultSet.getInt("no_of_vacs");
                 Time time = resultSet.getTime("time");
+                autoShareInfos.add(new AutoShareInfo(fullname, place, no_of_vacs, time));
             }
+            req.getSession().setAttribute("autoShareInfo", autoShareInfos);
             // Closing the statement
             statement.close();
             // Closing the connection to the database

@@ -1,6 +1,8 @@
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="com.groupnine.travelbuddy.Auto_Share.AutoShareInfo" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<jsp:include page="/auto_share_retreive_data"/>
 <%
     response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
     response.setHeader("Pragma", "no-cache");
@@ -9,6 +11,7 @@
     if(session.getAttribute("logged_in") == null) {
         session.setAttribute("logged_in", "false");
     }
+    ArrayList<AutoShareInfo> autoShareInfos = (ArrayList<AutoShareInfo>) session.getAttribute("autoShareInfos");
 %>
 
 <!DOCTYPE html>
@@ -179,11 +182,12 @@
                         <th>Contact</th>
                         <th>Timeframe</th>
                     </tr>
-                    <c:forEach var="data" items="${dataList}">
+                    <c:forEach var="data" items="${autoShareInfos}">
                         <tr>
-                            <td>${data.id}</td>
-                            <td>${data.name}</td>
-                            <td>${data.value}</td>
+                            <td>${data.getFullName()}</td>
+                            <td>${data.getPlace()}</td>
+                            <td>${data.getNo_of_vacs()}</td>
+                            <td>${data.getTimeInString()}</td>
                         </tr>
                     </c:forEach>
                 </table>
