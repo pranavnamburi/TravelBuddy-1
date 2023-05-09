@@ -166,9 +166,32 @@
         </div>
     </div>
     <div class="class_contents">
-        <c:forEach begin="1" end="2">
-            Yeah
-        </c:forEach>
+        <div class="class_contents_top">
+            <div class="class_contents_top_selection">
+                <button onclick="window.location.href='auto_share_registration.jsp'">Add an Auto-Share</button>
+            </div>
+        </div>
+        <div class="class_contents_body">
+            <div class="class_contents_body_data">
+                <table>
+                    <tr>
+                        <th>Name</th>
+                        <th>Contact</th>
+                        <th>Timeframe</th>
+                    </tr>
+                    <c:forEach var="data" items="${dataList}">
+                        <tr>
+                            <td>${data.id}</td>
+                            <td>${data.name}</td>
+                            <td>${data.value}</td>
+                        </tr>
+                    </c:forEach>
+                </table>
+            </div>
+        </div>
+        <div class="class_contents_bottom">
+
+        </div>
     </div>
 </div>
 <script>

@@ -39,6 +39,7 @@ public class Authentication  extends HttpServlet {
             }
             if(userValid) {
                 req.getSession().setAttribute("logged_in", "true");
+                req.getSession().setAttribute("user_email", acquiredEmail);
                 resp.sendRedirect("index.jsp");
                 System.out.println("Successfully logged in");
             } else {
