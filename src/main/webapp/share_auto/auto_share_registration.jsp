@@ -142,7 +142,7 @@
       font-weight: bold;
     }
     input[type="text"],
-    input[type="number"]{
+    input[type="number"], input[type="time"]{
       width: 95%;
       padding: 10px;
       border-radius: 5px;
@@ -213,34 +213,10 @@
         <input type="text" name="to_place" id="to_place" required><br>
         <label for="no_of_vacs">Number Of Vacancies:</label>
         <input type="number" name="no_of_vacs" id="no_of_vacs" min="1" max="10" pattern="[1-9]|10" required><br>
-        <label for="timeframe">Time-frame:</label>
-        <select name="timeframe" id="timeframe">
-          <option value="00:00:00">12:00 AM - 01:00 AM</option>
-          <option value="01:00:00">01:00 AM - 02:00 AM</option>
-          <option value="02:00:00">02:00 AM - 03:00 AM</option>
-          <option value="03:00:00">03:00AM - 04:00AM</option>
-          <option value="04:00:00">04:00AM - 05:00AM</option>
-          <option value="05:00:00">05:00AM - 06:00AM</option>
-          <option value="06:00:00">06:00AM - 07:00AM</option>
-          <option value="07:00:00">07:00AM - 08:00AM</option>
-          <option value="08:00:000">08:00AM - 09:00AM</option>
-          <option value="09:00:00">09:00AM - 10:00AM</option>
-          <option value="10:00:00">10:00AM - 11:00AM</option>
-          <option value="11:00:00">11:00AM - 12:00PM</option>
-          <option value="12:00:00">12:00PM - 01:00PM</option>
-          <option value="13:00:00">01:00PM - 02:00PM</option>
-          <option value="14:00:00">02:00PM - 03:00PM</option>
-          <option value="15:00:00">03:00PM - 04:00PM</option>
-          <option value="16:00:00">04:00PM - 05:00PM</option>
-          <option value="17:00:00">05:00PM - 06:00PM</option>
-          <option value="18:00:00">06:00PM - 07:00PM</option>
-          <option value="19:00:00">07:00PM - 08:00PM</option>
-          <option value="20:00:00">08:00PM - 09:00PM</option>
-          <option value="21:00:00">09:00PM - 10:00PM</option>
-          <option value="22:00:00">10:00PM - 11:00PM</option>
-          <option value="23:00:00">11:00PM - 12:00AM</option>
-        </select>
-        </select>
+        <label for="date">Date:</label>
+        <input type="date" id="date" name="date">
+        <label for="time">Time:</label>
+        <input type="time" name="time" id = "time">
         <input type="submit" value="Submit">
       </form>
     </div>

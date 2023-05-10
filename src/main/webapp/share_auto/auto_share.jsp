@@ -1,5 +1,6 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="com.groupnine.travelbuddy.Auto_Share.AutoShareInfo" %>
+<%@ page import="com.oracle.wls.shaded.org.apache.xpath.operations.Bool" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="/auto_share_retreive_data"/>
@@ -12,6 +13,7 @@
         session.setAttribute("logged_in", "false");
     }
     ArrayList<AutoShareInfo> autoShareInfos = (ArrayList<AutoShareInfo>) session.getAttribute("autoShareInfos");
+    Boolean isRegistered = (Boolean) session.getAttribute("isRegistered");
 %>
 
 <!DOCTYPE html>
@@ -128,25 +130,125 @@
             flex: 5;
             padding: 3%;
         }
-        .class_friend_pool_heading button {
-            border: none;
-            background-color: transparent;
-            color: white;
+        .class_contents_top {
+            height: 15%;
         }
-        .class_contents_share_auto img {
-            width: 300px;
-            height: 200px;
-            transform: translate(300%,-10%) ;
+        #asunregbutton, #asreqsbutton {
+            position: relative;
+            top: 40%;
+            bottom:50%;
+            background-color: #45ffbe;
+            border-radius: 20px;
+            width: 110px;
+            height: 35px;
+            font-size: medium;
+            border-color: #f4fa6a;
+            border-style: solid;
+            border-width: 1px;
+            color: #bcc446;
+            display: none;
         }
-        .class_contents_friend_pool img {
-            width: 300px;
-            height: 200px;
-            transform: translate(280%,-10%) ;
+        #asunregbutton:hover, #asreqsbutton:hover {
+            position: relative;
+            top: 40%;
+            bottom:50%;
+            background-color: #23e39e;
+            border-radius: 20px;
+            width: 110px;
+            height: 35px;
+            font-size: medium;
+            font-weight: bold;
+            border-color: #f4fa6a;
+            border-style: solid;
+            border-width: 1px;
+            color: #e1ee9e;
+            display: none;
         }
-        .class_contents_co_travel img {
-            width: 300px;
-            height: 200px;
-            transform: translate(280%,-10%) ;
+        #asregbutton {
+            position: relative;
+            top: 40%;
+            bottom:50%;
+            background-color: #45ffbe;
+            border-radius: 20px;
+            width: 180px;
+            height: 35px;
+            font-size: medium;
+            border-color: #f4fa6a;
+            border-style: solid;
+            border-width: 1px;
+            color: #bcc446;
+            display: none;
+        }
+        #asregbutton:hover {
+            position: relative;
+            top: 40%;
+            bottom:50%;
+            background-color: #23e39e;
+            border-radius: 20px;
+            width: 180px;
+            height: 35px;
+            font-size: medium;
+            font-weight: bold;
+            border-color: #f4fa6a;
+            border-style: solid;
+            border-width: 1px;
+            color: #e1ee9e;
+            display: none;
+        }
+        .class_contents_body {
+            height: 75%;
+            border-top-right-radius: 25px;
+            border-top-left-radius: 25px;
+        }
+        .class_contents_body_mention_records {
+            position: relative;
+            top: 10px;
+            margin-bottom: 10px;
+            height: 50px;
+            width: 400px;
+            text-align: center;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 20px;
+            background-color: #f4fa6a;
+        }
+        .class_contents_body_mention_records h2 {
+            position: relative;
+            top: 10px;
+            margin: 0;
+        }
+        .class_contents_body_table2 {
+            background-color: #f0f58e;
+            overflow-y: auto;
+            height: 70%;
+        }
+        .class_contents_body_table2::-webkit-scrollbar {
+            width: 10px;
+            background-color: #eef38d;
+        }
+        .class_contents_body_table2::-webkit-scrollbar-thumb {
+            background-color: green;
+            border-radius: 5px;
+        }
+        .class_contents_body_table1 table, .class_contents_body_table2 table{
+            width: 100%;
+            height: 5%;
+            background-color: #f0f58e;
+        }
+        .class_contents_body_table1 th{
+            border-top: 1px solid #f6ffc1;
+            border-bottom: 1px solid #b2c910;
+            height: 45px;
+            width: 5%;
+        }
+        .class_contents_body_table2 td{
+            text-align: center;
+            border-bottom: 1px solid #dce507;
+            height: 45px;
+            width: 20%;
+        }
+        .class_contents_bottom {
+            height: 10%;
+            background-color: #95ff8c;
         }
     </style>
 </head>
@@ -170,24 +272,42 @@
     </div>
     <div class="class_contents">
         <div class="class_contents_top">
-            <div class="class_contents_top_selection">
-                <button onclick="window.location.href='auto_share_registration.jsp'">Add an Auto-Share</button>
-            </div>
+            <button id="asregbutton" onclick="window.location.href='auto_share_registration.jsp'"> Register Auto-Share </button>
+            <button id="asunregbutton" onclick="window.location.href='auto_share_registration.jsp'"> Unregister </button>
+            <button id="asreqsbutton" onclick="window.location.href='auto_share_requests.jsp'"> Requests </button>
         </div>
         <div class="class_contents_body">
-            <div class="class_contents_body_data">
+            <div class="class_contents_body_mention_records"><h2>100 no. of autoshares recorded</h2></div>
+            <div class="class_contents_body_table1">
                 <table>
                     <tr>
                         <th>Name</th>
-                        <th>Contact</th>
-                        <th>Timeframe</th>
+                        <th>To Place</th>
+                        <th>No Of Vacancies</th>
+                        <th>Date</th>
+                        <th><p>Timeframe</p></th>
+                        <th><p>Request</p></th>
+                    </tr>
+                </table>
+            </div>
+            <div class="class_contents_body_table2">
+                <table>
+                    <tr>
+                        <td>Name1</td>
+                        <td>Place1</td>
+                        <td>NOV1</td>
+                        <td>Date1</td>
+                        <td>Timeframe1</td>
+                        <td>Request</td>
                     </tr>
                     <c:forEach var="data" items="${autoShareInfos}">
                         <tr>
-                            <td>${data.getFullName()}</td>
+                            <td>${data.getFullname()}</td>
                             <td>${data.getPlace()}</td>
                             <td>${data.getNo_of_vacs()}</td>
+                            <td>${data.getDateInString()}</td>
                             <td>${data.getTimeInString()}</td>
+                            <td>Text Here</td>
                         </tr>
                     </c:forEach>
                 </table>
@@ -208,6 +328,22 @@
     }
     menu_icon_out.onclick = () => {
         menu.style.setProperty("animation", "300ms linear 0s slide_right forwards");
+    }
+</script>
+<script>
+    <%--let isRegistered = '<%= isRegistered %>';--%>
+    let isRegistered = false;
+    let aSRegButton = document.getElementById("asregbutton");
+    let aSUnRegButton = document.getElementById("asunregbutton");
+    let aSReqsButton = document.getElementById("asreqsbutton");
+    if(isRegistered == true){
+        aSRegButton.style.display = "none";
+        aSUnRegButton.style.display = "inline";
+        aSReqsButton.style.display = "inline";
+    } else {
+        aSUnRegButton.style.display = "none";
+        aSReqsButton.style.display = "none";
+        aSRegButton.style.display = "inline";
     }
 </script>
 </body>

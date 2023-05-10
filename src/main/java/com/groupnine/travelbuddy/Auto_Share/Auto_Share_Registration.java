@@ -6,6 +6,8 @@ import jakarta.servlet.annotation.*;
 
 import java.io.IOException;
 import java.sql.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
@@ -22,15 +24,18 @@ public class Auto_Share_Registration extends HttpServlet{
             // Making a new connection to MySQL server
             Connection connection = DriverManager.getConnection(host, userName, userPass);
             // Instantiating a new Prepared Statement (known as pre-compiled statement) to insert the acquired data
-            PreparedStatement statement = connection.prepareStatement("INSERT INTO autosharers(email, place, no_of_vacs, time) VALUES (?,?,?,?)");
+            PreparedStatement statement = connection.prepareStatement("INSERT INTO autosharers(email, place, no_of_vacs, time, date) VALUES (?,?,?,?,?)");
             // Moving the data into the statement
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
-            LocalTime localTime = LocalTime.parse(req.getParameter("timeframe"), formatter);
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+            System.out.println(req.getParameter("date"));
+            LocalTime localTime = LocalTime.parse(req.getParameter("time"), formatter);
             Time time = Time.valueOf(localTime);
+            java.sql.Date parsedDate = java.sql.Date.valueOf(req.getParameter("date"));
             statement.setString(1, (String) req.getSession().getAttribute("user_email"));
             statement.setString(2, req.getParameter("to_place"));
             statement.setInt(3, Integer.parseInt(req.getParameter("no_of_vacs")));
             statement.setTime(4, time);
+            statement.setDate(5, parsedDate);
             // Executing the statement with all the data provided
             statement.executeUpdate();
             // Closing the statement
@@ -42,7 +47,6 @@ public class Auto_Share_Registration extends HttpServlet{
             throw new RuntimeException(e);
         }
     }
-
     public void destroy() {
 
     }

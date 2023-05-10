@@ -25,7 +25,7 @@ public class Auto_Share_Retreive_Data extends HttpServlet {
             // Making a new connection to MySQL server
             Connection connection = DriverManager.getConnection(host, userName, userPass);
             // Instantiating a new Prepared Statement (known as pre-compiled statement) to insert the acquired data
-            PreparedStatement statement = connection.prepareStatement("SELECT u.fullname, a.place, a.no_of_vacs, a.time FROM autosharers a JOIN users u ON u.email = a.email");
+            PreparedStatement statement = connection.prepareStatement("SELECT u.fullname, a.place, a.no_of_vacs, a.date, a.time FROM autosharers a JOIN users u ON u.email = a.email");
             // Moving the data into the statement
             // Executing the statement with all the data provided
             ResultSet resultSet = statement.executeQuery();
@@ -34,10 +34,18 @@ public class Auto_Share_Retreive_Data extends HttpServlet {
                 String fullname = resultSet.getString("fullname");
                 String place = resultSet.getString("place");
                 int no_of_vacs = resultSet.getInt("no_of_vacs");
+                Date date = resultSet.getDate("date");
                 Time time = resultSet.getTime("time");
-                autoShareInfos.add(new AutoShareInfo(fullname, place, no_of_vacs, time));
+                autoShareInfos.add(new AutoShareInfo(fullname, place, no_of_vacs, date, time));
             }
-            req.getSession().setAttribute("autoShareInfo", autoShareInfos);
+            if(autoShareInfos.size() == 0) {
+                System.out.println("Size is zero!");
+            }else {
+                for(AutoShareInfo obj : autoShareInfos) {
+                    System.out.println(obj.getFullname());
+                }
+            }
+            req.getSession().setAttribute("autoShareInfos", autoShareInfos);
             // Closing the statement
             statement.close();
             // Closing the connection to the database
