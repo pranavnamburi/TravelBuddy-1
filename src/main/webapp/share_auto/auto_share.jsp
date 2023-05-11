@@ -1,8 +1,10 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="com.groupnine.travelbuddy.Auto_Share.AutoShareInfo" %>
-<%@ page import="com.oracle.wls.shaded.org.apache.xpath.operations.Bool" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%
+    System.out.println("Printed1");
+%>
 <jsp:include page="/auto_share_retreive_data"/>
 <%
     response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
@@ -14,6 +16,9 @@
     }
     ArrayList<AutoShareInfo> autoShareInfos = (ArrayList<AutoShareInfo>) session.getAttribute("autoShareInfos");
     Boolean isRegistered = (Boolean) session.getAttribute("isRegistered");
+%>
+<%
+    System.out.println("Printed2");
 %>
 
 <!DOCTYPE html>
@@ -244,13 +249,33 @@
             text-align: center;
             border-bottom: 1px solid #dce507;
             height: 45px;
-            width: 20%;
+            width: 15%;
+        }
+        .class_contents_body_table2 a {
+            border-radius: 15px;
+            border: 2px solid #c9d20d;
+            background-color: #00731f;
+            color: #f4fa6a;
+            height: 20px;
+            width: 75px;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+            line-height: 20px;
+        }
+
+        .class_contents_body_table2 a:hover {
+            background-color: #c9d20d;
+            border-color: #00731f;
+            color: #00731f;
+            font-weight: bold;
         }
         .class_contents_bottom {
             height: 10%;
             background-color: #95ff8c;
         }
     </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
 <button class="class_menu_icon_out" id="menu_icon_out">!TB</button>
@@ -286,7 +311,7 @@
                         <th>No Of Vacancies</th>
                         <th>Date</th>
                         <th><p>Timeframe</p></th>
-                        <th><p>Request</p></th>
+                        <th><p>Action</p></th>
                     </tr>
                 </table>
             </div>
@@ -298,7 +323,7 @@
                         <td>NOV1</td>
                         <td>Date1</td>
                         <td>Timeframe1</td>
-                        <td>Request</td>
+                        <td><button>Request</button></td>
                     </tr>
                     <c:forEach var="data" items="${autoShareInfos}">
                         <tr>
@@ -307,7 +332,7 @@
                             <td>${data.getNo_of_vacs()}</td>
                             <td>${data.getDateInString()}</td>
                             <td>${data.getTimeInString()}</td>
-                            <td>Text Here</td>
+                            <td><a href="${pageContext.request.contextPath}/auto_share_request_manager?email=${data.getEmail()}">Request</a></td>
                         </tr>
                     </c:forEach>
                 </table>
@@ -318,6 +343,7 @@
         </div>
     </div>
 </div>
+
 <script>
     let menu = document.getElementById("menu");
     let menu_icon_out = document.getElementById("menu_icon_out");
@@ -336,7 +362,7 @@
     let aSRegButton = document.getElementById("asregbutton");
     let aSUnRegButton = document.getElementById("asunregbutton");
     let aSReqsButton = document.getElementById("asreqsbutton");
-    if(isRegistered == true){
+    if(isRegistered === true){
         aSRegButton.style.display = "none";
         aSUnRegButton.style.display = "inline";
         aSReqsButton.style.display = "inline";
@@ -346,5 +372,6 @@
         aSRegButton.style.display = "inline";
     }
 </script>
+
 </body>
 </html>

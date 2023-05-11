@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.sql.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
@@ -30,7 +31,9 @@ public class Auto_Share_Registration extends HttpServlet{
             System.out.println(req.getParameter("date"));
             LocalTime localTime = LocalTime.parse(req.getParameter("time"), formatter);
             Time time = Time.valueOf(localTime);
-            java.sql.Date parsedDate = java.sql.Date.valueOf(req.getParameter("date"));
+            formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            LocalDate localDate = LocalDate.parse(req.getParameter("date"), formatter);
+            java.sql.Date parsedDate = java.sql.Date.valueOf(localDate);
             statement.setString(1, (String) req.getSession().getAttribute("user_email"));
             statement.setString(2, req.getParameter("to_place"));
             statement.setInt(3, Integer.parseInt(req.getParameter("no_of_vacs")));

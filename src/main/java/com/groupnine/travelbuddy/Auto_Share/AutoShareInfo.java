@@ -7,12 +7,14 @@ import java.time.format.DateTimeFormatter;
 import java.sql.Date;
 
 public class AutoShareInfo {
-    String fullname, place;
+    String fullname, email, place;
     Integer no_of_vacs;
     Time time;
     Date date;
     public String getFullname() { return fullname; }
     public void setFullname(String fullname) { this.fullname = fullname; }
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
     public String getPlace() { return place; }
     public void setPlace(String place) { this.place = place; }
     public Integer getNo_of_vacs() { return no_of_vacs; }
@@ -20,9 +22,7 @@ public class AutoShareInfo {
     public Date getDate() { return date; }
     public void setDate(Date date) { this.date = date; }
     public String getDateInString() {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        String dateStr = dateFormat.format(date);
-        return dateStr;
+        return date.toString();
     }
     public Time getTime() { return time; }
     public String getTimeInString() {
@@ -32,8 +32,8 @@ public class AutoShareInfo {
     }
 
     public void setTime(Time time) { this.time = time; }
-    public AutoShareInfo(String fullname, String place, Integer no_of_vacs, Date date, Time time) {
-        setFullname(fullname); setPlace(place); setNo_of_vacs(no_of_vacs); setDate(date); setTime(time);
+    public AutoShareInfo(String fullname, String email, String place, Integer no_of_vacs, Date date, Time time) {
+        setFullname(fullname); setEmail(email); setPlace(place); setNo_of_vacs(no_of_vacs); setDate(date); setTime(time);
     }
 
 }
