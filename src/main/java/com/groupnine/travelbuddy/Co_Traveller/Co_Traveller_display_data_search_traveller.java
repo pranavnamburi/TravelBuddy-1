@@ -10,8 +10,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.annotation.WebServlet;
 
 
-@WebServlet(name = "coTraveller", value = "/co-traveller")
-public class Co_Traveller_display_data_co_traveller extends HttpServlet{
+@WebServlet(name = "coTravellerSearchTraveller", value = "/co-traveller-search-traveller")
+public class Co_Traveller_display_data_search_traveller extends HttpServlet{
     // Attributes of Server-url, Host-name, and Host-pass to access the database
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -23,12 +23,12 @@ public class Co_Traveller_display_data_co_traveller extends HttpServlet{
         if (searchQuery != null && !searchQuery.isEmpty()) {
 
             // Define the SQL query to search for matching passengers
-            String sql = "SELECT * FROM passengers WHERE destination LIKE ?";
+            String sql = "SELECT Fromplace,Toplace FROM Copassengers?";
 
             // Create a database connection and prepare the statement
-            String dbUrl = "jdbc:mysql://localhost:3306/mydb";
-            String dbUser = "username";
-            String dbPassword = "password";
+            String dbUrl = "jdbc:mysql://db4free.net:3306/tb_base";
+            String dbUser = "tbadmin";
+            String dbPassword = "admintravel123";
             Connection connection = null;
             PreparedStatement statement = null;
             ResultSet resultSet = null;
@@ -66,7 +66,7 @@ public class Co_Traveller_display_data_co_traveller extends HttpServlet{
         }
 
         // Forward the request to the search results page
-        RequestDispatcher view = request.getRequestDispatcher("co-traveller.jsp");
+        RequestDispatcher view = request.getRequestDispatcher("search_traveller.jsp");
         view.forward(request, response);
     }
 }
