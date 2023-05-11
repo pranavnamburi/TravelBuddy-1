@@ -103,7 +103,7 @@
 </head>
 <body>
 <h1>Journey Form</h1>
-<form>
+<form action="${pageContext.request.contextPath}/co-traveller-submit-add-journey" METHOD="POST">
     <label for="transportation">Transportation:</label>
     <select id="transportation" name="transportation">
         <option value="train">Train</option>

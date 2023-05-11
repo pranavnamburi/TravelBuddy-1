@@ -10,13 +10,13 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.annotation.WebServlet;
 
 
-@WebServlet(name = "coTraveller", value = "/co-traveller")
+@WebServlet(name = "coTravellerDisplayAddJourney", value = "/co-traveller-display-add-journey")
 public class Co_Traveller_display_data_Add_journey extends HttpServlet{
     // Attributes of Server-url, Host-name, and Host-pass to access the database
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         // Set up the database connection
-        String dbUrl = "jdbc:mysql://localhost:3306/tb_base";
+        String dbUrl = "jdbc:mysql://db4free.net:3306/tb_base";
         String dbUser = "tbadmin";
         String dbPassword = "admintravel123";
         Connection conn = null;
@@ -31,7 +31,7 @@ public class Co_Traveller_display_data_Add_journey extends HttpServlet{
 
             // Display the retrieved data on the JSP page
             request.setAttribute("passengerData", rs);
-            RequestDispatcher view = request.getRequestDispatcher("display_journey.jsp");
+            RequestDispatcher view = request.getRequestDispatcher("src/main/webapp/co_traveller/display_journey.jsp");
             view.forward(request, response);
 
         } catch (SQLException | ClassNotFoundException e) {

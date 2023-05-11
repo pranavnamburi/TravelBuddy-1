@@ -2,6 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
 <%@ page import="java.sql.ResultSet" %>
+<%@ page import="java.sql.SQLException" %>
 
 <html lang="en">
 <head>
@@ -168,6 +169,23 @@
 <button class="class_menu_icon_out" id="menu_icon_out">!TB</button>
 <div class="class_home">
     <div>
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Contact</th>
+                <th>Timeframe</th>
+            </tr>
+            <c:forEach var="data" items="${autoShareInfos}">
+                <tr>
+                    <td>${data.getFullName()}</td>
+                    <td>${data.getPlace()}</td>
+                    <td>${data.getNo_of_vacs()}</td>
+                    <td>${data.getTimeInString()}</td>
+                </tr>
+            </c:forEach>
+        </table>
+    </div>
+    <div>
         <button class="Button" id="adj" onclick="window.location.href= 'add_journey_form.jsp'">Add-journey</button>
     </div>
     <div class="class_menu" id="menu">
@@ -185,25 +203,7 @@
             <button class="class_sos">SOS</button><br>
         </div>
     </div>
-<%--    <div>--%>
-<%--        <% ResultSet rs = (ResultSet) request.getAttribute("passengerData"); %>--%>
-<%--        <%--%>
-<%--            while (rs.next()) {--%>
-<%--        %>--%>
-<%--        <div class="card">--%>
-<%--            <h2><%= rs.getString("name") %></h2>--%>
-<%--            <p><strong>Source:</strong> <%= rs.getString("source") %></p>--%>
-<%--            <p><strong>Destination:</strong> <%= rs.getString("destination") %></p>--%>
-<%--            <p><strong>Transport Mode:</strong> <%= rs.getString("transport") %></p>--%>
-<%--            <p><strong>Date:</strong> <%= rs.getString("date") %></p>--%>
-<%--            <p><strong>Time:</strong> <%= rs.getString("time") %></p>--%>
-<%--            <p><strong>Registration Number:</strong> <%= rs.getString("registration") %></p>--%>
-<%--            <p><strong>Branch:</strong> <%= rs.getString("branch") %></p>--%>
-<%--        </div>--%>
-<%--        <%--%>
-<%--            }--%>
-<%--        %>--%>
-<%--    </div>--%>
+
 </div>
 <script>
     let menu = document.getElementById("menu");
