@@ -7,7 +7,7 @@ import java.time.format.DateTimeFormatter;
 import java.sql.Date;
 
 public class AutoShareInfo {
-    String fullname, email, place;
+    String fullname, email, mobile, place;
     Integer no_of_vacs;
     Time time;
     Date date;
@@ -30,9 +30,8 @@ public class AutoShareInfo {
         String timeStr = format.format(time);
         return timeStr;
     }
-
     public void setTime(Time time) { this.time = time; }
-    public AutoShareInfo(String fullname, String email, String place, Integer no_of_vacs, Date date, Time time) {
+    public AutoShareInfo(String fullname, String email, String mobile, String place, Integer no_of_vacs, Date date, Time time) {
         setFullname(fullname); setEmail(email); setPlace(place); setNo_of_vacs(no_of_vacs); setDate(date); setTime(time);
     }
 

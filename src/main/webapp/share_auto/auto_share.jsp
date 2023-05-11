@@ -2,9 +2,7 @@
 <%@ page import="com.groupnine.travelbuddy.Auto_Share.AutoShareInfo" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%
-    System.out.println("Printed1");
-%>
+
 <jsp:include page="/auto_share_retreive_data"/>
 <%
     response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
@@ -16,9 +14,6 @@
     }
     ArrayList<AutoShareInfo> autoShareInfos = (ArrayList<AutoShareInfo>) session.getAttribute("autoShareInfos");
     Boolean isRegistered = (Boolean) session.getAttribute("isRegistered");
-%>
-<%
-    System.out.println("Printed2");
 %>
 
 <!DOCTYPE html>
@@ -357,8 +352,7 @@
     }
 </script>
 <script>
-    <%--let isRegistered = '<%= isRegistered %>';--%>
-    let isRegistered = false;
+    let isRegistered = '<%= isRegistered %>';
     let aSRegButton = document.getElementById("asregbutton");
     let aSUnRegButton = document.getElementById("asunregbutton");
     let aSReqsButton = document.getElementById("asreqsbutton");
