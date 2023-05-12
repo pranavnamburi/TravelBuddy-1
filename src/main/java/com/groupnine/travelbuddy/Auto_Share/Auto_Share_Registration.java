@@ -45,7 +45,6 @@ public class Auto_Share_Registration extends HttpServlet{
             statement.close();
             // Closing the connection to the database
             connection.close();
-            req.getSession().setAttribute("isRegistered", true);
             resp.sendRedirect("/share_auto/auto_share.jsp");
         } catch (ClassNotFoundException | SQLException | IOException e) {
             throw new RuntimeException(e);

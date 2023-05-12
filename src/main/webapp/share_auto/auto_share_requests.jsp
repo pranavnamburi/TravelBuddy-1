@@ -1,5 +1,6 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="com.groupnine.travelbuddy.Auto_Share.AutoShareInfo" %>
+<%@ page import="com.groupnine.travelbuddy.Auto_Share.AutoShareRequest" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
@@ -13,12 +14,10 @@
     if(session.getAttribute("logged_in") == null) {
         session.setAttribute("logged_in", "false");
     }
-    ArrayList<AutoShareInfo> autoShareInfos = (ArrayList<AutoShareInfo>) session.getAttribute("autoShareInfos");
-    Boolean isRegistered = (Boolean) session.getAttribute("isAutoShareRegistered");
+    ArrayList<AutoShareRequest> userRequests = (ArrayList<AutoShareRequest>) request.getSession().getAttribute("autoShareUserRequests");
 %>
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8"/>
     <title>Travel Buddy</title>
@@ -129,129 +128,92 @@
         }
         .class_contents {
             flex: 5;
-            padding: 3%;
+            padding-left: 1%;
+            padding-right: 5%;
         }
-        .class_contents_top {
-            height: 15%;
-        }
-        #asunregbutton, #asreqsbutton {
-            position: relative;
-            top: 40%;
-            bottom:50%;
-            background-color: #45ffbe;
-            border-radius: 20px;
-            width: 110px;
-            height: 35px;
-            font-size: medium;
-            border-color: #f4fa6a;
-            border-style: solid;
-            border-width: 1px;
-            color: #bcc446;
-            display: none;
-        }
-        #asunregbutton:hover, #asreqsbutton:hover {
-            position: relative;
-            top: 40%;
-            bottom:50%;
-            background-color: #23e39e;
-            border-radius: 20px;
-            width: 110px;
-            height: 35px;
-            font-size: medium;
-            font-weight: bold;
-            border-color: #f4fa6a;
-            border-style: solid;
-            border-width: 1px;
-            color: #e1ee9e;
-            display: none;
-        }
-        #asregbutton {
-            position: relative;
-            top: 40%;
-            bottom:50%;
-            background-color: #45ffbe;
-            border-radius: 20px;
-            width: 180px;
-            height: 35px;
-            font-size: medium;
-            border-color: #f4fa6a;
-            border-style: solid;
-            border-width: 1px;
-            color: #bcc446;
-            display: none;
-        }
-        #asregbutton:hover {
-            position: relative;
-            top: 40%;
-            bottom:50%;
-            background-color: #23e39e;
-            border-radius: 20px;
-            width: 180px;
-            height: 35px;
-            font-size: medium;
-            font-weight: bold;
-            border-color: #f4fa6a;
-            border-style: solid;
-            border-width: 1px;
-            color: #e1ee9e;
-            display: none;
-        }
-        .class_contents_body {
-            height: 75%;
-            border-top-right-radius: 25px;
-            border-top-left-radius: 25px;
-        }
-        .class_contents_body_mention_records {
-            position: relative;
-            top: 10px;
-            margin-bottom: 10px;
-            height: 50px;
-            width: 400px;
+        .class_contents_title {
             text-align: center;
-            border-top-left-radius: 10px;
-            border-top-right-radius: 20px;
-            background-color: #f4fa6a;
+            font-weight: bolder;
+            color: #1e7545;
+            height: 5px;
+            width: 100%;
+            background-color: #fff;
+            padding: 15px 20px 25px 20px;
+            border-radius: 5px;
+            margin: 5px auto;
+            translate: 0 200%;
         }
-        .class_contents_body_mention_records h2 {
-            position: relative;
-            top: 10px;
-            margin: 0;
+        .class_contents_requests_container {
+            height: 50%;
+            width: 100%;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 0 auto;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            translate: 0 22%;
+            overflow-y: scroll;
+            overflow-x: hidden;
         }
-        .class_contents_body_table2 {
-            background-color: #f0f58e;
-            overflow-y: auto;
-            height: 70%;
+        .class_contents_requests_container::-webkit-scrollbar {
+            width: 2px;
+            background-color: white;
         }
-        .class_contents_body_table2::-webkit-scrollbar {
-            width: 10px;
-            background-color: #eef38d;
-        }
-        .class_contents_body_table2::-webkit-scrollbar-thumb {
+        .class_contents_requests_container::-webkit-scrollbar-thumb {
             background-color: green;
             border-radius: 5px;
         }
-        .class_contents_body_table1 table, .class_contents_body_table2 table{
+        .class_contents_request {
+            position: relative;
             width: 100%;
-            height: 5%;
-            background-color: #f0f58e;
+            height: 15%;
+            background-color: white;
+            border-radius: 2px;
+            border: 1px solid whitesmoke;
+            box-shadow: 1px 1px 4px #556270;
+            display: flex;
+            align-content: center;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
         }
-        .class_contents_body_table1 th{
-            border-top: 1px solid #f6ffc1;
-            border-bottom: 1px solid #b2c910;
-            height: 45px;
-            width: 5%;
+        .class_contents_request_name {
+            position: relative;
+            height: 20px;
+            flex: 3;
+            left: 3%;
+            margin-top: -25px;
         }
-        .class_contents_body_table2 td{
-            text-align: center;
-            border-bottom: 1px solid #dce507;
-            height: 45px;
-            width: 15%;
+        .class_contents_request_email {
+            position: relative;
+            height: 20px;
+            flex: 4;
+            left: 3%;
+            margin-top: -25px;
         }
-        .class_contents_body_table2 a {
+        .class_contents_request_mobile {
+            position: relative;
+            height: 20px;
+            flex: 3;
+            margin-top: -25px;
+        }
+        .class_contents_request_accept {
+            position: relative;
+            flex: 1;
+        }
+        .class_contents_request_reject {
+            position: relative;
+            flex: 1;
+        }
+        .class_contents_request_text{
+            position: relative;
+            flex: 1;
+        }
+        .class_contents_request_accept a, .class_contents_request_reject a {
             border-radius: 15px;
-            border: 2px solid #c9d20d;
-            background-color: #00731f;
-            color: #f4fa6a;
+            border: 2px solid #00b700;
+            background-color: #0cd226;
+            color: white;
             height: 20px;
             width: 75px;
             text-decoration: none;
@@ -259,18 +221,7 @@
             text-align: center;
             line-height: 20px;
         }
-        .class_contents_body_table2 a:hover {
-            background-color: #c9d20d;
-            border-color: #00731f;
-            color: #00731f;
-            font-weight: bold;
-        }
-        .class_contents_bottom {
-            height: 10%;
-            background-color: #95ff8c;
-        }
     </style>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
 <button class="class_menu_icon_out" id="menu_icon_out">!TB</button>
@@ -291,61 +242,32 @@
         </div>
     </div>
     <div class="class_contents">
-        <div class="class_contents_top">
-            <button id="asregbutton" onclick="window.location.href='auto_share_registration.jsp'"> Register Auto-Share </button>
-            <button id="asunregbutton" onclick="window.location.href='auto_share_registration.jsp'"> Unregister </button>
-            <button id="asreqsbutton" onclick="window.location.href='auto_share_requests.jsp'"> Requests </button>
+        <div class="class_contents_title">
+            Requests
         </div>
-        <div class="class_contents_body">
-            <div class="class_contents_body_mention_records"><h2>100 no. of autoshares recorded</h2></div>
-            <div class="class_contents_body_table1">
-                <table>
-                    <tr>
-                        <th>Name</th>
-                        <th>To Place</th>
-                        <th>No Of Vacancies</th>
-                        <th>Date</th>
-                        <th><p>Timeframe</p></th>
-                        <th><p>Action</p></th>
-                    </tr>
-                </table>
-            </div>
-            <div class="class_contents_body_table2">
-                <table>
-                    <tr>
-                        <td>Name1</td>
-                        <td>Place1</td>
-                        <td>NOV1</td>
-                        <td>Date1</td>
-                        <td>Timeframe1</td>
-                        <td><button>Request</button></td>
-                    </tr>
-                    <c:forEach var="data" items="${autoShareInfos}">
-                        <tr>
-                            <td>${data.getFullname()}</td>
-                            <td>${data.getPlace()}</td>
-                            <td>${data.getNo_of_vacs()}</td>
-                            <td>${data.getDateInString()}</td>
-                            <td>${data.getTimeInString()}</td>
-                            <c:choose>
-                                <c:when test="${isRegistered}">
-                                    <td><a href="${pageContext.request.contextPath}/auto_share_request_manager?email=${data.getEmail()}">Request</a></td>
-                                </c:when>
-                                <c:otherwise>
-                                    <td><a href="#">Requested</a></td>
-                                </c:otherwise>
-                            </c:choose>
-                        </tr>
-                    </c:forEach>
-                </table>
-            </div>
-        </div>
-        <div class="class_contents_bottom">
+        <div class="class_contents_requests_container">
+            <c:forEach var="data" items="${autoShareUserRequests}">
+                <div class="class_contents_request">
+                    <div class="class_contents_request_name"><span style="font-weight: bold">Name</span><br>${data.getFirstname()}</div>
+                    <div class="class_contents_request_email"><span style="font-weight: bold">Email</span><br>${data.getEmail()}</div>
+                    <div class="class_contents_request_mobile"><span style="font-weight: bold">Mobile</span><br>${data.getMobile()}</div>
+                    <c:choose>
+                        <c:when test="${data.getStatus().equals(\"pending\")}">
+                            <div class="class_contents_request_accept"><a href="auto_share_manipulate_user_request?status=accept&other_user_email=${data.getEmail()}">Accept</a></div>
+                            <div class="class_contents_request_reject"><a href="auto_share_manipulate_user_request?status=reject&other_user_email=${data.getEmail()}">Reject</a></div>
+                        </c:when>
+                        <c:otherwise>
+                            <div class="class_contents_request_text"><span style="color:limegreen">Joined</span></div>
+                        </c:otherwise>
+                    </c:choose>
+                </div>
+                <tr>
 
+                </tr>
+            </c:forEach>
         </div>
     </div>
 </div>
-
 <script>
     let menu = document.getElementById("menu");
     let menu_icon_out = document.getElementById("menu_icon_out");
@@ -358,21 +280,5 @@
         menu.style.setProperty("animation", "300ms linear 0s slide_right forwards");
     }
 </script>
-<script>
-    let isRegistered = '<%= isRegistered %>';
-    let aSRegButton = document.getElementById("asregbutton");
-    let aSUnRegButton = document.getElementById("asunregbutton");
-    let aSReqsButton = document.getElementById("asreqsbutton");
-    if(isRegistered === true){
-        aSRegButton.style.display = "none";
-        aSUnRegButton.style.display = "inline";
-        aSReqsButton.style.display = "inline";
-    } else {
-        aSUnRegButton.style.display = "none";
-        aSReqsButton.style.display = "none";
-        aSRegButton.style.display = "inline";
-    }
-</script>
-
 </body>
 </html>
