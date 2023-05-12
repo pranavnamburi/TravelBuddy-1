@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 
-@WebServlet(name="AutoShareRetreiveUserRequests", value="auto_share_retreive_user_requests")
+@WebServlet(name="AutoShareRetreiveUserRequests", value="/auto_share_retreive_user_requests")
 public class AutoShareRetreiveUserRequests extends HttpServlet {
     final String host = "jdbc:mysql://db4free.net:3306/tb_base";
     final String userName = "tbadmin";

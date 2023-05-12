@@ -12,7 +12,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-@WebServlet(name="AutoShareManipulateUserRequest", value="auto_share_manipulate_user_request")
+@WebServlet(name="AutoShareManipulateUserRequest", value="/auto_share_manipulate_user_request")
 public class AutoShareManipulateUserRequests extends HttpServlet {
     final String host = "jdbc:mysql://db4free.net:3306/tb_base";
     final String userName = "tbadmin";
