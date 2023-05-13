@@ -232,11 +232,11 @@
             <button class="class_menu_icon_in" id="menu_icon_in">!TB</button><br>
         </div>
         <div class="class_menu_bar_items_top">
-            <button onclick="window.location.href='practice.jsp';" class="class_home_nav">Home</button>
-            <button onclick="window.location.href='#';" class="class_profile">Profile</button><br>
+            <button onclick="window.location.href='/webapp/index.jsp';" class="class_home_nav">Home</button>
+            <button onclick="window.location.href='profile.jsp';" class="class_profile">Profile</button><br>
             <button onclick="window.location.href='friends_pool.jsp';" class="class_friend_pool">Friend Pooling</button><br>
-            <button onclick="window.location.href='co-traveller.jsp';" class="class_co_travel">Co-Traveller</button><br>
-            <button onclick="window.location.href='auto_share.jsp';" class="class_share_auto">Auto Share</button><br>
+            <button onclick="window.location.href='/co_traveller/co-traveller.jsp';" class="class_co_travel">Co-Traveller</button><br>
+            <button onclick="window.location.href='/share_auto/auto_share.jsp';" class="class_share_auto">Auto Share</button><br>
         </div>
         <div class="class_menu_bar_items_bottom">
             <button class="class_sos">SOS</button><br>

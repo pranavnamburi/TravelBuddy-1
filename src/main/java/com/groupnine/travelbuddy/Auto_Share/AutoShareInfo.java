@@ -15,6 +15,8 @@ public class AutoShareInfo {
     public void setFullname(String fullname) { this.fullname = fullname; }
     public String getEmail() { return email; }
     public void setEmail(String email) { this.email = email; }
+    public String getMobile() { return mobile; }
+    public void setMobile(String mobile) { this.mobile = mobile; }
     public String getPlace() { return place; }
     public void setPlace(String place) { this.place = place; }
     public Integer getNo_of_vacs() { return no_of_vacs; }
@@ -32,7 +34,7 @@ public class AutoShareInfo {
     }
     public void setTime(Time time) { this.time = time; }
     public AutoShareInfo(String fullname, String email, String mobile, String place, Integer no_of_vacs, Date date, Time time) {
-        setFullname(fullname); setEmail(email); setPlace(place); setNo_of_vacs(no_of_vacs); setDate(date); setTime(time);
+        setFullname(fullname); setEmail(email); setMobile(mobile); setPlace(place); setNo_of_vacs(no_of_vacs); setDate(date); setTime(time);
     }
 
 }

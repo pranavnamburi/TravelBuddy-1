@@ -25,7 +25,7 @@ public class Authentication  extends HttpServlet {
             // Making a new connection to MySQL server
             Connection connection = DriverManager.getConnection(host, userName, userPass);
             // Instantiating a new Prepared Statement (known as pre-compiled statement) to insert the acquired data
-            PreparedStatement statement = connection.prepareStatement("SELECT email, userpass FROM users");
+            PreparedStatement statement = connection.prepareStatement("SELECT email, userpass FROM tb_base.users");
             ResultSet resultSet = statement.executeQuery();
             String acquiredEmail =  req.getParameter("email");
             String acquiredPass = req.getParameter("password");

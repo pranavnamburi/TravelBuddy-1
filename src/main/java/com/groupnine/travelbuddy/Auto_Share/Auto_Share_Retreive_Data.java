@@ -25,7 +25,7 @@ public class Auto_Share_Retreive_Data extends HttpServlet {
             // Making a new connection to MySQL server
             Connection connection = DriverManager.getConnection(host, userName, userPass);
             // Instantiating a new Prepared Statement (known as pre-compiled statement) to insert the acquired data
-            PreparedStatement statement = connection.prepareStatement("SELECT u.fullname, u.email, u.mobile, a.place, a.no_of_vacs, a.date, a.time FROM autosharers a JOIN users u ON u.email = a.email");
+            PreparedStatement statement = connection.prepareStatement("SELECT u.fullname, u.email, u.mobile, a.place, a.no_of_vacs, a.date, a.time FROM tb_base.autosharers a JOIN tb_base.users u ON u.email = a.email WHERE NOT a.no_of_vacs = 0");
             // Moving the data into the statement
             // Executing the statement with all the data provided
             ResultSet resultSet = statement.executeQuery();

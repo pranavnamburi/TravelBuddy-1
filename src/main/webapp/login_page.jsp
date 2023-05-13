@@ -20,10 +20,9 @@
 <head>
     <meta charset="utf-8">
     <title>Travel Buddy</title>
-    <!-- <link rel="stylesheet" href="style.css"> -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-        @import url('webapp/fonts.css');
+        @import url('fonts.css');
         *{
             margin: 0;
             padding: 0;

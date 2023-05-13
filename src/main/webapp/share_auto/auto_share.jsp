@@ -22,7 +22,31 @@
     ArrayList<AutoShareInfo> autoShareInfos = (ArrayList<AutoShareInfo>) session.getAttribute("autoShareInfos");
     ArrayList<String> autoShareUserMadeRequests = (ArrayList<String>) session.getAttribute("autoShareUserMadeRequests");
     boolean isRegistered = (boolean) request.getSession().getAttribute("isAutoShareRegistered");
-    System.out.println(isRegistered);
+    boolean requestAcceptance = (boolean) request.getSession().getAttribute("requestAcceptance");
+    String userForReqCancel = "";
+    AutoShareInfo acceptedUserObject = null;
+    if(autoShareUserMadeRequests.size() == 1) {
+        userForReqCancel = autoShareUserMadeRequests.get(0);
+        for(AutoShareInfo user : autoShareInfos) {
+            if(user.getEmail().equals(userForReqCancel)) {
+                acceptedUserObject = user;
+                break;
+            }
+        }
+        System.out.println(userForReqCancel);
+    }
+    boolean requestsMade = true;
+    if(autoShareUserMadeRequests.size() == 0) {
+        requestsMade = false;
+    }
+    int noOfVacanciesLeftOver = 0;
+    if(isRegistered) {
+        for (AutoShareInfo user : autoShareInfos) {
+            if (user.getEmail().equals(session.getAttribute("user_email"))){
+                noOfVacanciesLeftOver = user.getNo_of_vacs();
+            }
+        }
+    }
 %>
 
 <!DOCTYPE html>
@@ -157,13 +181,44 @@
             color: #bcc446;
             display: none;
         }
-        #asunregbutton:hover, #asreqsbutton:hover {
+        #asunregbutton:hover, #asreqsbutton:hover{
             position: relative;
             top: 40%;
             bottom:50%;
             background-color: #23e39e;
             border-radius: 20px;
             width: 110px;
+            height: 35px;
+            font-size: medium;
+            font-weight: bold;
+            border-color: #f4fa6a;
+            border-style: solid;
+            border-width: 1px;
+            color: #e1ee9e;
+            display: none;
+        }
+        #ascancelreqbutton {
+            position: relative;
+            top: 40%;
+            bottom:50%;
+            background-color: #45ffbe;
+            border-radius: 20px;
+            width: 150px;
+            height: 35px;
+            font-size: medium;
+            border-color: #f4fa6a;
+            border-style: solid;
+            border-width: 1px;
+            color: #bcc446;
+            display: none;
+        }
+        #ascancelreqbutton:hover {
+            position: relative;
+            top: 40%;
+            bottom:50%;
+            background-color: #23e39e;
+            border-radius: 20px;
+            width: 150px;
             height: 35px;
             font-size: medium;
             font-weight: bold;
@@ -274,8 +329,20 @@
             font-weight: bold;
         }
         .class_contents_bottom {
+            position: relative;
             height: 10%;
-            background-color: #95ff8c;
+            background-color: white;
+            border-radius: 20px;
+            padding: 5px;
+            text-align: center;
+            font-size: 20px;
+            align-content: center;
+            align-items: center;
+            justify-content: center;
+        }
+        #request_accepted {
+            position: relative;
+            bottom: -20px;
         }
     </style>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -288,11 +355,11 @@
             <button class="class_menu_icon_in" id="menu_icon_in">!TB</button><br>
         </div>
         <div class="class_menu_bar_items_top">
-            <button onclick="window.location.href='practice.jsp';" class="class_home_nav">Home</button>
-            <button onclick="window.location.href='#';" class="class_profile">Profile</button><br>
+            <button onclick="window.location.href='/webapp/index.jsp';" class="class_home_nav">Home</button>
+            <button onclick="window.location.href='profile.jsp';" class="class_profile">Profile</button><br>
             <button onclick="window.location.href='friends_pool.jsp';" class="class_friend_pool">Friend Pooling</button><br>
-            <button onclick="window.location.href='co-traveller.jsp';" class="class_co_travel">Co-Traveller</button><br>
-            <button onclick="window.location.href='auto_share.jsp';" class="class_share_auto">Auto Share</button><br>
+            <button onclick="window.location.href='/co_traveller/co-traveller.jsp';" class="class_co_travel">Co-Traveller</button><br>
+            <button onclick="window.location.href='/share_auto/auto_share.jsp';" class="class_share_auto">Auto Share</button><br>
         </div>
         <div class="class_menu_bar_items_bottom">
             <button class="class_sos">SOS</button><br>
@@ -300,8 +367,9 @@
     </div>
     <div class="class_contents">
         <div class="class_contents_top">
+            <button id="ascancelreqbutton" onclick="window.location.href='${pageContext.request.contextPath}/auto_share_request_cancel?user_for_req_cancel=<%= userForReqCancel%>'"> Cancel Request </button>
             <button id="asregbutton" onclick="window.location.href='auto_share_registration.jsp'"> Register Auto-Share </button>
-            <button id="asunregbutton" onclick="window.location.href='auto_share_registration.jsp'"> Unregister </button>
+            <button id="asunregbutton" onclick="window.location.href='${pageContext.request.contextPath}/auto_share_de_reg'"> Unregister </button>
             <button id="asreqsbutton" onclick="window.location.href='auto_share_requests.jsp'"> Requests </button>
         </div>
         <div class="class_contents_body">
@@ -314,7 +382,7 @@
                         <th>No Of Vacancies</th>
                         <th>Date</th>
                         <th><p>Timeframe</p></th>
-                        <c:if test="${!sessionScope.get(\"isAutoShareRegistered\")}">
+                        <c:if test="${!sessionScope.get(\"isAutoShareRegistered\")&&!sessionScope.get(\"requestAcceptance\")}">
                             <th><p>Action</p></th>
                         </c:if>
                     </tr>
@@ -330,7 +398,7 @@
                             <td>${data.getDateInString()}</td>
                             <td>${data.getTimeInString()}</td>
                             <c:set var="userMadeRequestFound" value="false" />
-                            <c:if test="${!sessionScope.get(\"isAutoShareRegistered\")}">
+                            <c:if test="${!sessionScope.get(\"isAutoShareRegistered\")&&!sessionScope.get(\"requestAcceptance\")}">
                                 <c:forEach var="other_user_email" items="${autoShareUserMadeRequests}">
                                     <c:if test="${data.getEmail().equals(other_user_email)}">
                                         <c:set var="userMadeRequestFound" value="true" />
@@ -351,10 +419,59 @@
             </div>
         </div>
         <div class="class_contents_bottom">
-
+            <div id="requests_invalid">
+                <p><pre style="position: relative; display: inline;"> --- </pre> Your AutoShare has still <%= noOfVacanciesLeftOver %> vacancies left over <pre style="position: relative; display: inline;"> --- </pre></p>
+            </div>
+            <div id="requests_not_made">
+                <p><pre style="position: relative; display: inline;"> --- </pre> You have not made any requests yet <pre style="position: relative; display: inline;"> --- </pre></p>
+            </div>
+            <div id="request_not_accepted">
+                <p><pre style="position: relative; display: inline;"> --- </pre>You do not have any request approvals yet<pre style="position: relative; display: inline;"> --- </pre></p>
+            </div>
+            <div id="request_accepted">
+                <c:if test="<%=requestAcceptance%>">
+                    <p style="position: relative; display: inline;">You joined the Autoshare by <span style="font-weight: bold"><%=acceptedUserObject.getFullname()%></span> on <span style="font-weight: bold"><%=acceptedUserObject.getDateInString()%></span> at <span style="font-weight: bold"><%=acceptedUserObject.getTimeInString()%></span></p>
+                    <pre style="position: relative; display: inline;"> --- </pre>
+                    <div style="position: relative; display: inline;">Contact: <span style="font-weight: bold;"><%=acceptedUserObject.getMobile()%></span></div>
+                    <pre style="position: relative; display: inline;"> --- </pre>
+                    <div style="position:relative; display: inline;">Email: <span style="font-weight: bold;">email@gmail.com</span></div>
+                </c:if>
+            </div>
         </div>
     </div>
 </div>
+
+<script>
+    let areRequestsInvalid = <%= isRegistered %>;;
+    let areRequestsMade = <%= requestsMade %>;
+    let isRequestAccepted = <%= requestAcceptance %>;
+    let request_invalid = document.getElementById("requests_invalid");
+    let requests_not_made = document.getElementById("requests_not_made");
+    let request_not_accepted = document.getElementById("request_not_accepted");
+    let request_accepted = document.getElementById("request_accepted");
+    if(areRequestsInvalid) {
+        requests_not_made.style.display = "none";
+        request_accepted.style.display = "none";
+        request_not_accepted.style.display = "none";
+        request_invalid.style.display = "block";
+    } else {
+        request_invalid.style.display = "none";
+        if (!areRequestsMade) {
+            request_not_accepted.style.display = "none";
+            request_accepted.style.display = "none";
+            requests_not_made.style.display = "block";
+        } else {
+            requests_not_made.style.display = "none";
+            if (isRequestAccepted) {
+                request_not_accepted.style.display = "none";
+                request_accepted = "block";
+            } else {
+                request_accepted.style.display = "none";
+                request_not_accepted.style.display = "block";
+            }
+        }
+    }
+</script>
 
 <script>
     let menu = document.getElementById("menu");
@@ -370,19 +487,29 @@
 </script>
 <script>
     let isRegistered = <%= isRegistered %>;
+    let requestAcceptance = <%= requestAcceptance %>;
     let aSRegButton = document.getElementById("asregbutton");
     let aSUnRegButton = document.getElementById("asunregbutton");
     let aSReqsButton = document.getElementById("asreqsbutton");
-    if(isRegistered === true){
+    let aSCancelReqButton = document.getElementById("ascancelreqbutton");
+    if(requestAcceptance === true) {
         aSRegButton.style.display = "none";
-        aSUnRegButton.style.display = "inline";
-        aSReqsButton.style.display = "inline";
+        aSUnRegButton.style.display="none";
+        aSReqsButton.style.display="none";
+        aSCancelReqButton.style.display="inline";
     } else {
-        aSUnRegButton.style.display = "none";
-        aSReqsButton.style.display = "none";
-        aSRegButton.style.display = "inline";
+        if(isRegistered === true){
+            aSCancelReqButton.style.display = "none";
+            aSRegButton.style.display = "none";
+            aSUnRegButton.style.display = "inline";
+            aSReqsButton.style.display = "inline";
+        } else {
+            aSCancelReqButton.style.display = "none";
+            aSUnRegButton.style.display = "none";
+            aSReqsButton.style.display = "none";
+            aSRegButton.style.display = "inline";
+        }
     }
 </script>
-
 </body>
 </html>

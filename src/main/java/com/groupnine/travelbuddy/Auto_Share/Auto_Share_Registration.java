@@ -25,7 +25,7 @@ public class Auto_Share_Registration extends HttpServlet{
             // Making a new connection to MySQL server
             Connection connection = DriverManager.getConnection(host, userName, userPass);
             // Instantiating a new Prepared Statement (known as pre-compiled statement) to insert the acquired data
-            PreparedStatement statement = connection.prepareStatement("INSERT INTO autosharers(email, place, no_of_vacs, time, date) VALUES (?,?,?,?,?)");
+            PreparedStatement statement1 = connection.prepareStatement("INSERT INTO tb_base.autosharers(email, place, no_of_vacs, time, date) VALUES (?,?,?,?,?)");
             // Moving the data into the statement
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
             System.out.println(req.getParameter("date"));
@@ -34,15 +34,21 @@ public class Auto_Share_Registration extends HttpServlet{
             formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             LocalDate localDate = LocalDate.parse(req.getParameter("date"), formatter);
             java.sql.Date parsedDate = java.sql.Date.valueOf(localDate);
-            statement.setString(1, (String) req.getSession().getAttribute("user_email"));
-            statement.setString(2, req.getParameter("to_place"));
-            statement.setInt(3, Integer.parseInt(req.getParameter("no_of_vacs")));
-            statement.setTime(4, time);
-            statement.setDate(5, parsedDate);
+            statement1.setString(1, (String) req.getSession().getAttribute("user_email"));
+            statement1.setString(2, req.getParameter("to_place"));
+            statement1.setInt(3, Integer.parseInt(req.getParameter("no_of_vacs")));
+            statement1.setTime(4, time);
+            statement1.setDate(5, parsedDate);
             // Executing the statement with all the data provided
-            statement.executeUpdate();
+            statement1.executeUpdate();
             // Closing the statement
-            statement.close();
+            statement1.close();
+            String userEmail = (String) req.getSession().getAttribute("user_email");
+            PreparedStatement statement2 = connection.prepareStatement("DELETE FROM tb_base.autosharerequests WHERE sender_id=? AND status=?");
+            statement2.setString(1, userEmail);
+            statement2.setString(2, "pending");
+            statement2.executeUpdate();
+            statement2.close();
             // Closing the connection to the database
             connection.close();
             resp.sendRedirect("/share_auto/auto_share.jsp");

@@ -23,7 +23,7 @@ public class AutoShareRetreiveUserRequests extends HttpServlet {
             // Making a new connection to MySQL server
             Connection connection = DriverManager.getConnection(host, userName, userPass);
             // Instantiating a new Prepared Statement (known as pre-compiled statement) to insert the acquired data
-            PreparedStatement statement = connection.prepareStatement("SELECT u.fullname, u.email, u.mobile, a.status FROM autosharerequests a JOIN users u ON a.sender_id=u.email WHERE a.receiver_id=?");
+            PreparedStatement statement = connection.prepareStatement("SELECT u.fullname, u.email, u.mobile, a.status FROM tb_base.autosharerequests a JOIN tb_base.users u ON a.sender_id=u.email WHERE a.receiver_id=?");
             // Moving the data into the statement
             String userEmail = (String) req.getSession().getAttribute("user_email");
             statement.setString(1, userEmail);

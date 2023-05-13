@@ -26,19 +26,32 @@ public class AutoShareManipulateUserRequests extends HttpServlet {
             Class.forName("com.mysql.cj.jdbc.Driver");
             // Making a new connection to MySQL server
             Connection connection = DriverManager.getConnection(host, userName, userPass);
-            final String query;
+            final String query1, query2, query3;
             if (webUserRequestStatus.equals("accept")) {
-                query = "UPDATE autosharerequests SET status='accepted' WHERE sender_id=? AND receiver_id=?";
+                query1 = "UPDATE tb_base.autosharerequests SET status='accepted' WHERE sender_id=? AND receiver_id=?";
+                query2 = "UPDATE tb_base.autosharers SET no_of_vacs=no_of_vacs-1 WHERE email=?";
             } else {
-                query = "DELETE FROM autosharerequests WHERE sender_id=? AND receiver_id=?";
+                query1 = "DELETE FROM tb_base.autosharerequests WHERE sender_id=? AND receiver_id=?";
+                query2 = "UPDATE tb_base.autosharers SET no_of_vacs=no_of_vacs+1 WHERE email=?";
             }
-            PreparedStatement statement = connection.prepareStatement(query);
-            statement.setString(1, otherUserEmail);
-            statement.setString(2, userEmail);
-            statement.executeUpdate();
-            statement.close();
+            PreparedStatement statement1 = connection.prepareStatement(query1);
+            statement1.setString(1, otherUserEmail);
+            statement1.setString(2, userEmail);
+            statement1.executeUpdate();
+            statement1.close();
+            PreparedStatement statement2 = connection.prepareStatement(query2);
+            statement2.setString(1, userEmail);
+            statement2.executeUpdate();
+            statement2.close();
+            if (webUserRequestStatus.equals("accept")) {
+                query3 = "DELETE FROM tb_base.autosharerequests WHERE sender_id=? AND status='pending'";
+                PreparedStatement statement3 = connection.prepareStatement(query3);
+                statement3.setString(1, otherUserEmail);
+                statement3.executeUpdate();
+                statement3.close();
+            }
             connection.close();
-            req.getRequestDispatcher("/share_auto/auto_share_requests.jsp").forward(req, resp);
+            resp.sendRedirect("/share_auto/auto_share_requests.jsp");
         } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
