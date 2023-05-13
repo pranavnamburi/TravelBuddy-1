@@ -37,7 +37,7 @@ public class AutoShareRetreiveUserMadeRequests extends HttpServlet {
             // Closing the connection to the database
             connection.close();
             req.getSession().setAttribute("autoShareUserMadeRequests", userMadeRequests);
-            req.getRequestDispatcher("/share_auto/auto_share.jsp").forward(req, resp);
+            resp.sendRedirect("/share_auto/auto_share.jsp");
         } catch (ClassNotFoundException | SQLException | IOException e) {
             throw new RuntimeException(e);
         }

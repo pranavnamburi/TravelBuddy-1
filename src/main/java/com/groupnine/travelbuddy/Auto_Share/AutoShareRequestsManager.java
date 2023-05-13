@@ -31,6 +31,8 @@ public class AutoShareRequestsManager extends HttpServlet {
             statement.setString(1, (String) req.getSession().getAttribute("user_email"));
             statement.setString(2, req.getParameter("email"));
             statement.setString(3, "pending");
+            statement.executeUpdate();
+            System.out.println("Added a request");
             // Closing the statement
             statement.close();
             // Closing the connection to the database

@@ -31,12 +31,14 @@ public class Auto_Share_Retreive_Data extends HttpServlet {
             ResultSet resultSet = statement.executeQuery();
             ArrayList<AutoShareInfo> autoShareInfos = new ArrayList<>();
             String userEmail = (String) req.getSession().getAttribute("user_email");
+            req.getSession().setAttribute("isAutoShareRegistered", false);
             while(resultSet.next()) {
                 String fullname = resultSet.getString("fullname");
                 String email = resultSet.getString("email");
                 if(userEmail.equals(email)) {
                     req.getSession().setAttribute("isAutoShareRegistered", true);
                 }
+                System.out.println(userEmail + " " + email);
                 String mobile = resultSet.getString("mobile");
                 String place = resultSet.getString("place");
                 int no_of_vacs = resultSet.getInt("no_of_vacs");

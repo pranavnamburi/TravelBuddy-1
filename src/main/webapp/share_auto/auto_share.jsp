@@ -3,7 +3,13 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+<%
+    System.out.println("Start");
+%>
 <jsp:include page="/auto_share_retreive_data"/>
+<%
+    System.out.println("Start of another module");
+%>
 <jsp:include page="/auto_share_retreive_user_made_requests"/>
 <%
     response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
@@ -14,7 +20,9 @@
         session.setAttribute("logged_in", "false");
     }
     ArrayList<AutoShareInfo> autoShareInfos = (ArrayList<AutoShareInfo>) session.getAttribute("autoShareInfos");
-    Boolean isRegistered = (Boolean) session.getAttribute("isAutoShareRegistered");
+    ArrayList<String> autoShareUserMadeRequests = (ArrayList<String>) session.getAttribute("autoShareUserMadeRequests");
+    boolean isRegistered = (boolean) request.getSession().getAttribute("isAutoShareRegistered");
+    System.out.println(isRegistered);
 %>
 
 <!DOCTYPE html>
@@ -297,7 +305,7 @@
             <button id="asreqsbutton" onclick="window.location.href='auto_share_requests.jsp'"> Requests </button>
         </div>
         <div class="class_contents_body">
-            <div class="class_contents_body_mention_records"><h2>100 no. of autoshares recorded</h2></div>
+            <div class="class_contents_body_mention_records"><h2>${autoShareInfos.size()} Autoshare(s) recorded</h2></div>
             <div class="class_contents_body_table1">
                 <table>
                     <tr>
@@ -306,20 +314,14 @@
                         <th>No Of Vacancies</th>
                         <th>Date</th>
                         <th><p>Timeframe</p></th>
-                        <th><p>Action</p></th>
+                        <c:if test="${!sessionScope.get(\"isAutoShareRegistered\")}">
+                            <th><p>Action</p></th>
+                        </c:if>
                     </tr>
                 </table>
             </div>
             <div class="class_contents_body_table2">
                 <table>
-                    <tr>
-                        <td>Name1</td>
-                        <td>Place1</td>
-                        <td>NOV1</td>
-                        <td>Date1</td>
-                        <td>Timeframe1</td>
-                        <td><button>Request</button></td>
-                    </tr>
                     <c:forEach var="data" items="${autoShareInfos}">
                         <tr>
                             <td>${data.getFullname()}</td>
@@ -327,14 +329,22 @@
                             <td>${data.getNo_of_vacs()}</td>
                             <td>${data.getDateInString()}</td>
                             <td>${data.getTimeInString()}</td>
-                            <c:choose>
-                                <c:when test="${isRegistered}">
-                                    <td><a href="${pageContext.request.contextPath}/auto_share_request_manager?email=${data.getEmail()}">Request</a></td>
-                                </c:when>
-                                <c:otherwise>
-                                    <td><a href="#">Requested</a></td>
-                                </c:otherwise>
-                            </c:choose>
+                            <c:set var="userMadeRequestFound" value="false" />
+                            <c:if test="${!sessionScope.get(\"isAutoShareRegistered\")}">
+                                <c:forEach var="other_user_email" items="${autoShareUserMadeRequests}">
+                                    <c:if test="${data.getEmail().equals(other_user_email)}">
+                                        <c:set var="userMadeRequestFound" value="true" />
+                                    </c:if>
+                                </c:forEach>
+                                <c:choose>
+                                        <c:when test="${!userMadeRequestFound}">
+                                            <td><a href="${pageContext.request.contextPath}/auto_share_request_manager?email=${data.getEmail()}">Request</a></td>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <td><a href="#">Requested</a></td>
+                                        </c:otherwise>
+                                </c:choose>
+                            </c:if>
                         </tr>
                     </c:forEach>
                 </table>
@@ -359,7 +369,7 @@
     }
 </script>
 <script>
-    let isRegistered = '<%= isRegistered %>';
+    let isRegistered = <%= isRegistered %>;
     let aSRegButton = document.getElementById("asregbutton");
     let aSUnRegButton = document.getElementById("asunregbutton");
     let aSReqsButton = document.getElementById("asreqsbutton");

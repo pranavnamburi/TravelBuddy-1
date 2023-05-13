@@ -1,11 +1,9 @@
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="com.groupnine.travelbuddy.Auto_Share.AutoShareInfo" %>
 <%@ page import="com.groupnine.travelbuddy.Auto_Share.AutoShareRequest" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<jsp:include page="/auto_share_retreive_data"/>
-<jsp:include page="/auto_share_retreive_user_made_requests"/>
+<jsp:include page="/auto_share_retreive_user_requests"/>
 <%
     response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
     response.setHeader("Pragma", "no-cache");
@@ -14,7 +12,10 @@
     if(session.getAttribute("logged_in") == null) {
         session.setAttribute("logged_in", "false");
     }
-    ArrayList<AutoShareRequest> userRequests = (ArrayList<AutoShareRequest>) request.getSession().getAttribute("autoShareUserRequests");
+    ArrayList<AutoShareRequest> autoShareUserRequests = (ArrayList<AutoShareRequest>) request.getSession().getAttribute("autoShareUserRequests");
+    for(AutoShareRequest a : autoShareUserRequests) {
+        System.out.println(a.getFullname() + " " + a.getMobile());
+    }
 %>
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/html">
@@ -248,22 +249,20 @@
         <div class="class_contents_requests_container">
             <c:forEach var="data" items="${autoShareUserRequests}">
                 <div class="class_contents_request">
-                    <div class="class_contents_request_name"><span style="font-weight: bold">Name</span><br>${data.getFirstname()}</div>
+                    <div class="class_contents_request_name"><span style="font-weight: bold">Name</span><br>${data.getFullname()}</div>
                     <div class="class_contents_request_email"><span style="font-weight: bold">Email</span><br>${data.getEmail()}</div>
                     <div class="class_contents_request_mobile"><span style="font-weight: bold">Mobile</span><br>${data.getMobile()}</div>
+                    <c:set var="dataStatus" value="${data.getStatus()}"/>
                     <c:choose>
-                        <c:when test="${data.getStatus().equals(\"pending\")}">
-                            <div class="class_contents_request_accept"><a href="auto_share_manipulate_user_request?status=accept&other_user_email=${data.getEmail()}">Accept</a></div>
-                            <div class="class_contents_request_reject"><a href="auto_share_manipulate_user_request?status=reject&other_user_email=${data.getEmail()}">Reject</a></div>
+                        <c:when test="${dataStatus == 'pending'}">
+                            <div class="class_contents_request_accept"><a href="${pageContext.request.contextPath}/auto_share_manipulate_user_request?status=accept&other_user_email=${data.getEmail()}">Accept</a></div>
+                            <div class="class_contents_request_reject"><a href="${pageContext.request.contextPath}/auto_share_manipulate_user_request?status=reject&other_user_email=${data.getEmail()}">Reject</a></div>
                         </c:when>
                         <c:otherwise>
                             <div class="class_contents_request_text"><span style="color:limegreen">Joined</span></div>
                         </c:otherwise>
                     </c:choose>
                 </div>
-                <tr>
-
-                </tr>
             </c:forEach>
         </div>
     </div>

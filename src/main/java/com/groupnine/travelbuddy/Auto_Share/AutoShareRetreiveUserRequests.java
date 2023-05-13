@@ -30,20 +30,19 @@ public class AutoShareRetreiveUserRequests extends HttpServlet {
             ResultSet resultSet = statement.executeQuery();
             ArrayList<AutoShareRequest> userRequests = new ArrayList<>();
             while (resultSet.next()) {
-                if (resultSet.getString("receiver_id").equals(userEmail)) {
-                    String fullname = resultSet.getString("fullname");
-                    String email = resultSet.getString("email");
-                    String mobile = resultSet.getString("mobile");
-                    String status = resultSet.getString("status");
-                    userRequests.add(new AutoShareRequest(fullname, email, mobile, status));
-                }
+                String fullname = resultSet.getString("fullname");
+                String email = resultSet.getString("email");
+                System.out.println(email);
+                String mobile = resultSet.getString("mobile");
+                String status = resultSet.getString("status");
+                userRequests.add(new AutoShareRequest(fullname, email, mobile, status));
             }
             // Closing the statement
             statement.close();
             // Closing the connection to the database
             connection.close();
-            req.setAttribute("autoShareUserRequests", userRequests);
-            req.getRequestDispatcher("/share_auto/auto_share_requests.jsp").forward(req, resp);
+            req.getSession().setAttribute("autoShareUserRequests", userRequests);
+            resp.sendRedirect("/share_auto/auto_share_requests.jsp");
         } catch (ClassNotFoundException | SQLException | IOException e) {
             throw new RuntimeException(e);
         }
