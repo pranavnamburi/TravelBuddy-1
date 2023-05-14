@@ -8,10 +8,6 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 import java.sql.*;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-
 @WebServlet(name="Auto_Share_Deregistration", value="/auto_share_de_reg")
 public class Auto_Share_Deregistration extends HttpServlet {
     final String host = "jdbc:mysql://db4free.net:3306/tb_base";
@@ -27,6 +23,9 @@ public class Auto_Share_Deregistration extends HttpServlet {
             String userEmail = (String) req.getSession().getAttribute("user_email");
             // Instantiating a new Prepared Statement (known as pre-compiled statement) to insert the acquired data
             PreparedStatement statement = connection.prepareStatement("DELETE FROM tb_base.autosharers WHERE email=?");
+            statement.setString(1, userEmail);
+            statement.executeUpdate();
+            statement = connection.prepareStatement("DELETE FROM tb_base.autosharerequests WHERE receiver_id=?");
             statement.setString(1, userEmail);
             statement.executeUpdate();
             // Closing the statement
