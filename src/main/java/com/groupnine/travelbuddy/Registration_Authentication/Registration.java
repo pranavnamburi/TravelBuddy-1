@@ -1,9 +1,11 @@
 package com.groupnine.travelbuddy.Registration_Authentication;
 
+import com.groupnine.travelbuddy.TBBase.TBBaseConnection;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.annotation.WebServlet;
+import org.apache.commons.configuration2.ex.ConfigurationException;
 
 import java.io.IOException;
 
@@ -22,9 +24,7 @@ public class Registration extends HttpServlet {
         DriverManager.setLoginTimeout(30);
         try {
             // Checking if JDBC driver for MySQL exist in the project
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            // Making a new connection to MySQL server
-            Connection connection = DriverManager.getConnection(host, userName, userPass);
+            Connection connection = new TBBaseConnection().getConnection();
             // Instantiating a new Prepared Statement (known as pre-compiled statement) to insert the acquired data
             PreparedStatement statement = connection.prepareStatement("INSERT INTO tb_base.users(fullname, email, alt_email, mobile, userpass) VALUES (?,?,?,?,?)");
             // Moving the data into the statement
@@ -40,7 +40,7 @@ public class Registration extends HttpServlet {
             // Closing the connection to the database
             connection.close();
             resp.sendRedirect("login_page.jsp");
-        } catch (ClassNotFoundException | SQLException | IOException e) {
+        } catch (ClassNotFoundException | SQLException | IOException | ConfigurationException e) {
             throw new RuntimeException(e);
         }
     }
