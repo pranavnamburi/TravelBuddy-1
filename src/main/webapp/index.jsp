@@ -16,6 +16,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8"/>
+  <link rel="icon" href="${pageContext.request.contextPath}/images/tb_favicon.ico" type="image/x-icon">
   <title>Travel Buddy</title>
   <style>
     html, body, .class_home {
@@ -104,22 +105,43 @@
       height: 50px;
       font-weight: bold;
       color: #1e7545;
-      background:linear-gradient(90deg, hsla(136, 48%, 54%, 1) 0%, hsla(58, 99%, 48%, 1) 100%);
+      background-image: url('images/tb_favicon.ico');
+      background-repeat: no-repeat;
+      background-size: 45px 45px;
+      background-color: #fcee16;
+      background-position: center;
+      padding-left: 20px;
       border-radius: 50%;
-      border: 4px solid #f4fa6a;
       margin: 15px;
       transform: translate(5%, 0%);
     }
     .class_menu_icon_in:hover, .class_menu_icon_out:hover {
-      color: white;
-      background:linear-gradient(90deg, hsla(136, 48%, 54%, 1) 0%, hsla(58, 99%, 48%, 1) 100%);
-      opacity: 75%;
+      background-image: url('images/tb_favicon.ico');
+      background-repeat: no-repeat;
+      padding-left: 20px;
+      background-size: 43px 43px;
+      background-position: center;
+      background-color: #fcee16;
     }
     .class_menu_icon_out {
       position: absolute;
+      box-shadow: 0 0 12px #005e4a;
+      border-color: transparent;
     }
     .class_menu_icon_in {
       position: relative;
+      /*box-shadow: 0 0 6px #318181;*/
+      border-color: transparent;
+      opacity: 75%;
+    }
+    .class_menu_icon_in:hover{
+      /*box-shadow: 0 0 1px #318181;*/
+      border-color: transparent;
+      opacity: 100%;
+    }
+    .class_menu_icon_out:hover {
+      box-shadow: 0 0 6px #005e4a;
+      border-color: transparent;
     }
     .class_contents {
       flex: 5;
@@ -251,21 +273,21 @@
   </style>
 </head>
 <body>
-<button class="class_menu_icon_out" id="menu_icon_out">!TB</button>
+<button class="class_menu_icon_out" id="menu_icon_out"></button>
 <div class="class_home">
   <div class="class_menu" id="menu">
     <div class="class_menu_bar_items_head">
-      <button class="class_menu_icon_in" id="menu_icon_in">!TB</button><br>
+      <button class="class_menu_icon_in" id="menu_icon_in"></button><br>
     </div>
     <div class="class_menu_bar_items_top">
       <button onclick="window.location.href='index.jsp';" class="class_home_nav">Home</button>
-      <button onclick="window.location.href='#';" class="class_profile">Profile</button><br>
-      <button onclick="window.location.href='webapp/share_auto/friends_pool.jsp';" class="class_friend_pool">Friend Pooling</button><br>
+      <button onclick="window.location.href='profile.jsp';" class="class_profile">Profile</button><br>
+      <button onclick="window.location.href='#';" class="class_friend_pool">Friend Pooling</button><br>
       <button onclick="window.location.href='co-traveller.jsp';" class="class_co_travel">Co-Traveller</button><br>
       <button onclick="window.location.href='auto_share.jsp';" class="class_share_auto">Auto Share</button><br>
     </div>
     <div class="class_menu_bar_items_bottom">
-      <button class="class_sos">SOS</button><br>
+      <button onclick="window.location.href='${pageContext.request.contextPath}/sos_button';" class="class_sos">SOS</button><br>
     </div>
   </div>
   <div class="class_contents">

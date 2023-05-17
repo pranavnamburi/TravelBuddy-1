@@ -1,4 +1,17 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+
+<%
+    response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+    response.setHeader("Pragma", "no-cache");
+    response.setDateHeader("Expires", 0);
+
+    if(session.getAttribute("logged_in") == null) {
+        session.setAttribute("logged_in", "false");
+    }
+    if(session.getAttribute("logged_in").equals("false")) {
+        response.sendRedirect("login_page.jsp");
+    }
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -41,10 +54,9 @@
             /*box-shadow: 1px 5px 3px 1px #557321;*/
             border-right: 1px solid black;
             padding-right: 8px;
-            flex: 1;
         }
         @keyframes slide_left {
-            0% {}
+            0% {transform: translate(0%, 0); flex: 1;}
             100% {transform: translate(-100%, 0); flex: 0;}
         }
         @keyframes slide_right {
@@ -93,7 +105,7 @@
             height: 50px;
             font-weight: bold;
             color: #1e7545;
-            background-image: url('/images/tb_favicon.ico');
+            background-image: url('images/tb_favicon.ico');
             background-repeat: no-repeat;
             background-size: 45px 45px;
             background-color: #fcee16;
@@ -104,7 +116,7 @@
             transform: translate(5%, 0%);
         }
         .class_menu_icon_in:hover, .class_menu_icon_out:hover {
-            background-image: url('/images/tb_favicon.ico');
+            background-image: url('images/tb_favicon.ico');
             background-repeat: no-repeat;
             padding-left: 20px;
             background-size: 43px 43px;
@@ -118,10 +130,12 @@
         }
         .class_menu_icon_in {
             position: relative;
+            /*box-shadow: 0 0 6px #318181;*/
             border-color: transparent;
             opacity: 75%;
         }
         .class_menu_icon_in:hover{
+            /*box-shadow: 0 0 1px #318181;*/
             border-color: transparent;
             opacity: 100%;
         }
@@ -133,61 +147,43 @@
             flex: 5;
             padding: 3%;
         }
-        .class_friend_pool_heading button {
-            border: none;
-            background-color: transparent;
-            color: white;
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
         }
-        .class_contents_share_auto img {
-            width: 300px;
-            height: 200px;
-            transform: translate(300%,-10%) ;
+        .profile-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
-        .class_contents_friend_pool img {
-            width: 300px;
-            height: 200px;
-            transform: translate(280%,-10%) ;
+        .profile-field {
+            margin-bottom: 15px;
         }
-        .class_contents_co_travel img {
-            width: 300px;
-            height: 200px;
-            transform: translate(280%,-10%) ;
+        .profile-field label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
         }
-        #adj{
-            position: absolute;
-            transform: translate(300%,200%);
-            background-color:#00bf8f;
-            width: 100px;
-            height: 30px;
-            font-style: italic;
-        }
-        #sdj{
-            position: absolute;
-            transform: translate(1100%,200%);
-            background-color:#c5f1e6;
-            width: 100px;
-            height: 30px;
-            font-style: italic;
+        .profile-field input[type="text"] {
+            width: 100%;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
         }
     </style>
 </head>
 <body>
 <button class="class_menu_icon_out" id="menu_icon_out"></button>
 <div class="class_home">
-    <div>
-        <button class="Button" id="adj" onclick="window.location.href= 'add_journey_form.jsp'">Add-journey</button>
-    </div>
-    <div>
-        <button id="sdj" onclick="window.location.href='search_traveller.jsp'">Search-Traveller</button>
-    </div>
     <div class="class_menu" id="menu">
         <div class="class_menu_bar_items_head">
             <button class="class_menu_icon_in" id="menu_icon_in"></button><br>
         </div>
         <div class="class_menu_bar_items_top">
-            <button onclick="window.location.href='practice.jsp';" class="class_home_nav">Home</button>
-            <button onclick="window.location.href='#';" class="class_profile">Profile</button><br>
-            <button onclick="window.location.href='friends_pool.jsp';" class="class_friend_pool">Friend Pooling</button><br>
+            <button onclick="window.location.href='index.jsp';" class="class_home_nav">Home</button>
+            <button onclick="window.location.href='profile.jsp';" class="class_profile">Profile</button><br>
+            <button onclick="window.location.href='webapp/share_auto/friends_pool.jsp';" class="class_friend_pool">Friend Pooling</button><br>
             <button onclick="window.location.href='co-traveller.jsp';" class="class_co_travel">Co-Traveller</button><br>
             <button onclick="window.location.href='auto_share.jsp';" class="class_share_auto">Auto Share</button><br>
         </div>
@@ -196,6 +192,25 @@
         </div>
     </div>
     <div class="class_contents">
+    <h1>View Profile</h1>
+    <div class="profile-container">
+        <div class="profile-field">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" value="John Doe" readonly>
+        </div>
+        <div class="profile-field">
+            <label for="email">Email ID:</label>
+            <input type="text" id="email" name="email" value="johndoe@example.com" readonly>
+        </div>
+        <div class="profile-field">
+            <label for="alt-email">Alternate Email ID:</label>
+            <input type="text" id="alt-email" name="alt-email" value="johndoe.alt@example.com" readonly>
+        </div>
+        <div class="profile-field">
+            <label for="phone">Phone Number:</label>
+            <input type="text" id="phone" name="phone" value="1234567890" readonly>
+        </div>
+    </div>
 
     </div>
 </div>
@@ -205,7 +220,7 @@
     let menu_icon_in = document.getElementById("menu_icon_in");
     menu.style.setProperty("animation", "0ms linear 0s slide_left forwards");
     menu_icon_in.onclick = ()  => {
-        menu.style.setProperty("animation", "300ms linear 0s slide_left forwards")
+        menu.style.setProperty("animation", "300ms linear 0s slide_left forwards");
     }
     menu_icon_out.onclick = () => {
         menu.style.setProperty("animation", "300ms linear 0s slide_right forwards");

@@ -9,6 +9,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <link rel="icon" href="${pageContext.request.contextPath}/images/tb_favicon.ico" type="image/x-icon">
     <title>Search Results</title>
     <style>
         .card {
