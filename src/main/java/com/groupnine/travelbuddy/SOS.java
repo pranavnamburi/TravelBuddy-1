@@ -1,5 +1,6 @@
 package com.groupnine.travelbuddy;
 
+import com.groupnine.travelbuddy.TBBase.TBBaseConnection;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -16,24 +17,21 @@ public class SOS extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String senderEmail = "andys_tmc@outlook.com";
         String senderPassword = "Paytmc@01";
-        String dbUrl = "jdbc:mysql://db4free.net:3306/tb_base";
-        String dbUser = "tbadmin";
-        String dbPassword = "admintravel123";
         String loginusermail = (String) req.getSession().getAttribute("user_email");
-        String recipientEmail="";
+        String recipientEmail=null;
         String loginusername=null;
         String loginusermobile=null;
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            Connection con = DriverManager.getConnection(dbUrl, dbUser, dbPassword);
-            PreparedStatement pstmt = con.prepareStatement("SELECT fullname,alt_email,mobile FROM users where email=?");
+            Connection con = new TBBaseConnection().getConnection();
+            PreparedStatement pstmt = con.prepareStatement("SELECT fullname,alt_email,mobile FROM bt_base.users where email=?");
             pstmt.setString(1,loginusermail);
             ResultSet rs = pstmt.executeQuery();
+            rs.next();
             loginusername = rs.getString("fullname");
             recipientEmail = rs.getString("alt_email");
             loginusermobile = rs.getString("mobile");
+            pstmt.close();
             con.close();
-            resp.sendRedirect("/co_traveller/display_journey.jsp");
         }catch (Exception e) {
             e.printStackTrace();
         }
