@@ -5,8 +5,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
 import java.io.IOException;
+import java.sql.*;
 import java.util.Properties;
 import javax.mail.*;
 import javax.mail.internet.*;
@@ -16,9 +16,27 @@ public class SOS extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String senderEmail = "andys_tmc@outlook.com";
         String senderPassword = "Paytmc@01";
-
-        // Recipient's email address
-        String recipientEmail = "saisasidhar07@gmail.com";
+        String dbUrl = "jdbc:mysql://db4free.net:3306/tb_base";
+        String dbUser = "tbadmin";
+        String dbPassword = "admintravel123";
+        String loginusermail = (String) req.getSession().getAttribute("user_email");
+        String recipientEmail="";
+        String loginusername=null;
+        String loginusermobile=null;
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection con = DriverManager.getConnection(dbUrl, dbUser, dbPassword);
+            PreparedStatement pstmt = con.prepareStatement("SELECT fullname,alt_email,mobile FROM users where email=?");
+            pstmt.setString(1,loginusermail);
+            ResultSet rs = pstmt.executeQuery();
+            loginusername = rs.getString("fullname");
+            recipientEmail = rs.getString("alt_email");
+            loginusermobile = rs.getString("mobile");
+            con.close();
+            resp.sendRedirect("/co_traveller/display_journey.jsp");
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
 
         // SMTP server details for Outlook/Office 365
         String host = "smtp.office365.com";
@@ -44,7 +62,7 @@ public class SOS extends HttpServlet {
             message.setFrom(new InternetAddress(senderEmail));
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipientEmail));
             message.setSubject("Alert from Travel Buddy!");
-            message.setText("Someone is in danger!");
+            message.setText(loginusername+" is in Emergency!\nContact: "+loginusermobile+"\n\n\nThis was an auto generated mail by Travel Buddy application in view of users safety\n\nRegards,\nTravel Buddy\n");
             // Send message
             Transport.send(message);
             System.out.println("Email sent successfully!");
