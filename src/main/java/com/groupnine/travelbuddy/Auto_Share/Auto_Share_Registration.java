@@ -23,7 +23,7 @@ public class Auto_Share_Registration extends HttpServlet{
             // Making a new connection to MySQL server
             Connection connection = new TBBaseConnection().getConnection();
             // Instantiating a new Prepared Statement (known as pre-compiled statement) to insert the acquired data
-            PreparedStatement statement1 = connection.prepareStatement("INSERT INTO tb_base.autosharers(email, place, no_of_vacs, time, date) VALUES (?,?,?,?,?)");
+            PreparedStatement statement1 = connection.prepareStatement("INSERT INTO bt_base.autosharers(email, place, no_of_vacs, time, date) VALUES (?,?,?,?,?)");
             // Moving the data into the statement
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
             System.out.println(req.getParameter("date"));
@@ -42,7 +42,7 @@ public class Auto_Share_Registration extends HttpServlet{
             // Closing the statement
             statement1.close();
             String userEmail = (String) req.getSession().getAttribute("user_email");
-            PreparedStatement statement2 = connection.prepareStatement("DELETE FROM tb_base.autosharerequests WHERE sender_id=? AND status=?");
+            PreparedStatement statement2 = connection.prepareStatement("DELETE FROM bt_base.autosharerequests WHERE sender_id=? AND status=?");
             statement2.setString(1, userEmail);
             statement2.setString(2, "pending");
             statement2.executeUpdate();

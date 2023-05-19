@@ -24,11 +24,11 @@ public class AutoShareRequestCancellation extends HttpServlet {
             // Making a new connection to MySQL server
             Connection connection = new TBBaseConnection().getConnection();
             // Instantiating a new Prepared Statement (known as pre-compiled statement) to insert the acquired data
-            PreparedStatement statement = connection.prepareStatement("DELETE FROM tb_base.autosharerequests WHERE receiver_id=? AND sender_id=?");
+            PreparedStatement statement = connection.prepareStatement("DELETE FROM bt_base.autosharerequests WHERE receiver_id=? AND sender_id=?");
             statement.setString(1, req.getParameter("user_for_req_cancel"));
             statement.setString(2, userEmail);
             statement.executeUpdate();
-            statement = connection.prepareStatement("UPDATE tb_base.autosharers SET no_of_vacs=no_of_vacs+1 WHERE email=?");
+            statement = connection.prepareStatement("UPDATE bt_base.autosharers SET no_of_vacs=no_of_vacs+1 WHERE email=?");
             statement.setString(1, req.getParameter("user_for_req_cancel"));
             statement.executeUpdate();
             // Closing the statement

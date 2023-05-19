@@ -26,7 +26,7 @@ public class Registration extends HttpServlet {
             // Checking if JDBC driver for MySQL exist in the project
             Connection connection = new TBBaseConnection().getConnection();
             // Instantiating a new Prepared Statement (known as pre-compiled statement) to insert the acquired data
-            PreparedStatement statement = connection.prepareStatement("INSERT INTO tb_base.users(fullname, email, alt_email, mobile, userpass) VALUES (?,?,?,?,?)");
+            PreparedStatement statement = connection.prepareStatement("INSERT INTO bt_base.users(fullname, email, alt_email, mobile, userpass) VALUES (?,?,?,?,?)");
             // Moving the data into the statement
             statement.setString(1, req.getParameter("fullname"));
             statement.setString(2, req.getParameter("email"));

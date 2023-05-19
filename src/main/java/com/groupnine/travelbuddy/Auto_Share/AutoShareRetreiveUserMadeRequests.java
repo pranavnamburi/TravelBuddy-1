@@ -22,7 +22,7 @@ public class AutoShareRetreiveUserMadeRequests extends HttpServlet {
             // Making a new connection to MySQL server
             Connection connection = new TBBaseConnection().getConnection();
             // Instantiating a new Prepared Statement (known as pre-compiled statement) to insert the acquired data
-            PreparedStatement statement = connection.prepareStatement("SELECT receiver_id, status from tb_base.autosharerequests where sender_id=?", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            PreparedStatement statement = connection.prepareStatement("SELECT receiver_id, status from bt_base.autosharerequests where sender_id=?", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
             // Moving the data into the statement
             statement.setString(1, userEmail);
             ResultSet resultSet = statement.executeQuery();

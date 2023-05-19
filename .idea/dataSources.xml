@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="DB4FREE" uuid="95861108-5d55-44c3-bb28-8ddca0c28740">
+    <data-source source="LOCAL" name="DB4FREE" uuid="2b1c1012-13d1-46a8-a057-48826cddff55">
       <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://db4free.net:3306/</jdbc-url>
+      <jdbc-url>jdbc:mysql://db4free.net:3306/bt_base</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
   </component>
