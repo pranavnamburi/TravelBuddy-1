@@ -1,5 +1,4 @@
-<jsp:useBean id="rs" scope="request" type="java.sql.ResultSet"/>
-<%@ page import="java.sql.ResultSet" %>
+<%@ page import="java.sql.ResultSet"%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <jsp:include page="/profile-update-password"/>
 <%
@@ -13,7 +12,7 @@
     if(session.getAttribute("logged_in").equals("false")) {
         response.sendRedirect("login_page.jsp");
     }
-    rs = (ResultSet) session.getAttribute("rs");
+    ResultSet rs = (ResultSet) session.getAttribute("rs");
 
 %>
 <!DOCTYPE html>
