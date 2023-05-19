@@ -15,8 +15,8 @@ import javax.mail.internet.*;
 public class SOS extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String senderEmail = "andys_tmc@outlook.com";
-        String senderPassword = "Paytmc@01";
+        String senderEmail = "buddy.travel@outlook.com";
+        String senderPassword = "buddy_travel_srmap";
         String loginusermail = (String) req.getSession().getAttribute("user_email");
         String recipientEmail=null;
         String loginusername=null;
