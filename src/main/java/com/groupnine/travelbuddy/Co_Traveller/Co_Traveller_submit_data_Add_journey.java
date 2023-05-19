@@ -24,7 +24,7 @@ public class Co_Traveller_submit_data_Add_journey extends HttpServlet{
         try {
             Class.forName("com.mysql.jdbc.Driver");
             Connection con = DriverManager.getConnection(dbUrl, dbUser, dbPassword);
-            PreparedStatement pst = con.prepareStatement("INSERT INTO tb_base.Copassengers(Mail,Transportation,Serviceno,Fromplace,Toplace,Date,Time) VALUES (?,?, ?, ?, ?, ?, ?)");
+            PreparedStatement pst = con.prepareStatement("INSERT INTO bt_base.Copassengers(Mail,Transportation,Serviceno,Fromplace,Toplace,Date,Time) VALUES (?,?, ?, ?, ?, ?, ?)");
             pst.setString(1, (String) req.getSession().getAttribute("user_email"));
             pst.setString(2, req.getParameter("transportation"));
             pst.setString(3, req.getParameter("service_number"));

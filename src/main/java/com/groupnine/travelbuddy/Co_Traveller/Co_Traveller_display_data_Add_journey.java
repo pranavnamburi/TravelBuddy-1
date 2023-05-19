@@ -25,7 +25,7 @@ public class Co_Traveller_display_data_Add_journey extends HttpServlet{
         try {
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(dbUrl, dbUser, dbPassword);
-            String query = "SELECT * FROM Copassengers";
+            String query = "SELECT * FROM bt_base.Copassengers";
             PreparedStatement pstmt = conn.prepareStatement(query);
             ResultSet rs = pstmt.executeQuery();
 

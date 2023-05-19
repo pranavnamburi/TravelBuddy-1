@@ -22,7 +22,7 @@ public class Auto_Share_Retreive_Data extends HttpServlet {
             final String userEmail = (String) req.getSession().getAttribute("user_email");
             req.getSession().setAttribute("isAutoShareRegistered", false);
             Connection connection = new TBBaseConnection().getConnection();
-            PreparedStatement statement = connection.prepareStatement("SELECT u.fullname, u.email, u.mobile, a.place, a.no_of_vacs, a.date, a.time FROM tb_base.autosharers a JOIN tb_base.users u ON u.email = a.email WHERE NOT a.no_of_vacs = 0");
+            PreparedStatement statement = connection.prepareStatement("SELECT u.fullname, u.email, u.mobile, a.place, a.no_of_vacs, a.date, a.time FROM bt_base.autosharers a JOIN bt_base.users u ON u.email = a.email WHERE NOT a.no_of_vacs = 0");
             ResultSet resultSet = statement.executeQuery();
             ArrayList<AutoShareInfo> autoShareInfos = new ArrayList<>();
             while(resultSet.next()) {

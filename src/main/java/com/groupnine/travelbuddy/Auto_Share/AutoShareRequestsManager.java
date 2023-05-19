@@ -23,7 +23,7 @@ public class AutoShareRequestsManager extends HttpServlet {
             // Making a new connection to MySQL server
             Connection connection = new TBBaseConnection().getConnection();
             // Instantiating a new Prepared Statement (known as pre-compiled statement) to insert the acquired data
-            PreparedStatement statement = connection.prepareStatement("INSERT INTO tb_base.autosharerequests(sender_id, receiver_id, status) VALUES (?,?,?)");
+            PreparedStatement statement = connection.prepareStatement("INSERT INTO bt_base.autosharerequests(sender_id, receiver_id, status) VALUES (?,?,?)");
             // Moving the data into the statement
             statement.setString(1, (String) req.getSession().getAttribute("user_email"));
             statement.setString(2, req.getParameter("email"));
