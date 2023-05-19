@@ -19,10 +19,10 @@ public class Auto_Share_Deregistration extends HttpServlet {
             // Checking if JDBC driver for MySQL exist in the project
             Connection connection = new TBBaseConnection().getConnection();
             // Instantiating a new Prepared Statement (known as pre-compiled statement) to insert the acquired data
-            PreparedStatement statement = connection.prepareStatement("DELETE FROM tb_base.autosharers WHERE email=?");
+            PreparedStatement statement = connection.prepareStatement("DELETE FROM bt_base.autosharers WHERE email=?");
             statement.setString(1, userEmail);
             statement.executeUpdate();
-            statement = connection.prepareStatement("DELETE FROM tb_base.autosharerequests WHERE receiver_id=?");
+            statement = connection.prepareStatement("DELETE FROM bt_base.autosharerequests WHERE receiver_id=?");
             statement.setString(1, userEmail);
             statement.executeUpdate();
             // Closing the statement

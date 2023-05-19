@@ -25,7 +25,7 @@ public class Authentication  extends HttpServlet {
             // Making a new connection to MySQL server
             Connection connection = new TBBaseConnection().getConnection();
             // Instantiating a new Prepared Statement (known as pre-compiled statement) to insert the acquired data
-            PreparedStatement statement = connection.prepareStatement("SELECT email, userpass FROM tb_base.users");
+            PreparedStatement statement = connection.prepareStatement("SELECT email, userpass FROM bt_base.users");
             ResultSet resultSet = statement.executeQuery();
             while(resultSet.next() && !userValid) {
                 boolean emailFound = acquiredEmail.equals(resultSet.getString("email"));

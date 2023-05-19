@@ -23,7 +23,7 @@ public class Co_Traveller_display_data_search_traveller extends HttpServlet{
         if (searchQuery != null && !searchQuery.isEmpty()) {
 
             // Define the SQL query to search for matching passengers
-            String sql = "SELECT Fromplace,Toplace FROM Copassengers?";
+            String sql = "SELECT Fromplace,Toplace FROM bt_base.Copassengers?";
 
             // Create a database connection and prepare the statement
             String dbUrl = "jdbc:mysql://db4free.net:3306/tb_base";

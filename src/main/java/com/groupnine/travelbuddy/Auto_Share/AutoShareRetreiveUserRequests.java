@@ -22,7 +22,7 @@ public class AutoShareRetreiveUserRequests extends HttpServlet {
             final String userEmail = (String) req.getSession().getAttribute("user_email");
             Connection connection = new TBBaseConnection().getConnection();
             // Instantiating a new Prepared Statement (known as pre-compiled statement) to insert the acquired data
-            PreparedStatement statement = connection.prepareStatement("SELECT u.fullname, u.email, u.mobile, a.status FROM tb_base.autosharerequests a JOIN tb_base.users u ON a.sender_id=u.email WHERE a.receiver_id=?");
+            PreparedStatement statement = connection.prepareStatement("SELECT u.fullname, u.email, u.mobile, a.status FROM bt_base.autosharerequests a JOIN bt_base.users u ON a.sender_id=u.email WHERE a.receiver_id=?");
             // Moving the data into the statement
             statement.setString(1, userEmail);
             ResultSet resultSet = statement.executeQuery();

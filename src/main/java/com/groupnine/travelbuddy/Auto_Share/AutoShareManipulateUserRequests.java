@@ -26,11 +26,11 @@ public class AutoShareManipulateUserRequests extends HttpServlet {
             // Making a new connection to MySQL server
             Connection connection = new TBBaseConnection().getConnection();
             if (webUserRequestStatus.equals("accept")) {
-                query1 = "UPDATE tb_base.autosharerequests SET status='accepted' WHERE sender_id=? AND receiver_id=?";
-                query2 = "UPDATE tb_base.autosharers SET no_of_vacs=no_of_vacs-1 WHERE email=?";
-                query3 = "DELETE FROM tb_base.autosharerequests WHERE sender_id=? AND status='pending'";
+                query1 = "UPDATE bt_base.autosharerequests SET status='accepted' WHERE sender_id=? AND receiver_id=?";
+                query2 = "UPDATE bt_base.autosharers SET no_of_vacs=no_of_vacs-1 WHERE email=?";
+                query3 = "DELETE FROM bt_base.autosharerequests WHERE sender_id=? AND status='pending'";
             } else {
-                query1 = "DELETE FROM tb_base.autosharerequests WHERE sender_id=? AND receiver_id=?";
+                query1 = "DELETE FROM bt_base.autosharerequests WHERE sender_id=? AND receiver_id=?";
                 query2 = null;
                 query3 = null;
             }
