@@ -220,7 +220,7 @@
   </div>
   <div class="class_contents">
     <div class="class_contents_form">
-      <h1>Travel Booking Form</h1>
+      <h1>Booking Form</h1>
       <form>
         <div class="neumorphic-container">
           <div class="neumorphic-input">

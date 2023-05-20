@@ -27,7 +27,7 @@ public class host_servlet extends HttpServlet{
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection connection = DriverManager.getConnection(dbURL, user, password);
-            PreparedStatement statement = connection.prepareStatement("INSERT INTO host_details VALUES (?,?,?,?,?,?,?,?)");
+            PreparedStatement statement = connection.prepareStatement("INSERT INTO bt_base.friendpoolhosts VALUES (?,?,?,?,?,?,?,?)");
             statement.setString(1, req.getParameter("name"));
             statement.setString(2, req.getParameter("destination"));
             statement.setString(3, req.getParameter("from"));
