@@ -10,6 +10,7 @@
         <entry key="file://$PROJECT_DIR$/src/main/webapp/login_page.jsp" value="file://$PROJECT_DIR$/src/main/webapp" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/profile.jsp" value="file://$PROJECT_DIR$/src/main/webapp" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/share_auto/auto_share.jsp" value="file://$PROJECT_DIR$/src/main/webapp/share_auto" />
+        <entry key="file://$PROJECT_DIR$/src/main/webapp/share_auto/auto_share_registration.jsp" value="file://$PROJECT_DIR$/src/main/webapp/share_auto" />
       </map>
     </option>
   </component>
