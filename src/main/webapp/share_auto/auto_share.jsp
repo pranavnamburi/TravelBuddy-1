@@ -7,10 +7,13 @@
     System.out.println("Start");
 %>
 <jsp:include page="/auto_share_retreive_data"/>
+
 <%
     System.out.println("Start of another module");
 %>
+
 <jsp:include page="/auto_share_retreive_user_made_requests"/>
+
 <%
     response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
     response.setHeader("Pragma", "no-cache");
