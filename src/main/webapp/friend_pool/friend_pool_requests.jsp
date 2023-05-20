@@ -1,5 +1,9 @@
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="com.groupnine.travelbuddy.Friend_Pool.FriendPoolRequest" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+<jsp:include page="/friend_pool_retreive_user_requests"/>
 <%
   response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
   response.setHeader("Pragma", "no-cache");
@@ -8,12 +12,13 @@
   if(session.getAttribute("logged_in") == null) {
     session.setAttribute("logged_in", "false");
   }
-  if(session.getAttribute("logged_in").equals("false")) {
-    response.sendRedirect("login_page.jsp");
+  ArrayList<FriendPoolRequest> friendPoolUserRequests = (ArrayList<FriendPoolRequest>) request.getSession().getAttribute("friendPoolUserRequests");
+  for(FriendPoolRequest a : friendPoolUserRequests) {
+    System.out.println(a.getFullname() + " " + a.getMobile());
   }
 %>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
   <meta charset="UTF-8"/>
   <link rel="icon" href="${pageContext.request.contextPath}/images/tb_favicon.ico" type="image/x-icon">
@@ -54,9 +59,10 @@
       /*box-shadow: 1px 5px 3px 1px #557321;*/
       border-right: 1px solid black;
       padding-right: 8px;
+      flex: 1;
     }
     @keyframes slide_left {
-      0% {transform: translate(0%, 0); flex: 1;}
+      0% {}
       100% {transform: translate(-100%, 0); flex: 0;}
     }
     @keyframes slide_right {
@@ -105,7 +111,7 @@
       height: 50px;
       font-weight: bold;
       color: #1e7545;
-      background-image: url('images/tb_favicon.ico');
+      background-image: url('/images/tb_favicon.ico');
       background-repeat: no-repeat;
       background-size: 45px 45px;
       background-color: #fcee16;
@@ -116,7 +122,7 @@
       transform: translate(5%, 0%);
     }
     .class_menu_icon_in:hover, .class_menu_icon_out:hover {
-      background-image: url('images/tb_favicon.ico');
+      background-image: url('/images/tb_favicon.ico');
       background-repeat: no-repeat;
       padding-left: 20px;
       background-size: 43px 43px;
@@ -145,130 +151,98 @@
     }
     .class_contents {
       flex: 5;
-      padding: 3%;
+      padding-left: 1%;
+      padding-right: 5%;
     }
-    .class_contents_friend_pool, .class_contents_co_travel, .class_contents_share_auto {
+    .class_contents_title {
+      text-align: center;
+      font-weight: bolder;
+      color: #1e7545;
+      height: 5px;
       width: 100%;
-      height: 210px;
-      margin: 10px;
-      position: relative;
-      border-radius: 45px;
-      box-sizing: border-box;
-      translate: 0 -8%;
+      background-color: #fff;
+      padding: 15px 20px 25px 20px;
+      border-radius: 5px;
+      margin: 5px auto;
+      translate: 0 200%;
     }
-    .class_contents_friend_pool {
-      background: #59C173; /* fallback for old browsers*/
-      background: -webkit-linear-gradient(to right, #5D26C1, #a17fe0, #59C173);   /*Chrome 10-25, Safari 5.1-6 8*/
-      background: linear-gradient(to right, #5D26C1, #a17fe0, #59C173);/* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
-    }
-    .class_contents_co_travel {
-      background: #59C173;  /* fallback for old browsers */
-      background: -webkit-linear-gradient(to right, #5D26C1, #a17fe0, #59C173);  /* Chrome 10-25, Safari 5.1-6 */
-      background: linear-gradient(to right, #5D26C1, #a17fe0, #59C173); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-    }
-    .class_contents_share_auto {
-      background: #59C173;  /* fallback for old browsers */
-      background: -webkit-linear-gradient(to right, #5D26C1, #a17fe0, #59C173);  /* Chrome 10-25, Safari 5.1-6 */
-      background: linear-gradient(to right, #5D26C1, #a17fe0, #59C173); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-    }
-    .hide{
-      display: block;
-      border:white;
-      color: white;
-    }
-    .Button{
-      background-color: transparent;
-      color: white;
-      border: none;
-    }
-    .class_friend_pool_heading .hide{
-      display: none;
-      position: relative;
-      color: white;
+    .class_contents_requests_container {
+      height: 50%;
       width: 100%;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 5px;
+      margin: 0 auto;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      translate: 0 22%;
+      overflow-y: scroll;
+      overflow-x: hidden;
     }
-    .class_co_travel_heading .hide{
-      display: none;
+    .class_contents_requests_container::-webkit-scrollbar {
+      width: 2px;
+      background-color: white;
+    }
+    .class_contents_requests_container::-webkit-scrollbar-thumb {
+      background-color: green;
+      border-radius: 5px;
+    }
+    .class_contents_request {
       position: relative;
-      color: white;
       width: 100%;
+      height: 15%;
+      background-color: white;
+      border-radius: 2px;
+      border: 1px solid whitesmoke;
+      box-shadow: 1px 1px 4px #556270;
+      display: flex;
+      align-content: center;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 10px;
     }
-    .class_share_auto_heading .hide{
-      display: none;
+    .class_contents_request_name {
       position: relative;
-      color: white;
-      width: 100%;
+      height: 20px;
+      flex: 3;
+      left: 3%;
+      margin-top: -25px;
     }
-    .class_friend_pool_heading:hover .hide{
-      display: block;
+    .class_contents_request_email {
       position: relative;
-      color: white;
-      width: 100%;
+      height: 20px;
+      flex: 4;
+      left: 3%;
+      margin-top: -25px;
     }
-    .class_co_travel_heading:hover .hide {
-      display: block;
+    .class_contents_request_mobile {
       position: relative;
-      color: white;
-      width: 100%;
+      height: 20px;
+      flex: 3;
+      margin-top: -25px;
     }
-    .class_share_auto_heading:hover .hide {
-      display: block;
+    .class_contents_request_accept {
       position: relative;
-      color: white;
-      width: 100%;
+      flex: 1;
     }
-    .class_friend_pool_heading {
-      display: block;
+    .class_contents_request_reject {
       position: relative;
-      translate: 100px 30px;
-      color: white;
-      background-color: transparent;
-      border: none;
-      height: 30px;
+      flex: 1;
     }
-    .class_co_travel_heading{
-      display: block;
+    .class_contents_request_text{
       position: relative;
-      translate: 100px 30px;
+      flex: 1;
+    }
+    .class_contents_request_accept a, .class_contents_request_reject a {
+      border-radius: 15px;
+      border: 2px solid #00b700;
+      background-color: #0cd226;
       color: white;
-      background-color: transparent;
-      border: none;
-      height: 30px;
-    }
-    .class_share_auto_heading{
-      display: block;
-      position: relative;
-      translate: 100px 30px;
-      color: white;
-      background-color: transparent;
-      border: none;
-      height: 30px;
-    }
-    .class_friend_pool_heading button {
-      border: none;
-      background-color: transparent;
-      color: white;
-    }
-    .class_contents_share_auto img {
-      width: 300px;
-      height: 200px;
-      transform: translate(300%,-10%) ;
-    }
-    .class_contents_friend_pool img {
-      width: 300px;
-      height: 200px;
-      transform: translate(280%,-10%) ;
-    }
-    .class_contents_co_travel img {
-      width: 300px;
-      height: 200px;
-      transform: translate(280%,-10%) ;
-    }
-    .content_horizontal {
-      position: relative;
-      width: 50%;
-      translate: -50% -10px;
+      height: 20px;
+      width: 75px;
+      text-decoration: none;
+      display: inline-block;
+      text-align: center;
+      line-height: 20px;
     }
   </style>
 </head>
@@ -280,50 +254,38 @@
       <button class="class_menu_icon_in" id="menu_icon_in"></button><br>
     </div>
     <div class="class_menu_bar_items_top">
-      <button onclick="window.location.href='index.jsp';" class="class_home_nav">Home</button>
-      <button onclick="window.location.href='profile.jsp';" class="class_profile">Profile</button><br>
-      <button onclick="window.location.href='/friend_pool/friend_pool.jsp';" class="class_friend_pool">Friend Pooling</button><br>
+      <button onclick="window.location.href='/../index.jsp';" class="class_home_nav">Home</button>
+      <button onclick="window.location.href='/../profile.jsp';" class="class_profile">Profile</button><br>
+      <button onclick="window.location.href='#';" class="class_friend_pool">Friend Pooling</button><br>
       <button onclick="window.location.href='/co_traveller/co-traveller.jsp';" class="class_co_travel">Co-Traveller</button><br>
       <button onclick="window.location.href='/share_auto/auto_share.jsp';" class="class_share_auto">Auto Share</button><br>
     </div>
     <div class="class_menu_bar_items_bottom">
-      <button onclick="window.location.href='${pageContext.request.contextPath}/sos_button';" class="class_sos">SOS</button><br>
+      <button class="class_sos">SOS</button><br>
     </div>
   </div>
   <div class="class_contents">
-    <div class="class_contents_friend_pool">
-      <div class="class_friend_pool_heading">
-        <button class="Button" onclick="window.location.href='friend_pool/friend_pool.jsp';"><h1>Friend Pooling</h1></button>
-        <hr class="content_horizontal">
-        <div class="hide">this is hidden section</div>
-      </div>
-      <div>
-        <img src="${pageContext.request.contextPath}/images/friend_pool.png" alt="">
-
-      </div>
+    <div class="class_contents_title">
+      Pool Requests
     </div>
-    <div class="class_contents_co_travel">
-      <div class="class_co_travel_heading">
-        <button class="Button" onclick="window.location.href='co_traveller/display_journey.jsp';"><h1>Co-Traveller</h1></button>
-        <hr class="content_horizontal">
-        <div class="hide">this is hidden section</div>
-      </div>
-      <div>
-        <img src="${pageContext.request.contextPath}/images/co-traveller_img.png" alt="">
-      </div>
-    </div>
-    <div class="class_contents_share_auto">
-      <div class="class_share_auto_heading">
-        <button class="Button" onclick="window.location.href='share_auto/auto_share.jsp';"><h1>Auto Share</h1></button>
-        <hr class="content_horizontal">
-        <div class="hide">this is hidden section</div>
-      </div>
-      <div>
-        <img src="${pageContext.request.contextPath}/images/share_auto_img_1.png" alt="">
-      </div>
-      <div>
-        <img src="${pageContext.request.contextPath}/images/share_auto_img2.png" style="width: 240px; height: 240px; transform: translate(310%,-98%);" alt="">
-      </div>
+    <div class="class_contents_requests_container">
+      <c:forEach var="data" items="${friendPoolUserRequests}">
+        <div class="class_contents_request">
+          <div class="class_contents_request_name"><span style="font-weight: bold">Name</span><br>${data.getFullname()}</div>
+          <div class="class_contents_request_email"><span style="font-weight: bold">Email</span><br>${data.getEmail()}</div>
+          <div class="class_contents_request_mobile"><span style="font-weight: bold">Mobile</span><br>${data.getMobile()}</div>
+          <c:set var="dataStatus" value="${data.getStatus()}"/>
+          <c:choose>
+            <c:when test="${dataStatus == 'pending'}">
+              <div class="class_contents_request_accept"><a href="${pageContext.request.contextPath}/friend_pool_manipulate_user_request?status=accept&other_user_email=${data.getEmail()}">Accept</a></div>
+              <div class="class_contents_request_reject"><a href="${pageContext.request.contextPath}/friend_pool_manipulate_user_request?status=reject&other_user_email=${data.getEmail()}">Reject</a></div>
+            </c:when>
+            <c:otherwise>
+              <div class="class_contents_request_text"><span style="color:limegreen">Joined</span></div>
+            </c:otherwise>
+          </c:choose>
+        </div>
+      </c:forEach>
     </div>
   </div>
 </div>
@@ -333,7 +295,7 @@
   let menu_icon_in = document.getElementById("menu_icon_in");
   menu.style.setProperty("animation", "0ms linear 0s slide_left forwards");
   menu_icon_in.onclick = ()  => {
-    menu.style.setProperty("animation", "300ms linear 0s slide_left forwards");
+    menu.style.setProperty("animation", "300ms linear 0s slide_left forwards")
   }
   menu_icon_out.onclick = () => {
     menu.style.setProperty("animation", "300ms linear 0s slide_right forwards");

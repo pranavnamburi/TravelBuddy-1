@@ -17,7 +17,6 @@ import jakarta.servlet.http.HttpServlet;
 @WebServlet(name = "HOST", value = "/host_details")
 public class host_servlet extends HttpServlet{
 
-    //database name
     private String dbURL = "jdbc:mysql://localhost:3306/TravelBuddy";
     private String user = "root";
     private String password = "shizukachan#18";

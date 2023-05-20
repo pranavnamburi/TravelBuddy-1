@@ -158,7 +158,7 @@
 
     .neumorphic-container {
       display: grid;
-      grid-gap: 20px;
+      grid-gap: 10px;
 
     }
 
@@ -191,7 +191,7 @@
       border-radius: 3px;
       cursor: pointer;
       font-size: 16px;
-      margin-top: 40px; /* Add space between contact and submit button */
+      margin-top: 20px; /* Add space between contact and submit button */
       margin-bottom: 20px;
     }
 
@@ -221,12 +221,8 @@
   <div class="class_contents">
     <div class="class_contents_form">
       <h1>Booking Form</h1>
-      <form>
+      <form action="${pageContext.request.contextPath}/friend_pool_reg" method="post">
         <div class="neumorphic-container">
-          <div class="neumorphic-input">
-            <label for="name">Name:</label>
-            <input type="text" id="name" name="name" required>
-          </div>
           <div class="neumorphic-input">
             <label for="destination">Destination:</label>
             <input type="text" id="destination" name="destination" required>
@@ -244,8 +240,16 @@
             </select>
           </div>
           <div class="neumorphic-input">
-            <label for="datetime">Time and Date:</label>
-            <input type="datetime-local" id="datetime" name="datetime" required>
+            <label for="capacity">From:</label>
+            <input type="number" id="capacity" name="capacity" required>
+          </div>
+          <div class="neumorphic-input">
+            <label for="date">Date:</label>
+            <input type="date" id="date" name="date" required>
+          </div>
+          <div class="neumorphic-input">
+            <label for="time">Time:</label>
+            <input type="time" id="time" name="time" required>
           </div>
           <div class="neumorphic-input">
             <label for="email">Email:</label>
