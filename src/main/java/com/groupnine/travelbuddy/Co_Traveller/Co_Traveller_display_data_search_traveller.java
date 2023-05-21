@@ -1,73 +1,81 @@
 package com.groupnine.travelbuddy.Co_Traveller;
 
-import java.io.IOException;
-import java.sql.*;
-import jakarta.servlet.RequestDispatcher;
+import com.groupnine.travelbuddy.TBBase.TBBaseConnection;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.annotation.WebServlet;
+import org.apache.commons.configuration2.ex.ConfigurationException;
 
+import java.io.IOException;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @WebServlet(name = "coTravellerSearchTraveller", value = "/co-traveller-search-traveller")
-public class Co_Traveller_display_data_search_traveller extends HttpServlet{
-    // Attributes of Server-url, Host-name, and Host-pass to access the database
+public class Co_Traveller_display_data_search_traveller extends HttpServlet {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String destination = request.getParameter("Transportation");
+        String date = request.getParameter("Date");
+        String time = request.getParameter("Time");
 
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // Perform search operation based on the form inputs
+        List<Co_Traveller_Info> coTravelersList = searchCoTravelers(destination, date, time);
 
-        // Get the search query parameter from the request
-        String searchQuery = request.getParameter("query");
+        request.setAttribute("coTravelersList", coTravelersList);
+        request.getRequestDispatcher("/webapp/co_traveller/display_search.jsp").forward(request, response);
+    }
 
-        // Check if the search query parameter is not empty or null
-        if (searchQuery != null && !searchQuery.isEmpty()) {
+    // Method to perform search operation based on the form inputs
+    private List<Co_Traveller_Info> searchCoTravelers(String destination, String date, String time) {
+        // Assuming you have a database connection and query implementation
 
-            // Define the SQL query to search for matching passengers
-            String sql = "SELECT Fromplace,Toplace FROM bt_base.Copassengers?";
+        // Construct the SQL query with the search criteria
+        String query = "SELECT Transportation,Serviceno,Name FROM Copassengers WHERE Toplace = ? AND Date = ? AND Time = ?";
+        // Execute the query and retrieve the results
+        List<Co_Traveller_Info> coTravelersList = new ArrayList<>();
+        try (
+                Connection connection = new TBBaseConnection().getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, destination);
+            statement.setString(2, date);
+            statement.setString(3, time);
 
-            // Create a database connection and prepare the statement
-            String dbUrl = "jdbc:mysql://db4free.net:3306/tb_base";
-            String dbUser = "tbadmin";
-            String dbPassword = "admintravel123";
-            Connection connection = null;
-            PreparedStatement statement = null;
-            ResultSet resultSet = null;
-            try {
-                connection = DriverManager.getConnection(dbUrl, dbUser, dbPassword);
-                statement = connection.prepareStatement(sql);
+            ResultSet resultSet = statement.executeQuery();
 
-                // Set the search parameter in the prepared statement
-                String searchPattern = "%" + searchQuery + "%";
-                statement.setString(1, searchPattern);
-
-                // Execute the SQL query
-                resultSet = statement.executeQuery();
-
-                // Store the search results in the request attribute
-                request.setAttribute("searchResults", resultSet);
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            } finally {
-                // Close the database resources
-                try {
-                    if (resultSet != null) {
-                        resultSet.close();
-                    }
-                    if (statement != null) {
-                        statement.close();
-                    }
-                    if (connection != null) {
-                        connection.close();
-                    }
-                } catch (SQLException ex) {
-                    ex.printStackTrace();
-                }
+            while (resultSet.next()) {
+                // Retrieve data from the result set and create CoTraveler objects
+                String name = resultSet.getString("Name");
+                String dest = resultSet.getString("Toplace");
+                String Date = resultSet.getString("Date");
+                String Time = resultSet.getString("Time");
+                Co_Traveller_Info coTraveler = new Co_Traveller_Info(name, dest,Date,Time);
+                coTravelersList.add(coTraveler);
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Handle the exception appropriately
+        } catch (ConfigurationException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
 
-        // Forward the request to the search results page
-        RequestDispatcher view = request.getRequestDispatcher("search_traveller.jsp");
-        view.forward(request, response);
+        return coTravelersList;
     }
+
+    // Method to get the database connection
+//    private Connection getConnection() throws SQLException {
+//        // Assuming you have a method to establish the database connection
+//        // Replace the placeholder with your actual database connection logic
+//
+//        String url = "jdbc:mysql://db4free.net:3306/bt_base";
+//        String username = "bt_admin";
+//        String password = "buddy_travel_srmap";
+//
+//        return DriverManager.getConnection(url, username, password);
+//    }
 }
+
 

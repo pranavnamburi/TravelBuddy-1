@@ -18,9 +18,9 @@ public class Co_Traveller_submit_data_Add_journey extends HttpServlet{
     // Attributes of Server-url, Host-name, and Host-pass to access the database
 @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
-    String dbUrl = "jdbc:mysql://db4free.net:3306/tb_base";
-    String dbUser = "tbadmin";
-    String dbPassword = "admintravel123";
+    String dbUrl = "jdbc:mysql://db4free.net:3306/bt_base";
+    String dbUser = "bt_admin";
+    String dbPassword = "buddy_travel_srmap";
         try {
             Class.forName("com.mysql.jdbc.Driver");
             Connection con = DriverManager.getConnection(dbUrl, dbUser, dbPassword);

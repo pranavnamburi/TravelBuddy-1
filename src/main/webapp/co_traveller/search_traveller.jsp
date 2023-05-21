@@ -1,4 +1,9 @@
-<%@ page import="jakarta.resource.cci.ResultSet" %><%--
+<%@ page import="jakarta.resource.cci.ResultSet" %>
+<%@ page import="com.groupnine.travelbuddy.Co_Traveller.Co_Traveller_Info" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="java.util.List" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %><%--
 <%--
   Created by IntelliJ IDEA.
   User: DELL
@@ -6,7 +11,7 @@
   Time: 7:32 PM
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
 <html lang="en">
 <head>
     <meta charset="UTF-8"/>
@@ -179,13 +184,14 @@
 </head>
 <body>
 <div class="class_home">
-    <form action="${pageContext.request.contextPath}/co-traveller-search-traveller" method="GET">
-        <label for="source">Source:</label>
-        <input type="text" id="source" name="source"><br><br>
-        <label for="destination">Destination:</label>
-        <input type="text" id="destination" name="destination"><br><br>
-        <label for="transport">Transport Mode:</label>
+    <div class="class_contents_form">
+    <form action="z${pageContext.request.contextPath}/co-traveller-search-traveller" method="GET">
+        <label for="transport">Transportation:</label>
         <select id="transport" name="transport">
+        <label for="source">Fromplace:</label>
+        <input type="text" id="source" name="source"><br><br>
+        <label for="destination">Toplace:</label>
+        <input type="text" id="destination" name="destination"><br><br>
             <option value="bus">Bus</option>
             <option value="train">Train</option>
         </select><br><br>
@@ -193,33 +199,28 @@
         <input type="date" id="date" name="date"><br><br>
         <label for="time">Time:</label>
         <input type="time" id="time" name="time"><br><br>
+        <label for="Name">Name</label>
+        <input type="text" id="Name" name="Name">
         <input type="submit" value="Submit">
     </form>
-    <div>
-        <% ResultSet rs = (ResultSet)   request.getAttribute("searchResults"); %>
-        <% if (rs != null && rs.next()) { %>
-        <p>Matching passengers:</p>
-        <% do { %>
-        <div class="card">
-            <h2><%= rs.getString("name") %></h2>
-            <p><strong>Source:</strong> <%= rs.getString("source") %></p>
-            <p><strong>Destination:</strong> <%= rs.getString("destination") %></p>
-            <p><strong>Transport Mode:</strong> <%= rs.getString("transport") %></p>
-            <p><strong>Date:</strong> <%= rs.getString("date") %></p>
-            <p><strong>Time:</strong> <%= rs.getString("time") %></p>
-            <p><strong>Registration Number:</strong> <%= rs.getString("registration") %></p>
-            <p><strong>Branch:</strong> <%= rs.getString("branch") %></p>
-        </div>
-        <% } while (rs.next()); %>
-        <% } else { %>
-        <p>No matching passengers found.</p>
-        <% } %>
-
+    </div>
+    <div class="class_contents_body">
         <p><a href="index.jsp">Back to Home</a></p>
     </div>
-
+    <div>
+        <% List<Co_Traveller_Info> coTravelersList = (ArrayList<Co_Traveller_Info>) request.getAttribute("coTravelersList"); %>
+        <% if (coTravelersList != null && !coTravelersList.isEmpty()) { %>
+        <h2>Co-Travelers:</h2>
+        <ul>
+            <% for (Co_Traveller_Info coTraveler : coTravelersList) { %>
+            <li><%= coTraveler.getName() %></li>
+            <li><%= coTraveler.getToplace()%></li>
+            <% } %>
+        </ul>
+        <% } else { %>
+        <p>No co-travelers found.</p>
+        <% } %>
+    </div>
 </div>
-
-
 </body>
 </html>

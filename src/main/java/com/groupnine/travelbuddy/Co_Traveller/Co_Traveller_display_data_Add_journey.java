@@ -1,52 +1,59 @@
 package com.groupnine.travelbuddy.Co_Traveller;
-
-import java.io.IOException;
-import java.sql.*;
+import com.groupnine.travelbuddy.TBBase.TBBaseConnection;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.annotation.WebServlet;
+import org.apache.commons.configuration2.ex.ConfigurationException;
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
+@WebServlet(name = "coTravellerDisplayAddJourney", urlPatterns = "/co-traveller-display-add-journey")
+public class Co_Traveller_display_data_Add_journey extends HttpServlet {
 
-@WebServlet(name = "coTravellerDisplayAddJourney", value = "/co-traveller-display-add-journey")
-public class Co_Traveller_display_data_Add_journey extends HttpServlet{
-    // Attributes of Server-url, Host-name, and Host-pass to access the database
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        List<Co_Traveller_Info> journeyList = new ArrayList<>();
 
-        // Set up the database connection
-        String dbUrl = "jdbc:mysql://db4free.net:3306/tb_base";
-        String dbUser = "tbadmin";
-        String dbPassword = "admintravel123";
-        Connection conn = null;
-
-        // Retrieve data from the database
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            conn = DriverManager.getConnection(dbUrl, dbUser, dbPassword);
-            String query = "SELECT * FROM bt_base.Copassengers";
-            PreparedStatement pstmt = conn.prepareStatement(query);
-            ResultSet rs = pstmt.executeQuery();
+            // Establish database connection
+            Connection connection = new TBBaseConnection().getConnection();
+            PreparedStatement statement = connection.prepareStatement("SELECT Transportation,Serviceno,Fromplace,Toplace,Date,Time  FROM Copassengers");
+            ResultSet resultSet = statement.executeQuery();
+            // Process the result set
+            while (resultSet.next()) {
+                String transportation = resultSet.getString("Transportation");
+                String serviceNo = resultSet.getString("Serviceno");
+                String from = resultSet.getString("Fromplace");
+                String to = resultSet.getString("Toplace");
+                String date = resultSet.getString("Date");
+                String time = resultSet.getString("Time");
+                Co_Traveller_Info travelInfo = new Co_Traveller_Info(transportation, serviceNo, from, to, date, time);
+                journeyList.add(travelInfo);
 
-            // Display the retrieved data on the JSP page
-            request.setAttribute("passengerData", rs);
-            RequestDispatcher view = request.getRequestDispatcher("src/main/webapp/co_traveller/display_journey.jsp");
-            view.forward(request, response);
-
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
-        } finally {
-            if (conn != null) {
-                try {
-                    conn.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
             }
+            // Close the resources
+            resultSet.close();
+            statement.close();
+            connection.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ConfigurationException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
+        // Set the journeyList as an attribute in the request
+        request.setAttribute("journeyList", journeyList);
+        // Forward the request to the JSP page
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/webapp/share_auto/display_journey.jsp");
+        dispatcher.forward(request, response);
     }
-
-
 }
+
 

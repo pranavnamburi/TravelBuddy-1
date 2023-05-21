@@ -6,7 +6,7 @@
 <%
     System.out.println("Start");
 %>
-<jsp:include page="/auto_share_retreive_data"/>
+p
 
 <%
     System.out.println("Start of another module");
@@ -443,13 +443,13 @@
         </div>
         <div class="class_contents_bottom">
             <div id="requests_invalid">
-                <p><pre style="position: relative; display: inline;"> --- </pre> Your AutoShare has still <%= noOfVacanciesLeftOver %> vacancies left over <pre style="position: relative; display: inline;"> --- </pre></p>
+                <p><pre style="position: relative; display: inline;"> --- </pre> Your AutoShare has still <%= noOfVacanciesLeftOver %> vacancies left over <pre style="position: relative; display: inline;"> --- </pre>
             </div>
             <div id="requests_not_made">
-                <p><pre style="position: relative; display: inline;"> --- </pre> You have not made any requests yet <pre style="position: relative; display: inline;"> --- </pre></p>
+                <p><pre style="position: relative; display: inline;"> --- </pre> You have not made any requests yet <pre style="position: relative; display: inline;"> --- </pre>
             </div>
             <div id="request_not_accepted">
-                <p><pre style="position: relative; display: inline;"> --- </pre>You do not have any request approvals yet<pre style="position: relative; display: inline;"> --- </pre></p>
+                <p><pre style="position: relative; display: inline;"> --- </pre>You do not have any request approvals yet<pre style="position: relative; display: inline;"> --- </pre>
             </div>
             <div id="request_accepted">
                 <c:if test="<%=requestAcceptance%>">

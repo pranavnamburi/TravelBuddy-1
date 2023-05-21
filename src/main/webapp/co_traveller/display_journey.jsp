@@ -1,7 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8"%>
-<%@ page import="java.sql.ResultSet" %>
-<%@ page import="java.sql.SQLException" %>
+<%@ page import="com.groupnine.travelbuddy.Co_Traveller.Co_Traveller_Info" %>
+<%@ page import="java.util.List" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <html lang="en">
 <head>
@@ -165,6 +165,83 @@
             height: 30px;
             font-style: italic;
         }
+        #sj{
+            position: absolute;
+            transform: translate(500%,300%);
+            background-color: #00bf8f;
+            width: 100px;
+            height: 30px;
+            font-style: italic;
+        }
+        .class_contents_body {
+            height: 75%;
+            border-top-right-radius: 25px;
+            border-top-left-radius: 25px;
+        }
+        .class_contents_body_mention_records {
+            position: relative;
+            top: 10px;
+            margin-bottom: 10px;
+            height: 50px;
+            width: 400px;
+            text-align: center;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 20px;
+            background-color: #f4fa6a;
+        }
+        .class_contents_body_mention_records h2 {
+            position: relative;
+            top: 10px;
+            margin: 0;
+        }
+        .class_contents_body_table2 {
+            background-color: #f0f58e;
+            overflow-y: auto;
+            height: 70%;
+        }
+        .class_contents_body_table2::-webkit-scrollbar {
+            width: 10px;
+            background-color: #eef38d;
+        }
+        .class_contents_body_table2::-webkit-scrollbar-thumb {
+            background-color: green;
+            border-radius: 5px;
+        }
+        .class_contents_body_table1 table, .class_contents_body_table2 table{
+            width: 100%;
+            height: 5%;
+            background-color: #f0f58e;
+        }
+        .class_contents_body_table1 th{
+            border-top: 1px solid #f6ffc1;
+            border-bottom: 1px solid #b2c910;
+            height: 45px;
+            width: 5%;
+        }
+        .class_contents_body_table2 td{
+            text-align: center;
+            border-bottom: 1px solid #dce507;
+            height: 45px;
+            width: 15%;
+        }
+        .class_contents_body_table2 a {
+            border-radius: 15px;
+            border: 2px solid #c9d20d;
+            background-color: #00731f;
+            color: #f4fa6a;
+            height: 20px;
+            width: 75px;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+            line-height: 20px;
+        }
+        .class_contents_body_table2 a:hover {
+            background-color: #c9d20d;
+            border-color: #00731f;
+            color: #00731f;
+            font-weight: bold;
+        }
         .card {
             position: absolute;
             transform: translate(20%,50%);
@@ -187,26 +264,6 @@
 <body>
 <button class="class_menu_icon_out" id="menu_icon_out"></button>
 <div class="class_home">
-    <div>
-        <table>
-            <tr>
-                <th>Name</th>
-                <th>Contact</th>
-                <th>Timeframe</th>
-            </tr>
-            <c:forEach var="data" items="${autoShareInfos}">
-                <tr>
-                    <td>${data.getFullName()}</td>
-                    <td>${data.getPlace()}</td>
-                    <td>${data.getNo_of_vacs()}</td>
-                    <td>${data.getTimeInString()}</td>
-                </tr>
-            </c:forEach>
-        </table>
-    </div>
-    <div>
-        <button class="Button" id="adj" onclick="window.location.href= 'add_journey_form.jsp'">Add-journey</button>
-    </div>
     <div class="class_menu" id="menu">
         <div class="class_menu_bar_items_head">
             <button class="class_menu_icon_in" id="menu_icon_in"></button><br>
@@ -222,7 +279,40 @@
             <button class="class_sos">SOS</button><br>
         </div>
     </div>
+    <div class="class_contents">
+        <div class="class_contents-body">
+            <div><button id="adj" onclick="window.location.href='add_journey_form.jsp'">Add-journey</button></div>
+            <div><button id="sj" onclick="window.location.href='search_traveller.jsp'">Search-Traveller</button></div>
+            <div class="class_contents_body_table">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Transportation</th>
+                        <th>Service Number</th>
+                        <th>From</th>
+                        <th>To</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <% List<Co_Traveller_Info> journeyList = (List<Co_Traveller_Info>) request.getAttribute("journeyList");
+                        for (Co_Traveller_Info journey : journeyList) { %>
+                    <tr>
+                        <td><%= journey.getTransportation() %></td>
+                        <td><%= journey.getServiceno() %></td>
+                        <td><%= journey.getFromplace() %></td>
+                        <td><%= journey.getToplace() %></td>
+                        <td><%= journey.getDate() %></td>
+                        <td><%= journey.getTime() %></td>
+                    </tr>
+                    <% } %>
+                    </tbody>
+                </table>
 
+        </div>
+</div>
+    </div>
 </div>
 <script>
     let menu = document.getElementById("menu");
