@@ -26,11 +26,11 @@
         }
         .class_menu_bar_items_top{
             position: relative;
-            height: 80%;
+            height: 75%;
         }
         .class_menu_bar_items_bottom{
             position: relative;
-            height: 14%;
+            height: 20%;
         }
         .class_menu{
             height: 100%;
@@ -41,10 +41,9 @@
             /*box-shadow: 1px 5px 3px 1px #557321;*/
             border-right: 1px solid black;
             padding-right: 8px;
-            flex: 1;
         }
         @keyframes slide_left {
-            0% {}
+            0% {transform: translate(0%, 0); flex: 1;}
             100% {transform: translate(-100%, 0); flex: 0;}
         }
         @keyframes slide_right {
@@ -70,7 +69,7 @@
             opacity: 75%;
             border: 1px solid white;
         }
-        .class_sos{
+        .class_sos, .class_logout{
             color: white;
             width: 93%;
             height: 32px;
@@ -84,7 +83,7 @@
             border-width: 2px;
             border-color: #1e7545;
         }
-        .class_sos:hover {
+        .class_sos:hover, .class_logout:hover {
             opacity: 75%;
             border: 1px solid white;
         }
@@ -192,7 +191,8 @@
             <button onclick="window.location.href='/share_auto/auto_share.jsp';" class="class_share_auto">Auto Share</button><br>
         </div>
         <div class="class_menu_bar_items_bottom">
-            <button class="class_sos">SOS</button><br>
+            <button onclick="window.location.href='${pageContext.request.contextPath}/sos_button';" class="class_sos">SOS</button><br>
+            <button onclick="window.location.href='${pageContext.request.contextPath}/logout_button';" class="class_logout">Logout</button>
         </div>
     </div>
     <div class="class_contents">
