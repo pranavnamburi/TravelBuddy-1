@@ -1,6 +1,5 @@
 package com.groupnine.travelbuddy.Co_Traveller;
 import com.groupnine.travelbuddy.TBBase.TBBaseConnection;
-import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -20,11 +19,11 @@ public class Co_Traveller_display_data_Add_journey extends HttpServlet {
         List<Co_Traveller_Info> journeyList = new ArrayList<>();
 
         try {
-            // Establish database connection
+
             Connection connection = new TBBaseConnection().getConnection();
             PreparedStatement statement = connection.prepareStatement("SELECT Transportation,Serviceno,Fromplace,Toplace,Date,Time  FROM Copassengers");
             ResultSet resultSet = statement.executeQuery();
-            // Process the result set
+
             while (resultSet.next()) {
                 String transportation = resultSet.getString("Transportation");
                 int serviceNo = resultSet.getInt("Serviceno");
@@ -36,21 +35,16 @@ public class Co_Traveller_display_data_Add_journey extends HttpServlet {
                 journeyList.add(travelInfo);
 
             }
-            // Close the resources
             resultSet.close();
             statement.close();
             connection.close();
-
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (ConfigurationException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
-        // Set the journeyList as an attribute in the request
         request.setAttribute("journeyList", journeyList);
-        // Forward the request to the JSP page
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/webapp/share_auto/display_journey.jsp");
-        dispatcher.forward(request, response);
+        response.sendRedirect("/webapp/share_auto/display_journey.jsp");
     }
 }
 

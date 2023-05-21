@@ -48,17 +48,15 @@ public class Co_Traveller_display_data_search_traveller extends HttpServlet {
                 // Retrieve data from the result set and create CoTraveler objects
                 String name = resultSet.getString("Name");
                 String dest = resultSet.getString("Toplace");
-                String Date = resultSet.getString("Date");
-                String Time = resultSet.getString("Time");
+                Date Date = java.sql.Date.valueOf(resultSet.getString("Date"));
+                Time Time = java.sql.Time.valueOf(resultSet.getString("Time"));
                 Co_Traveller_Info coTraveler = new Co_Traveller_Info(name, dest,Date,Time);
                 coTravelersList.add(coTraveler);
             }
         } catch (SQLException e) {
             e.printStackTrace();
             // Handle the exception appropriately
-        } catch (ConfigurationException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
+        } catch (ConfigurationException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
 

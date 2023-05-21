@@ -25,6 +25,9 @@ public class Co_Traveller_Info  {
     public Co_Traveller_Info(String transportation, int serviceNo, String from, String to, java.util.Date date, java.sql.Time time) {
     }
 
+    public Co_Traveller_Info(String name, String dest, java.sql.Date date, java.sql.Time time) {
+    }
+
     public String getTransportation(){return Transportation;}
     public void setTransportation(String Transportation){this.Transportation = Transportation;}
     public int getServiceno(){return Serviceno;}
