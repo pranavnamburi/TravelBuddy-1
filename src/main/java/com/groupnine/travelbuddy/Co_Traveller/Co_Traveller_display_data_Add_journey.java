@@ -16,7 +16,7 @@ import java.util.List;
 public class Co_Traveller_display_data_Add_journey extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        List<Co_Traveller_Info> journeyList = new ArrayList<>();
+        ArrayList<Co_Traveller_Info> journeyList = new ArrayList<>();
 
         try {
 
@@ -29,11 +29,11 @@ public class Co_Traveller_display_data_Add_journey extends HttpServlet {
                 int serviceNo = resultSet.getInt("Serviceno");
                 String from = resultSet.getString("Fromplace");
                 String to = resultSet.getString("Toplace");
-                Date date = resultSet.getDate("Date");
+                java.sql.Date date = resultSet.getDate("Date");
                 Time time = resultSet.getTime("Time");
                 Co_Traveller_Info travelInfo = new Co_Traveller_Info(transportation, serviceNo, from, to, date, time);
                 journeyList.add(travelInfo);
-
+                System.out.println(from);
             }
             resultSet.close();
             statement.close();
@@ -43,8 +43,9 @@ public class Co_Traveller_display_data_Add_journey extends HttpServlet {
         } catch (ConfigurationException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
-        request.setAttribute("journeyList", journeyList);
-        response.sendRedirect("/webapp/share_auto/display_journey.jsp");
+        request.getSession().setAttribute("journeyList", journeyList);
+        System.out.println("YEs");
+        response.sendRedirect("/co_traveller/display_journey.jsp");
     }
 }
 

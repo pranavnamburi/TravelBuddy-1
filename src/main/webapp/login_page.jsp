@@ -10,7 +10,7 @@
     response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
     response.setHeader("Pragma", "no-cache");
     response.setDateHeader("Expires", 0);
-    if (session.getAttribute("logged_in").equals("true")) {
+    if (session.getAttribute("logged_in") != null && session.getAttribute("logged_in").equals("true")) {
         response.sendRedirect("index.jsp");
         System.out.println("yes");
     }

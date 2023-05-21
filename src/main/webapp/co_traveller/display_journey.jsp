@@ -1,8 +1,8 @@
 <%@ page import="com.groupnine.travelbuddy.Co_Traveller.Co_Traveller_Info" %>
-<%@ page import="java.util.List" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<jsp:include page="/co-traveller-display-add-journey"/>
 
 <html lang="en">
 <head>
@@ -297,15 +297,18 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <% List<Co_Traveller_Info> journeyList = (ArrayList<Co_Traveller_Info>) request.getAttribute("journeyList");
-                        for (Co_Traveller_Info journey : journeyList) { %>
+                    <% System.out.println("yes"); %>
+                    <% ArrayList<Co_Traveller_Info> journeyList = (ArrayList<Co_Traveller_Info>) session.getAttribute("journeyList");
+                        for (Co_Traveller_Info journey : journeyList) {
+                            System.out.println(journey.getName());
+                    %>
                     <tr>
                         <td><%= journey.getTransportation() %></td>
-                        <td><%= journey.getServiceno() %></td>
+                        <td><%= String.valueOf(journey.getServiceno()) %></td>
                         <td><%= journey.getFromplace() %></td>
                         <td><%= journey.getToplace() %></td>
-                        <td><%= journey.getDate() %></td>
-                        <td><%= journey.getTime() %></td>
+                        <td><%= journey.getDateInString() %></td>
+                        <td><%= journey.getTimeInString() %></td>
                     </tr>
                     <% } %>
                     </tbody>
