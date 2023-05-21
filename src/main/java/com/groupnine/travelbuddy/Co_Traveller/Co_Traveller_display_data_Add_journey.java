@@ -8,11 +8,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.commons.configuration2.ex.ConfigurationException;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @WebServlet(name = "coTravellerDisplayAddJourney", urlPatterns = "/co-traveller-display-add-journey")
@@ -29,11 +27,11 @@ public class Co_Traveller_display_data_Add_journey extends HttpServlet {
             // Process the result set
             while (resultSet.next()) {
                 String transportation = resultSet.getString("Transportation");
-                String serviceNo = resultSet.getString("Serviceno");
+                int serviceNo = resultSet.getInt("Serviceno");
                 String from = resultSet.getString("Fromplace");
                 String to = resultSet.getString("Toplace");
-                String date = resultSet.getString("Date");
-                String time = resultSet.getString("Time");
+                Date date = resultSet.getDate("Date");
+                Time time = resultSet.getTime("Time");
                 Co_Traveller_Info travelInfo = new Co_Traveller_Info(transportation, serviceNo, from, to, date, time);
                 journeyList.add(travelInfo);
 
