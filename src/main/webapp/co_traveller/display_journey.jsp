@@ -30,11 +30,11 @@
         }
         .class_menu_bar_items_top{
             position: relative;
-            height: 75%;
+            height: 80%;
         }
         .class_menu_bar_items_bottom{
             position: relative;
-            height: 20%;
+            height: 14%;
         }
         .class_menu{
             height: 100%;
@@ -45,15 +45,17 @@
             /*box-shadow: 1px 5px 3px 1px #557321;*/
             border-right: 1px solid black;
             padding-right: 8px;
+            flex: 1;
         }
         @keyframes slide_left {
-            0% {transform: translate(0%, 0); flex: 1;}
+            0% {}
             100% {transform: translate(-100%, 0); flex: 0;}
         }
         @keyframes slide_right {
             0% {transform: translate(-100%, 0); flex: 0;}
             100% {transform: translate(0%, 0); flex: 1;}
         }
+
         .class_home_nav, .class_friend_pool, .class_co_travel, .class_share_auto, .class_profile{
             color: white;
             width: 93%;
@@ -73,7 +75,7 @@
             opacity: 75%;
             border: 1px solid white;
         }
-        .class_sos, .class_logout{
+        .class_sos{
             color: white;
             width: 93%;
             height: 32px;
@@ -87,7 +89,7 @@
             border-width: 2px;
             border-color: #1e7545;
         }
-        .class_sos:hover, .class_logout:hover {
+        .class_sos:hover {
             opacity: 75%;
             border: 1px solid white;
         }
@@ -154,57 +156,12 @@
         .class_contents_co_travel img {
             width: 300px;
             height: 200px;
-            transform: translate(280%,-10%) ;
-        }
-        #adj{
-            position: absolute;
-            transform: translate(300%,200%);
-            background-color:#00bf8f;
-            width: 100px;
-            height: 30px;
-            font-style: italic;
-        }
-        #sj{
-            position: absolute;
-            transform: translate(500%,300%);
-            background-color: #00bf8f;
-            width: 100px;
-            height: 30px;
-            font-style: italic;
-        }
-        .class_contents_body {
-            height: 75%;
-            border-top-right-radius: 25px;
-            border-top-left-radius: 25px;
-        }
-        .class_contents_body_mention_records {
-            position: relative;
-            top: 10px;
-            margin-bottom: 10px;
-            height: 50px;
-            width: 400px;
-            text-align: center;
-            border-top-left-radius: 10px;
-            border-top-right-radius: 20px;
-            background-color: #f4fa6a;
+            transform: translate(280%, -10%);
         }
         .class_contents_body_mention_records h2 {
             position: relative;
             top: 10px;
             margin: 0;
-        }
-        .class_contents_body_table2 {
-            background-color: #f0f58e;
-            overflow-y: auto;
-            height: 70%;
-        }
-        .class_contents_body_table2::-webkit-scrollbar {
-            width: 10px;
-            background-color: #eef38d;
-        }
-        .class_contents_body_table2::-webkit-scrollbar-thumb {
-            background-color: green;
-            border-radius: 5px;
         }
         .class_contents_body_table1 table, .class_contents_body_table2 table{
             width: 100%;
@@ -241,15 +198,6 @@
             color: #00731f;
             font-weight: bold;
         }
-        .card {
-            position: absolute;
-            transform: translate(20%,50%);
-            background-color: #fff;
-            border-radius: 5px;
-            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
-            margin: 10px;
-            padding: 10px;
-        }
 
         .card h2 {
             margin-top: 0;
@@ -257,6 +205,41 @@
 
         .card p {
             margin: 0;
+        }
+
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .add-button {
+            padding: 10px 43px;
+            background: linear-gradient(to right, #5D26C1, #a17fe0, #59C173);
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin-bottom: 10px;
+        }
+
+        .search-button {
+            align-items: end;
+            padding: 10px 30px;
+            background:linear-gradient(to right, #5D26C1, #a17fe0, #59C173);
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin-bottom: 10px;
         }
     </style>
 </head>
@@ -275,18 +258,19 @@
             <button onclick="window.location.href='share_auto/auto_share.jsp';" class="class_share_auto">Auto Share</button><br>
         </div>
         <div class="class_menu_bar_items_bottom">
-            <button onclick="window.location.href='${pageContext.request.contextPath}/sos_button';" class="class_sos">SOS</button><br>
-            <button onclick="window.location.href='${pageContext.request.contextPath}/logout_button';" class="class_logout">Logout</button>
+            <button class="class_sos">SOS</button><br>
         </div>
     </div>
     <div class="class_contents">
         <div class="class_contents-body">
-            <div><button id="adj" onclick="window.location.href='add_journey_form.jsp'">Add-journey</button></div>
-            <div><button id="sj" onclick="window.location.href='search_traveller.jsp'">Search-Traveller</button></div>
+            <h1>CO - TRAVELLER</h1>
+            <div><button class="add-button" onclick="window.location.href='add_journey_form.jsp'">Add-journey</button></div>
+            <div><button class="search-button" onclick="window.location.href='search_traveller.jsp'">Search-Traveller</button></div>
             <div class="class_contents_body_table">
                 <table>
                     <thead>
                     <tr>
+                        <th>Name</th>
                         <th>Transportation</th>
                         <th>Service Number</th>
                         <th>From</th>
@@ -302,6 +286,7 @@
                             System.out.println(journey.getName());
                     %>
                     <tr>
+                        <td><%= journey.getName() %></td>
                         <td><%= journey.getTransportation() %></td>
                         <td><%= String.valueOf(journey.getServiceno()) %></td>
                         <td><%= journey.getFromplace() %></td>

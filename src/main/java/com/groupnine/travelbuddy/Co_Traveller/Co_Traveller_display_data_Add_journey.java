@@ -21,19 +21,20 @@ public class Co_Traveller_display_data_Add_journey extends HttpServlet {
         try {
 
             Connection connection = new TBBaseConnection().getConnection();
-            PreparedStatement statement = connection.prepareStatement("SELECT Transportation,Serviceno,Fromplace,Toplace,Date,Time  FROM Copassengers");
+            PreparedStatement statement = connection.prepareStatement("SELECT u.fullname,c.Transportation,c.Serviceno,c.Fromplace,c.Toplace,c.Date,c.Time  FROM Copassengers c join users u on u.email=c.Mail");
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
+                System.out.println("fullname from display data add journey"+resultSet.getString("fullname"));
+                String name=resultSet.getString("fullname");
                 String transportation = resultSet.getString("Transportation");
                 int serviceNo = resultSet.getInt("Serviceno");
                 String from = resultSet.getString("Fromplace");
                 String to = resultSet.getString("Toplace");
                 java.sql.Date date = resultSet.getDate("Date");
                 Time time = resultSet.getTime("Time");
-                Co_Traveller_Info travelInfo = new Co_Traveller_Info(transportation, serviceNo, from, to, date, time);
+                Co_Traveller_Info travelInfo = new Co_Traveller_Info(name, transportation, serviceNo, from, to, date, time);
                 journeyList.add(travelInfo);
-                System.out.println(from);
             }
             resultSet.close();
             statement.close();
