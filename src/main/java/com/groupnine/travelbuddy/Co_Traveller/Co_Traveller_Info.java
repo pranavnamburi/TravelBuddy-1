@@ -1,27 +1,18 @@
 package com.groupnine.travelbuddy.Co_Traveller;
-
-import jakarta.persistence.criteria.From;
-
 import java.sql.Time;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
-
-
 public class Co_Traveller_Info  {
     String Transportation,Fromplace,Toplace,Name;
     int Serviceno;
     Time Time;
     Date Date;
-
-    public Co_Traveller_Info(String transportation, String serviceNo, String from, String to, String date, String time) {
-    }
-
-    public Co_Traveller_Info(String name, String dest) {
-    }
-
-    public Co_Traveller_Info(String name, String dest, String date, String time) {
-    }
-
+//    public Co_Traveller_Info(String transportation, String serviceNo, String from, String to, String date, String time) {
+//    }
+//    public Co_Traveller_Info(String name, String dest) {
+//    }
+//    public Co_Traveller_Info(String name, String dest, String date, String time) {
+//    }
     public Co_Traveller_Info(String transportation, int serviceNo, String from, String to, java.util.Date date, java.sql.Time time) {
     }
 
