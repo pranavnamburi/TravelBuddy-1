@@ -1,7 +1,6 @@
 package com.groupnine.travelbuddy.Co_Traveller;
 
 import com.groupnine.travelbuddy.TBBase.TBBaseConnection;
-import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -9,7 +8,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.commons.configuration2.ex.ConfigurationException;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;

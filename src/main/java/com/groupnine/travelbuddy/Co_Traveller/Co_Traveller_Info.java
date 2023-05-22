@@ -53,4 +53,5 @@ public class Co_Traveller_Info  {
         setTransportation(transportation);setServiceno(serviceno);setFromplace(fromplace);setToplace(toplace);setDate(date);setTime(time);setName(name);}
 
 
+
 }
