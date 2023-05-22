@@ -3,7 +3,7 @@ import java.sql.Time;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 public class Co_Traveller_Info  {
-    String Transportation,Fromplace,Toplace,Name;
+    String Transportation,Fromplace,Toplace,Name,Mail;
     int Serviceno;
     Time Time;
     Date Date;
@@ -20,6 +20,12 @@ public class Co_Traveller_Info  {
     public Co_Traveller_Info(String name, String dest, java.sql.Date date, java.sql.Time time) {
     }
 
+    public Co_Traveller_Info(String name) {
+        setName(name);
+    }
+
+    public String getMail(){return Mail;}
+    public void setMail(String Mail){this.Mail = Mail;}
     public String getTransportation(){return Transportation;}
     public void setTransportation(String Transportation){this.Transportation = Transportation;}
     public int getServiceno(){return Serviceno;}

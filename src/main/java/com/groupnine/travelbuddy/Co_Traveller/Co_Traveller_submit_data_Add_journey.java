@@ -19,7 +19,7 @@ public class Co_Traveller_submit_data_Add_journey extends HttpServlet{
 @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
     String dbUrl = "jdbc:mysql://db4free.net:3306/bt_base";
-    String dbUser = "bt_admin";
+    String dbUser = "btadmin";
     String dbPassword = "buddy_travel_srmap";
         try {
             Class.forName("com.mysql.jdbc.Driver");

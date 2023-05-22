@@ -1,16 +1,9 @@
-<%@ page import="jakarta.resource.cci.ResultSet" %>
+<%--//<%@ page import="jakarta.resource.cci.ResultSet" %>--%>
 <%@ page import="com.groupnine.travelbuddy.Co_Traveller.Co_Traveller_Info" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.List" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %><%--
-<%--
-  Created by IntelliJ IDEA.
-  User: DELL
-  Date: 5/6/2023
-  Time: 7:32 PM
-  To change this template use File | Settings | File Templates.
---%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <html lang="en">
 <head>
@@ -164,62 +157,88 @@
             height: 200px;
             transform: translate(280%,-10%) ;
         }
-        .card {
-            background-color: #fff;
-            border-radius: 5px;
-            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
-            margin: 10px;
-            padding: 10px;
-        }
-
-        .card h2 {
-            margin-top: 0;
-        }
-
-        .card p {
-            margin: 0;
+        .class_contents-body{
+            position: absolute;
+            transform: translate(200%,500%);
         }
     </style>
 </head>
 <body>
 <div class="class_home">
     <div class="class_contents_form">
-    <form action="z${pageContext.request.contextPath}/co-traveller-search-traveller" method="GET">
-        <label for="transport">Transportation:</label>
-        <select id="transport" name="transport">
-        <label for="source">Fromplace:</label>
-        <input type="text" id="source" name="source"><br><br>
-        <label for="destination">Toplace:</label>
-        <input type="text" id="destination" name="destination"><br><br>
-            <option value="bus">Bus</option>
-            <option value="train">Train</option>
-        </select><br><br>
-        <label for="date">Date:</label>
-        <input type="date" id="date" name="date"><br><br>
-        <label for="time">Time:</label>
-        <input type="time" id="time" name="time"><br><br>
-        <label for="Name">Name</label>
-        <input type="text" id="Name" name="Name">
-        <input type="submit" value="Submit">
-    </form>
+        <form action="/co-traveller-search-traveller" method="GET">
+            <!-- Form inputs -->
+            <label for="destination">Destination:</label>
+            <input type="text" id="destination" name="destination">
+
+            <label for="date">Date:</label>
+            <input type="text" id="date" name="date">
+
+            <label for="time">Time:</label>
+            <input type="text" id="time" name="time">
+
+            <button type="submit">Search</button>
+        </form>
     </div>
     <div class="class_contents_body">
         <p><a href="index.jsp">Back to Home</a></p>
     </div>
-    <div>
-        <% List<Co_Traveller_Info> coTravelersList = (ArrayList<Co_Traveller_Info>) request.getAttribute("coTravelersList"); %>
+    <div id="coTravelersContainer">
+        <% ArrayList<Co_Traveller_Info> coTravelersList = (ArrayList<Co_Traveller_Info>) session.getAttribute("coTravelersList");%>
         <% if (coTravelersList != null && !coTravelersList.isEmpty()) { %>
-        <h2>Co-Travelers:</h2>
-        <ul>
+        <h3>Co-Travelers:</h3>
+        <tr>
             <% for (Co_Traveller_Info coTraveler : coTravelersList) { %>
-            <li><%= coTraveler.getName() %></li>
-            <li><%= coTraveler.getToplace()%></li>
+            <td><%= coTraveler.getName() %></td>
             <% } %>
-        </ul>
+        </tr>
+
         <% } else { %>
         <p>No co-travelers found.</p>
         <% } %>
     </div>
+
 </div>
 </body>
 </html>
+
+<script>
+    // Function to handle form submission
+    function searchCoTravelers() {
+        var form = document.getElementById('searchForm');
+        var destination = form.elements['destination'].value;
+        var date = form.elements['date'].value;
+        var time = form.elements['time'].value;
+
+        // Make an AJAX request to the servlet
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', '/search_co_travelers?destination=' + destination + '&date=' + date + '&time=' + time);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                // Parse the JSON response
+                var coTravelers = JSON.parse(xhr.responseText);
+
+                // Update the co-travelers' names on the page
+                var coTravelersContainer = document.getElementById('coTravelersContainer');
+                coTravelersContainer.innerHTML = ''; // Clear previous results
+
+                if (coTravelers.length > 0) {
+                    var names = '';
+                    for (var i = 0; i < coTravelers.length; i++) {
+                        names += coTravelers[i].Name + '<br>';
+                    }
+                    coTravelersContainer.innerHTML = names;
+                } else {
+                    coTravelersContainer.textContent = 'No co-travelers found.';
+                }
+            }
+        };
+        xhr.send();
+
+        return false; // Prevent form submission
+    }
+
+    // Add form submission event listener
+    var form = document.getElementById('searchForm');
+    form.addEventListener('submit', searchCoTravelers);
+</script>

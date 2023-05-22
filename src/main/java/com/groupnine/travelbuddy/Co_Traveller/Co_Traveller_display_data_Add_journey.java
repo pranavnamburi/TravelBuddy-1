@@ -9,8 +9,6 @@ import org.apache.commons.configuration2.ex.ConfigurationException;
 import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 @WebServlet(name = "coTravellerDisplayAddJourney", urlPatterns = "/co-traveller-display-add-journey")
 public class Co_Traveller_display_data_Add_journey extends HttpServlet {
