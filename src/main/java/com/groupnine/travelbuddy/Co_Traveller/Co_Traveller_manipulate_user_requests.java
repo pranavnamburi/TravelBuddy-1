@@ -20,6 +20,7 @@ public class Co_Traveller_manipulate_user_requests extends HttpServlet {
         try {
             final String webUserRequestStatus = req.getParameter("status");
             final String otherUserEmail = req.getParameter("other_user_email");
+            final String serviceno = req.getParameter("serviceno");
             final String userEmail = (String) req.getSession().getAttribute("user_email");
             final String query1,query3;
             // Making a new connection to MySQL server
@@ -32,7 +33,7 @@ public class Co_Traveller_manipulate_user_requests extends HttpServlet {
                 query3 = null;
             }
             PreparedStatement statement = connection.prepareStatement(query1);
-            statement.setString(1, otherUserEmail);
+            statement.setString(1, otherUserEmail + " " + serviceno);
             statement.setString(2, userEmail);
             statement.executeUpdate();
             if(query3 != null) {
