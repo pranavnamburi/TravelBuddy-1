@@ -157,10 +157,7 @@
             height: 200px;
             transform: translate(280%,-10%) ;
         }
-        .class_contents-body{
-            position: absolute;
-            transform: translate(200%,500%);
-        }
+
     </style>
 </head>
 <body>
@@ -169,21 +166,18 @@
         <form action="/co-traveller-search-traveller" method="GET">
             <!-- Form inputs -->
             <label for="destination">Destination:</label>
-            <input type="text" id="destination" name="destination">
+            <input type="text" id="destination" name="destination"><br><br>
 
             <label for="date">Date:</label>
-            <input type="text" id="date" name="date">
+            <input type="text" id="date" name="date"><br><br>
 
             <label for="time">Time:</label>
-            <input type="text" id="time" name="time">
+            <input type="text" id="time" name="time"><br>
 
             <button type="submit">Search</button>
         </form>
     </div>
-    <div class="class_contents_body">
-        <p><a href="index.jsp">Back to Home</a></p>
-    </div>
-    <div id="coTravelersContainer">
+    <div class="class_contents_body_table" id="coTravelersContainer">
         <% ArrayList<Co_Traveller_Info> coTravelersList = (ArrayList<Co_Traveller_Info>) session.getAttribute("coTravelersList");%>
         <% if (coTravelersList != null && !coTravelersList.isEmpty()) { %>
         <h3>Co-Travelers:</h3>
@@ -212,7 +206,7 @@
 
         // Make an AJAX request to the servlet
         var xhr = new XMLHttpRequest();
-        xhr.open('GET', '/search_co_travelers?destination=' + destination + '&date=' + date + '&time=' + time);
+        xhr.open('GET', '/co-traveller-search-traveller?destination=' + destination + '&date=' + date + '&time=' + time);
         xhr.onreadystatechange = function () {
             if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
                 // Parse the JSON response

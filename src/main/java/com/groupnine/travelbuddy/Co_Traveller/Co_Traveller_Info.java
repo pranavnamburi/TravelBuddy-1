@@ -16,6 +16,9 @@ public class Co_Traveller_Info  {
     public Co_Traveller_Info(String name,String transportation, int serviceNo, String from, String to, java.sql.Date date, java.sql.Time time) {
         this.Name=name;setTransportation(transportation); setServiceno(serviceNo); setFromplace(from); setToplace(to); setDate(date); setTime(time);
     }
+    public Co_Traveller_Info(String destination,String date,String time,String email){
+        setToplace(destination);setDate(java.sql.Date.valueOf(date));setTime(java.sql.Time.valueOf(time));setMail(email);
+    }
 
     public Co_Traveller_Info(String name, String dest, java.sql.Date date, java.sql.Time time) {
     }
