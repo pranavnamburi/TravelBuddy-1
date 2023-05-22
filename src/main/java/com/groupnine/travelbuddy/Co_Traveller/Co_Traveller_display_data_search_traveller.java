@@ -34,18 +34,18 @@ public class Co_Traveller_display_data_search_traveller extends HttpServlet {
     private List<Co_Traveller_Info> retrieveCoTravelers(String destination, String date, String time,String currentEmail) {
         List<Co_Traveller_Info> coTravelersList = new ArrayList<>();
         try {
-            String query = "SELECT u.fullname FROM bt_base.Copassengers a JOIN bt_base.users u ON u.email = a.Mail WHERE a.Toplace = ? AND a.Date = ? AND a.Time = ? AND NOT a.Mail = ?";
+            String query = "SELECT u.fullname, u.email FROM bt_base.Copassengers a JOIN bt_base.users u ON u.email = a.Mail WHERE a.Toplace = ? AND a.Date = ? AND a.Time = ? AND NOT a.Mail = ?";
             Connection connection = new TBBaseConnection().getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, destination);
             statement.setString(2, date);
             statement.setString(3, time);
             statement.setString(4,currentEmail);
-
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 String name = resultSet.getString("fullname");
-                Co_Traveller_Info coTraveler = new Co_Traveller_Info(name);
+                String email = resultSet.getString("email");
+                Co_Traveller_Info coTraveler = new Co_Traveller_Info(name,email);
                 coTravelersList.add(coTraveler);
             }
             statement.close();

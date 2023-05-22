@@ -27,6 +27,10 @@ public class Co_Traveller_Info  {
         setName(name);
     }
 
+    public Co_Traveller_Info(String name, String email) {
+        setName(name);setMail(email);
+    }
+
     public String getMail(){return Mail;}
     public void setMail(String Mail){this.Mail = Mail;}
     public String getTransportation(){return Transportation;}

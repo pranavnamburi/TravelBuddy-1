@@ -2,8 +2,37 @@
 <%@ page import="com.groupnine.travelbuddy.Co_Traveller.Co_Traveller_Info" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.List" %>
+<%@ page import="com.groupnine.travelbuddy.Co_Traveller.Co_Traveller_Requests" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<jsp:include page="/co-traveller-user-made-requests"/>
+<jsp:include page="/co-traveller-retrieve-user-request"/>
+<%
+ArrayList<Co_Traveller_Requests> coTravellerUserRequests = (ArrayList<Co_Traveller_Requests>) request.getSession().getAttribute("coTravellerUserRequests");
+ArrayList<String> coTravellerUserMadeRequests = (ArrayList<String>) session.getAttribute("coTravellerUserMadeRequests");
+ArrayList<Co_Traveller_Info> coTravelersList = (ArrayList<Co_Traveller_Info>) session.getAttribute("coTravelersList");
+for(Co_Traveller_Requests a : coTravellerUserRequests) {
+System.out.println(a.getFullname());
+}
+    boolean requestAcceptance = (boolean) request.getSession().getAttribute("coTravellerRequestAcceptance");
+    System.out.println(requestAcceptance);
+    String userForReqCancel = "";
+    Co_Traveller_Info acceptedUserObject = null;
+    if(coTravellerUserRequests.size() == 1) {
+        userForReqCancel = coTravellerUserMadeRequests.get(0);
+        for(Co_Traveller_Info user : coTravelersList) {
+            if(user.getMail().equals(userForReqCancel)) {
+                acceptedUserObject = user;
+                break;
+            }
+        }
+        System.out.println(userForReqCancel);
+    }
+    boolean requestsMade = true;
+    if(coTravellerUserMadeRequests.size() == 0) {
+        requestsMade = false;
+    }
+%>
 
 <html lang="en">
 <head>
@@ -137,61 +166,141 @@
             flex: 5;
             padding: 3%;
         }
-        .class_friend_pool_heading button {
-            border: none;
-            background-color: transparent;
+        .table-container {
+            display: flex;
+            flex-direction: column;
+            height: 400px;
+            /*transform: translate(100%,600%);*/
+        }
+
+        .header-table {
+            background-color: #f1f1f1;
+        }
+
+        .scrollable-table-container {
+            overflow-y: auto;
+            flex-grow: 1;
+        }
+
+        .scrollable-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .scrollable-table td {
+            padding: 8px;
+            border: 1px solid #000;
+        }
+        td{
+            text-align: center;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #4CAF50;
             color: white;
-        }
-        .class_contents_share_auto img {
-            width: 300px;
-            height: 200px;
-            transform: translate(300%,-10%) ;
-        }
-        .class_contents_friend_pool img {
-            width: 300px;
-            height: 200px;
-            transform: translate(280%,-10%) ;
-        }
-        .class_contents_co_travel img {
-            width: 300px;
-            height: 200px;
-            transform: translate(280%,-10%) ;
         }
 
     </style>
 </head>
 <body>
+<button class="class_menu_icon_out" id="menu_icon_out"></button>
 <div class="class_home">
-    <div class="class_contents_form">
-        <form action="/co-traveller-search-traveller" method="GET">
-            <!-- Form inputs -->
-            <label for="destination">Destination:</label>
-            <input type="text" id="destination" name="destination"><br><br>
-
-            <label for="date">Date:</label>
-            <input type="text" id="date" name="date"><br><br>
-
-            <label for="time">Time:</label>
-            <input type="text" id="time" name="time"><br>
-
-            <button type="submit">Search</button>
-        </form>
+    <div class="class_menu" id="menu">
+        <div class="class_menu_bar_items_head">
+            <button class="class_menu_icon_in" id="menu_icon_in"></button><br>
+        </div>
+        <div class="class_menu_bar_items_top">
+            <button onclick="window.location.href='/../index.jsp';" class="class_home_nav">Home</button>
+            <button onclick="window.location.href='/../profile.jsp';" class="class_profile">Profile</button><br>
+            <button onclick="window.location.href='friends_pool.jsp';" class="class_friend_pool">Friend Pooling</button><br>
+            <button onclick="window.location.href='co-traveller.jsp';" class="class_co_travel">Co-Traveller</button><br>
+            <button onclick="window.location.href='share_auto/auto_share.jsp';" class="class_share_auto">Auto Share</button><br>
+        </div>
+        <div class="class_menu_bar_items_bottom">
+            <button class="class_sos">SOS</button><br>
+        </div>
     </div>
-    <div class="class_contents_body_table" id="coTravelersContainer">
-        <% ArrayList<Co_Traveller_Info> coTravelersList = (ArrayList<Co_Traveller_Info>) session.getAttribute("coTravelersList");%>
-        <% if (coTravelersList != null && !coTravelersList.isEmpty()) { %>
-        <h3>Co-Travelers:</h3>
-        <tr>
-            <% for (Co_Traveller_Info coTraveler : coTravelersList) { %>
-            <td><%= coTraveler.getName() %></td>
-            <% } %>
-        </tr>
+    <div class="class_contents">
+        <h1>Search For Traveller!</h1>
+        <div class="class_contents_form">
+            <form action="/co-traveller-search-traveller" method="GET">
+                <!-- Form inputs -->
+                <label for="destination">Destination:</label>
+                <input type="text" id="destination" name="destination"><br><br>
 
-        <% } else { %>
-        <p>No co-travelers found.</p>
-        <% } %>
+                <label for="date">Date:</label>
+                <input type="date" id="date" name="date"><br><br>
+
+                <label for="time">Time:</label>
+                <input type="time" id="time" name="time"><br>
+
+                <button type="submit">Search</button>
+            </form>
+        </div>
+        <div class="table-container">
+            <h1>CO-Traveller(s)</h1>
+            <table class="header-table">
+                <tr>
+                    <th style="translate: 0px 0px">Co-Travelers</th>
+                    <th style="translate: 0px 0px">Action</th>
+                </tr>
+            </table>
+            <div class="scrollable-table-container">
+                <table class="scrollable-table">
+                    <tr>
+                        <% if (coTravelersList != null && !coTravelersList.isEmpty()) { %>
+                            <% for (Co_Traveller_Info coTraveller : coTravelersList) { %>
+                            <td><%= coTraveller.getName() %></td>
+                            <% boolean userMadeRequestFound = false; %>
+                            <% if(!requestAcceptance) { %>
+                            <% for(String other_user_email : coTravellerUserMadeRequests) {
+                                if(coTraveller.getMail().equals(other_user_email)) {
+                                    userMadeRequestFound = true;
+                                    break;
+                            }
+                        }
+                            if(!userMadeRequestFound) {
+                        %>
+                        <td><button id="asreqsbutton" onclick="window.location.href='${pageContext.request.contextPath}/co-traveller-request-manager?email=<%=coTraveller.getMail()%> '"> Request </button></td>
+                        <% } else { %>
+                        <TD><p style="color: #00b700;">Requested</p></TD>
+
+                        <% } }}%>
+                        <% } %>
+                    </tr>
+
+                    <!-- Repeat rows as needed -->
+                </table>
+            </div>
+        </div>
+
+        <div class="class_contents_title">
+            Requests
+        </div>
+        <div class="class_contents_requests_container">
+            <c:forEach var="data" items="${coTravellerUserRequests}">
+                <div class="class_contents_request">
+                    <div class="class_contents_request_name"><span style="font-weight: bold">Name</span><br>${data.getName()}</div>
+                    <div class="class_contents_request_email"><span style="font-weight: bold">Email</span><br>${data.getMail()}</div>
+                    <c:set var="dataStatus" value="${data.getStatus()}"/>
+                    <c:choose>
+                        <c:when test="${dataStatus == 'pending'}">
+                            <div class="class_contents_request_accept"><a href="${pageContext.request.contextPath}/co-traveller-manipulate-user-requests?status=accept&other_user_email=${data.getMail()}">Accept</a></div>
+                            <div class="class_contents_request_reject"><a href="${pageContext.request.contextPath}/co-traveller-manipulate-user-requests?status=reject&other_user_email=${data.getMail()}">Reject</a></div>
+                        </c:when>
+                        <c:otherwise>
+                            <div class="class_contents_request_text"><span style="color:limegreen">Joined</span></div>
+                        </c:otherwise>
+                    </c:choose>
+                </div>
+            </c:forEach>
+        </div>
     </div>
-
 </div>
 </body>
 </html>
@@ -235,4 +344,17 @@
     // Add form submission event listener
     var form = document.getElementById('searchForm');
     form.addEventListener('submit', searchCoTravelers);
+</script>
+
+<script>
+    let menu = document.getElementById("menu");
+    let menu_icon_out = document.getElementById("menu_icon_out");
+    let menu_icon_in = document.getElementById("menu_icon_in");
+    menu.style.setProperty("animation", "0ms linear 0s slide_left forwards");
+    menu_icon_in.onclick = ()  => {
+        menu.style.setProperty("animation", "300ms linear 0s slide_left forwards")
+    }
+    menu_icon_out.onclick = () => {
+        menu.style.setProperty("animation", "300ms linear 0s slide_right forwards");
+    }
 </script>
