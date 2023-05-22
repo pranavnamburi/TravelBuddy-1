@@ -17,14 +17,12 @@ public class Co_Traveller_display_data_Add_journey extends HttpServlet {
         ArrayList<Co_Traveller_Info> journeyList = new ArrayList<>();
 
         try {
-
             Connection connection = new TBBaseConnection().getConnection();
-            PreparedStatement statement = connection.prepareStatement("SELECT u.fullname,c.Transportation,c.Serviceno,c.Fromplace,c.Toplace,c.Date,c.Time  FROM Copassengers c join users u on u.email=c.Mail");
+            PreparedStatement statement = connection.prepareStatement("SELECT u.fullname,c.Transportation,c.Serviceno,c.Fromplace,c.Toplace,c.Date,c.Time  FROM Copassengers c JOIN users u ON u.email = c.Mail where u.email=?");
+            statement.setString(1, (String) request.getSession().getAttribute("user_email"));
             ResultSet resultSet = statement.executeQuery();
-
             while (resultSet.next()) {
-                System.out.println("fullname from display data add journey"+resultSet.getString("fullname"));
-                String name=resultSet.getString("fullname");
+                String name = resultSet.getString("fullname");
                 String transportation = resultSet.getString("Transportation");
                 int serviceNo = resultSet.getInt("Serviceno");
                 String from = resultSet.getString("Fromplace");

@@ -3,7 +3,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="/co-traveller-display-add-journey"/>
-
+<% ArrayList<Co_Traveller_Info> journeyList = (ArrayList<Co_Traveller_Info>) session.getAttribute("journeyList");%>
 <html lang="en">
 <head>
     <meta charset="UTF-8"/>
@@ -267,6 +267,7 @@
             <div><button class="add-button" onclick="window.location.href='add_journey_form.jsp'">Add-journey</button></div>
             <div><button class="search-button" onclick="window.location.href='search_traveller.jsp'">Search-Traveller</button></div>
             <div class="class_contents_body_table">
+                <h1>(${journeyList.size()}) CURRENT - JOURNEY(S)</h1>
                 <table>
                     <thead>
                     <tr>
@@ -281,7 +282,7 @@
                     </thead>
                     <tbody>
                     <% System.out.println("yes"); %>
-                    <% ArrayList<Co_Traveller_Info> journeyList = (ArrayList<Co_Traveller_Info>) session.getAttribute("journeyList");
+                    <%
                         for (Co_Traveller_Info journey : journeyList) {
                             System.out.println(journey.getName());
                     %>
