@@ -24,7 +24,7 @@ public class Co_Traveller_retrieve_user_requests extends HttpServlet {
             final String userEmail = (String) req.getSession().getAttribute("user_email");
             Connection connection = new TBBaseConnection().getConnection();
             // Instantiating a new Prepared Statement (known as pre-compiled statement) to insert the acquired data
-            PreparedStatement statement = connection.prepareStatement("SELECT u.fullname, u.email, a.status, a.recieverid FROM bt_base.Copassengersrequests a JOIN bt_base.users u ON a.senderid=u.email WHERE a.recieverid=?");
+            PreparedStatement statement = connection.prepareStatement("SELECT u.fullname, u.email, a.status, a.recieverid FROM bt_base.Copassengersrequests a JOIN bt_base.users u ON a.senderid = u.email WHERE a.recieverid LIKE CONCAT(?, ' %');");
             // Moving the data into the statement
             statement.setString(1, userEmail);
             ResultSet resultSet = statement.executeQuery();

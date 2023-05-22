@@ -280,7 +280,7 @@ System.out.println(a.getFullname());
 
                 </table>
             </div>
-            <div><button onclick="window.location.href='/co_traveller/search_traveller_requests.jsp'">Requests</button></div>
+
         </div>
     </div>
 </div>

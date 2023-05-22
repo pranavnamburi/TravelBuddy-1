@@ -241,6 +241,15 @@
             cursor: pointer;
             margin-bottom: 10px;
         }
+        .requests-button{
+            align-items: end;
+            padding: 10px 30px;
+            background:linear-gradient(to right, #5D26C1, #a17fe0, #59C173);
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin-bottom: 10px;
+        }
     </style>
 </head>
 <body>
@@ -266,6 +275,7 @@
             <h1>CO - TRAVELLER</h1>
             <div><button class="add-button" onclick="window.location.href='add_journey_form.jsp'">Add-journey</button></div>
             <div><button class="search-button" onclick="window.location.href='search_traveller.jsp'">Search-Traveller</button></div>
+            <div><button class="requests-button" onclick="window.location.href='/co_traveller/search_traveller_requests.jsp'">Requests</button></div>
             <div class="class_contents_body_table">
                 <h1>(${journeyList.size()}) CURRENT - JOURNEY(S)</h1>
                 <table>
@@ -299,6 +309,10 @@
                     </tbody>
                 </table>
         </div>
+
+
+
+
 </div>
     </div>
 </div>
