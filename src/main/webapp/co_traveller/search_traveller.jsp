@@ -252,9 +252,10 @@ System.out.println(a.getFullname());
             </table>
             <div class="scrollable-table-container">
                 <table class="scrollable-table">
-                    <tr>
+
                         <% if (coTravelersList != null && !coTravelersList.isEmpty()) { %>
                             <% for (Co_Traveller_Info coTraveller : coTravelersList) { %>
+                    <tr>
                             <td><%= coTraveller.getName() %></td>
                             <% boolean userMadeRequestFound = false; %>
                             <% if(!requestAcceptance) { %>
@@ -270,36 +271,15 @@ System.out.println(a.getFullname());
                         <td><button id="asreqsbutton" onclick="window.location.href='${pageContext.request.contextPath}/co-traveller-request-manager?email=<%=coTraveller.getMail()%>&serviceno=<%=coTraveller.getServiceno()%>'"> Request </button></td>
                         <% } else { %>
                         <TD><p style="color: #00b700;">Requested</p></TD>
-
-                        <% } }}%>
-                        <% } %>
+                        <% }%>
+                    <%}%>
                     </tr>
+                    <%}%>
+                        <% } %>
 
-                    <!-- Repeat rows as needed -->
+
                 </table>
             </div>
-        </div>
-
-        <div class="class_contents_title">
-            Requests
-        </div>
-        <div class="class_contents_requests_container">
-            <c:forEach var="data" items="${coTravellerUserRequests}">
-                <div class="class_contents_request">
-                    <div class="class_contents_request_name"><span style="font-weight: bold">Name</span><br>${data.getName()}</div>
-                    <div class="class_contents_request_email"><span style="font-weight: bold">Email</span><br>${data.getMail()}</div>
-                    <c:set var="dataStatus" value="${data.getStatus()}"/>
-                    <c:choose>
-                        <c:when test="${dataStatus == 'pending'}">
-                            <div class="class_contents_request_accept"><a href="${pageContext.request.contextPath}/co-traveller-manipulate-user-requests?status=accept&other_user_email=${data.getMail()}">Accept</a></div>
-                            <div class="class_contents_request_reject"><a href="${pageContext.request.contextPath}/co-traveller-manipulate-user-requests?status=reject&other_user_email=${data.getMail()}">Reject</a></div>
-                        </c:when>
-                        <c:otherwise>
-                            <div class="class_contents_request_text"><span style="color:limegreen">Joined</span></div>
-                        </c:otherwise>
-                    </c:choose>
-                </div>
-            </c:forEach>
         </div>
     </div>
 </div>
