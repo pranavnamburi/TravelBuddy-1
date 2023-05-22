@@ -4,7 +4,7 @@ import java.sql.Date;
 import java.text.SimpleDateFormat;
 public class Co_Traveller_Info  {
     String Transportation,Fromplace,Toplace,Name,Mail;
-    int Serviceno;
+    Integer Serviceno;
     Time Time;
     Date Date;
 //    public Co_Traveller_Info(String transportation, String serviceNo, String from, String to, String date, String time) {
@@ -27,8 +27,8 @@ public class Co_Traveller_Info  {
         setName(name);
     }
 
-    public Co_Traveller_Info(String name, String email) {
-        setName(name);setMail(email);
+    public Co_Traveller_Info(String name, String email, Integer serviceno) {
+        setName(name); setMail(email); setServiceno(serviceno);
     }
 
     public String getMail(){return Mail;}
