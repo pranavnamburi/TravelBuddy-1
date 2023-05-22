@@ -259,14 +259,15 @@ System.out.println(a.getFullname());
                             <% boolean userMadeRequestFound = false; %>
                             <% if(!requestAcceptance) { %>
                             <% for(String other_user_email : coTravellerUserMadeRequests) {
-                                if(coTraveller.getMail().equals(other_user_email)) {
+                                String[] emailAndServiceno = other_user_email.split(" ");
+                                if(coTraveller.getMail().equals(emailAndServiceno[0]) && coTraveller.getServiceno() == Integer.parseInt(emailAndServiceno[1])) {
                                     userMadeRequestFound = true;
                                     break;
                             }
                         }
                             if(!userMadeRequestFound) {
                         %>
-                        <td><button id="asreqsbutton" onclick="window.location.href='${pageContext.request.contextPath}/co-traveller-request-manager?email=<%=coTraveller.getMail()%> '"> Request </button></td>
+                        <td><button id="asreqsbutton" onclick="window.location.href='${pageContext.request.contextPath}/co-traveller-request-manager?email=<%=coTraveller.getMail()%>&serviceno=<%=coTraveller.getServiceno()%>'"> Request </button></td>
                         <% } else { %>
                         <TD><p style="color: #00b700;">Requested</p></TD>
 

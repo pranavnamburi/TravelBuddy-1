@@ -25,7 +25,7 @@ public class Co_Traveller_requests_manager extends HttpServlet {
             PreparedStatement statement = connection.prepareStatement("INSERT INTO bt_base.Copassengersrequests(senderid, recieverid, status) VALUES (?,?,?)");
             // Moving the data into the statement
             statement.setString(1, (String) req.getSession().getAttribute("user_email"));
-            statement.setString(2, req.getParameter("email"));
+            statement.setString(2, req.getParameter("email") + " " + req.getParameter("serviceno"));
             statement.setString(3, "pending");
             statement.executeUpdate();
             // Closing the statement
