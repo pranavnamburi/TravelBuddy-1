@@ -6,7 +6,7 @@
 <%
     System.out.println("Start");
 %>
-p
+<jsp:include page="/auto_share_retreive_data"/>
 
 <%
     System.out.println("Start of another module");
