@@ -12,13 +12,13 @@
 ArrayList<Co_Traveller_Requests> coTravellerUserRequests = (ArrayList<Co_Traveller_Requests>) request.getSession().getAttribute("coTravellerUserRequests");
 ArrayList<String> coTravellerUserMadeRequests = (ArrayList<String>) session.getAttribute("coTravellerUserMadeRequests");
 ArrayList<Co_Traveller_Info> coTravelersList = (ArrayList<Co_Traveller_Info>) session.getAttribute("coTravelersList");
+ArrayList<Co_Traveller_Info> allCoTravelersList = (ArrayList<Co_Traveller_Info>) session.getAttribute("allCoTravelersList");
     boolean requestAcceptance = (boolean) request.getSession().getAttribute("coTravellerRequestAcceptance");
-    System.out.println(requestAcceptance);
     String userForReqCancel = "";
     Co_Traveller_Info acceptedUserObject = null;
     if(coTravellerUserMadeRequests.size() == 1) {
         userForReqCancel = coTravellerUserMadeRequests.get(0);
-        for(Co_Traveller_Info user : coTravelersList) {
+        for(Co_Traveller_Info user : allCoTravelersList) {
             if(user.getMail().equals(userForReqCancel)) {
                 acceptedUserObject = user;
                 break;
