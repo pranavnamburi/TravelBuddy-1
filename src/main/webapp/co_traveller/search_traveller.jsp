@@ -7,18 +7,16 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="/co-traveller-user-made-requests"/>
 <jsp:include page="/co-traveller-retrieve-user-request"/>
+<jsp:include page="/co-traveller-search-traveller?getalldata=true"/>
 <%
 ArrayList<Co_Traveller_Requests> coTravellerUserRequests = (ArrayList<Co_Traveller_Requests>) request.getSession().getAttribute("coTravellerUserRequests");
 ArrayList<String> coTravellerUserMadeRequests = (ArrayList<String>) session.getAttribute("coTravellerUserMadeRequests");
 ArrayList<Co_Traveller_Info> coTravelersList = (ArrayList<Co_Traveller_Info>) session.getAttribute("coTravelersList");
-for(Co_Traveller_Requests a : coTravellerUserRequests) {
-System.out.println(a.getFullname());
-}
     boolean requestAcceptance = (boolean) request.getSession().getAttribute("coTravellerRequestAcceptance");
     System.out.println(requestAcceptance);
     String userForReqCancel = "";
     Co_Traveller_Info acceptedUserObject = null;
-    if(coTravellerUserRequests != null && coTravellerUserRequests.size() == 1) {
+    if(coTravellerUserMadeRequests.size() == 1) {
         userForReqCancel = coTravellerUserMadeRequests.get(0);
         for(Co_Traveller_Info user : coTravelersList) {
             if(user.getMail().equals(userForReqCancel)) {
@@ -169,7 +167,7 @@ System.out.println(a.getFullname());
         .table-container {
             display: flex;
             flex-direction: column;
-            height: 400px;
+            height: 60%;
             /*transform: translate(100%,600%);*/
         }
 
@@ -180,6 +178,7 @@ System.out.println(a.getFullname());
         .scrollable-table-container {
             overflow-y: auto;
             flex-grow: 1;
+            border: 1px solid white;
         }
 
         .scrollable-table {
@@ -204,7 +203,16 @@ System.out.println(a.getFullname());
             background-color: #4CAF50;
             color: white;
         }
-
+        .requests_section {
+            position: relative;
+            background-color: white;
+            padding: 10px;
+            text-align: center;
+            border-radius: 50px;
+            width: 60%;
+            translate: 35%;
+            margin-top: 25px;
+        }
     </style>
 </head>
 <body>
@@ -228,7 +236,7 @@ System.out.println(a.getFullname());
     <div class="class_contents">
         <h1>Search For Traveller!</h1>
         <div class="class_contents_form">
-            <form action="/co-traveller-search-traveller" method="GET">
+            <form action="/co-traveller-search-traveller?getalldata=false" method="GET">
                 <!-- Form inputs -->
                 <label for="destination">Destination:</label>
                 <input type="text" id="destination" name="destination"><br><br>
@@ -276,17 +284,49 @@ System.out.println(a.getFullname());
                     </tr>
                     <%}%>
                         <% } %>
-
-
                 </table>
             </div>
-
+        </div>
+        <div class="requests_section">
+            <div id="requests_not_made">
+                <p><pre style="position: relative; display: inline;"> --- </pre> You have not made any requests yet <pre style="position: relative; display: inline;"> --- </pre>
+            </div>
+            <div id="request_not_accepted">
+                <p><pre style="position: relative; display: inline;"> --- </pre>You do not have any request approvals yet<pre style="position: relative; display: inline;"> --- </pre>
+            </div>
+            <div id="request_accepted">
+                <c:if test="<%=requestAcceptance%>">
+                    <p style="position: relative; display: inline;">You've got a Co-Traveller named <span style="font-weight: bold"><%=acceptedUserObject.getName()%></span> to travel on <span style="font-weight: bold"><%=acceptedUserObject.getDateInString()%></span> at <span style="font-weight: bold"><%=acceptedUserObject.getTimeInString()%></span></p>
+                    <pre style="position: relative; display: inline;"> --- </pre>
+                    <div style="position:relative; display: inline;">Email: <span style="font-weight: bold;">email@gmail.com</span></div>
+                </c:if>
+            </div>
         </div>
     </div>
 </div>
 </body>
 </html>
-
+<script>
+    let areRequestsMade = true;
+    let isRequestAccepted = true;
+    let requests_not_made = document.getElementById("requests_not_made");
+    let request_not_accepted = document.getElementById("request_not_accepted");
+    let request_accepted = document.getElementById("request_accepted");
+    if(areRequestsMade === false) {
+        requests_not_made.style.display = "block";
+        request_not_accepted.style.display = "none";
+        request_accepted.style.display = "none";
+    }else {
+        requests_not_made.style.display = "none";
+        if(isRequestAccepted) {
+            request_not_accepted.style.display = "none"
+            request_accepted.style.display = "block";
+        } else {
+            request_accepted.style.display = "none";
+            request_not_accepted.style.display = "block";
+        }
+    }
+</script>
 <script>
     // Function to handle form submission
     function searchCoTravelers() {
