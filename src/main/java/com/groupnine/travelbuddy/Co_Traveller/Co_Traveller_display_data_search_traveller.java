@@ -16,21 +16,21 @@ import java.util.List;
 public class Co_Traveller_display_data_search_traveller extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String getTravelData = (String) request.getAttribute("getalldata");
+        String getTravelData = (String) request.getParameter("getalldata");
+        String currentEmail = (String) request.getSession().getAttribute("user_email");
         List<Co_Traveller_Info> coTravelersList = null;
         List<Co_Traveller_Info> allCoTravelersList = null;
-        String currentEmail = null;
         if (getTravelData.equals("true")) {
+            System.out.println("Reached it");
+            System.out.println(currentEmail);
+            allCoTravelersList = retrieveCoTravelers(currentEmail);
+            request.getSession().setAttribute("allCoTravelersList", allCoTravelersList);
+        } else {
             String destination = request.getParameter("destination");
             String date = request.getParameter("date");
             String time = request.getParameter("time");
-            currentEmail = (String) request.getSession().getAttribute("user_email");
-
             coTravelersList = retrieveCoTravelers(destination, date, time, currentEmail);
             request.getSession().setAttribute("coTravelersList", coTravelersList);
-        } else {
-            allCoTravelersList = retrieveCoTravelers(currentEmail);
-            request.getSession().setAttribute("allCoTravelersList", allCoTravelersList);
         }
 
 
@@ -73,7 +73,7 @@ public class Co_Traveller_display_data_search_traveller extends HttpServlet {
     private List<Co_Traveller_Info> retrieveCoTravelers(String currentEmail){
         List<Co_Traveller_Info> allCoTravelersList = new ArrayList<>();
         try {
-            String query = "SELECT u.fullname, u.email, a.Serviceno FROM bt_base.Copassengers a JOIN bt_base.users u ON u.email = a.Mail WHERE NOT a.Mail = ?";
+            String query = "SELECT u.fullname, u.email, a.Serviceno, a.Date, a.Time FROM bt_base.Copassengers a JOIN bt_base.users u ON u.email = a.Mail WHERE NOT a.Mail = ?";
             Connection connection = new TBBaseConnection().getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
 
@@ -83,7 +83,9 @@ public class Co_Traveller_display_data_search_traveller extends HttpServlet {
                 String name = resultSet.getString("fullname");
                 String email = resultSet.getString("email");
                 Integer serviceno = resultSet.getInt("Serviceno");
-                Co_Traveller_Info coTraveler = new Co_Traveller_Info(name,email, serviceno);
+                Date date = resultSet.getDate("Date");
+                Time time = resultSet.getTime("Time");
+                Co_Traveller_Info coTraveler = new Co_Traveller_Info(name, email, serviceno, date, time);
                 allCoTravelersList.add(coTraveler);
             }
             statement.close();

@@ -7,17 +7,20 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="/co-traveller-user-made-requests"/>
 <jsp:include page="/co-traveller-retrieve-user-request"/>
-<jsp:include page="/co-traveller-search-traveller?getalldata=true"/>
+<jsp:include page="/co-traveller-search-traveller">
+    <jsp:param name="getalldata" value="true" />
+</jsp:include>
 <%
-ArrayList<Co_Traveller_Requests> coTravellerUserRequests = (ArrayList<Co_Traveller_Requests>) request.getSession().getAttribute("coTravellerUserRequests");
-ArrayList<String> coTravellerUserMadeRequests = (ArrayList<String>) session.getAttribute("coTravellerUserMadeRequests");
-ArrayList<Co_Traveller_Info> coTravelersList = (ArrayList<Co_Traveller_Info>) session.getAttribute("coTravelersList");
-ArrayList<Co_Traveller_Info> allCoTravelersList = (ArrayList<Co_Traveller_Info>) session.getAttribute("allCoTravelersList");
+    ArrayList<Co_Traveller_Requests> coTravellerUserRequests = (ArrayList<Co_Traveller_Requests>) request.getSession().getAttribute("coTravellerUserRequests");
+    ArrayList<String> coTravellerUserMadeRequests = (ArrayList<String>) session.getAttribute("coTravellerUserMadeRequests");
+    ArrayList<Co_Traveller_Info> coTravelersList = (ArrayList<Co_Traveller_Info>) session.getAttribute("coTravelersList");
+    ArrayList<Co_Traveller_Info> allCoTravelersList = (ArrayList<Co_Traveller_Info>) session.getAttribute("allCoTravelersList");
     boolean requestAcceptance = (boolean) request.getSession().getAttribute("coTravellerRequestAcceptance");
+    System.out.println(requestAcceptance);
     String userForReqCancel = "";
     Co_Traveller_Info acceptedUserObject = null;
     if(coTravellerUserMadeRequests.size() == 1) {
-        userForReqCancel = coTravellerUserMadeRequests.get(0);
+        userForReqCancel = coTravellerUserMadeRequests.get(0).split(" ")[0];
         for(Co_Traveller_Info user : allCoTravelersList) {
             if(user.getMail().equals(userForReqCancel)) {
                 acceptedUserObject = user;
@@ -25,6 +28,13 @@ ArrayList<Co_Traveller_Info> allCoTravelersList = (ArrayList<Co_Traveller_Info>)
             }
         }
         System.out.println(userForReqCancel);
+    }
+    if(acceptedUserObject == null) {
+        System.out.println("The user is null");
+    }else {
+        System.out.println(acceptedUserObject.getName());
+        System.out.println(acceptedUserObject.getDateInString());
+        System.out.println(acceptedUserObject.getTimeInString());
     }
     boolean requestsMade = true;
     if(coTravellerUserMadeRequests.size() == 0) {
@@ -204,14 +214,22 @@ ArrayList<Co_Traveller_Info> allCoTravelersList = (ArrayList<Co_Traveller_Info>)
             color: white;
         }
         .requests_section {
-            position: relative;
             background-color: white;
-            padding: 10px;
+            padding: 5px;
             text-align: center;
             border-radius: 50px;
-            width: 60%;
-            translate: 35%;
+            width: 65%;
+            translate: 15%;
             margin-top: 25px;
+        }
+        #cancel_request {
+            background-color: green;
+            border-radius: 25px;
+            height: 20px;
+            width: 20px;
+            margin-right: 10px;
+            place-items: center;
+            box-shadow: 1px 1px 3px greenyellow;
         }
     </style>
 </head>
@@ -236,7 +254,7 @@ ArrayList<Co_Traveller_Info> allCoTravelersList = (ArrayList<Co_Traveller_Info>)
     <div class="class_contents">
         <h1>Search For Traveller!</h1>
         <div class="class_contents_form">
-            <form action="/co-traveller-search-traveller?getalldata=false" method="GET">
+            <form action="/co-traveller-search-traveller" method="GET">
                 <!-- Form inputs -->
                 <label for="destination">Destination:</label>
                 <input type="text" id="destination" name="destination"><br><br>
@@ -248,6 +266,7 @@ ArrayList<Co_Traveller_Info> allCoTravelersList = (ArrayList<Co_Traveller_Info>)
                 <input type="time" id="time" name="time"><br>
 
                 <button type="submit">Search</button>
+                <input type="hidden" name="getalldata" value="false">
             </form>
         </div>
         <div class="table-container">
@@ -288,6 +307,11 @@ ArrayList<Co_Traveller_Info> allCoTravelersList = (ArrayList<Co_Traveller_Info>)
             </div>
         </div>
         <div class="requests_section">
+            <div id="cancel_request">
+                <% if(acceptedUserObject != null) { %>
+                <button style="vertical-align: center; background-color: transparent; border-color: transparent; color: white; display: inline;" onclick="window.location.href='${pageContext.request.contextPath}/co-traveller-request-cancellation?user_for_req_cancel=<%=acceptedUserObject.getMail()%>&serviceno=<%=acceptedUserObject.getServiceno()%>'">Cancel Request</button>
+                <% } %>
+            </div>
             <div id="requests_not_made">
                 <p><pre style="position: relative; display: inline;"> --- </pre> You have not made any requests yet <pre style="position: relative; display: inline;"> --- </pre>
             </div>
@@ -307,23 +331,27 @@ ArrayList<Co_Traveller_Info> allCoTravelersList = (ArrayList<Co_Traveller_Info>)
 </body>
 </html>
 <script>
-    let areRequestsMade = true;
-    let isRequestAccepted = true;
+    let areRequestsMade = <%= requestsMade%>;
+    let isRequestAccepted = <%= requestAcceptance %>;
+    let cancel_request = document.getElementById("cancel_request");
     let requests_not_made = document.getElementById("requests_not_made");
     let request_not_accepted = document.getElementById("request_not_accepted");
     let request_accepted = document.getElementById("request_accepted");
     if(areRequestsMade === false) {
-        requests_not_made.style.display = "block";
+        requests_not_made.style.display = "inline";
         request_not_accepted.style.display = "none";
         request_accepted.style.display = "none";
+        cancel_request.style.display = "none";
     }else {
         requests_not_made.style.display = "none";
         if(isRequestAccepted) {
             request_not_accepted.style.display = "none"
-            request_accepted.style.display = "block";
+            request_accepted.style.display = "inline";
+            cancel_request.style.display = "inline";
         } else {
             request_accepted.style.display = "none";
-            request_not_accepted.style.display = "block";
+            cancel_request.style.display = "none";
+            request_not_accepted.style.display = "inline";
         }
     }
 </script>

@@ -18,12 +18,13 @@ public class Co_Traveller_requeset_cancellation extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
             final String userEmail = (String) req.getSession().getAttribute("user_email");
+            final String serviceno = req.getParameter("serviceno");
             // Checking if JDBC driver for MySQL exist in the project
             // Making a new connection to MySQL server
             Connection connection = new TBBaseConnection().getConnection();
             // Instantiating a new Prepared Statement (known as pre-compiled statement) to insert the acquired data
             PreparedStatement statement = connection.prepareStatement("DELETE FROM bt_base.Copassengersrequests WHERE recieverid=? AND senderid=?");
-            statement.setString(1, req.getParameter("user_for_req_cancel"));
+            statement.setString(1, req.getParameter("user_for_req_cancel") + " " + serviceno);
             statement.setString(2, userEmail);
             statement.executeUpdate();
             // Closing the statement

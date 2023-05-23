@@ -5,8 +5,8 @@ import java.text.SimpleDateFormat;
 public class Co_Traveller_Info  {
     String Transportation,Fromplace,Toplace,Name,Mail;
     Integer Serviceno;
-    Time Time;
-    Date Date;
+    Time time;
+    Date date;
 //    public Co_Traveller_Info(String transportation, String serviceNo, String from, String to, String date, String time) {
 //    }
 //    public Co_Traveller_Info(String name, String dest) {
@@ -31,6 +31,10 @@ public class Co_Traveller_Info  {
         setName(name); setMail(email); setServiceno(serviceno);
     }
 
+    public Co_Traveller_Info(String name, String email, Integer serviceno, Date date, java.sql.Time time) {
+        setName(name); setMail(email); setServiceno(serviceno); setDate(date); setTime(time);
+    }
+
     public String getMail(){return Mail;}
     public void setMail(String Mail){this.Mail = Mail;}
     public String getTransportation(){return Transportation;}
@@ -41,21 +45,22 @@ public class Co_Traveller_Info  {
     public void setFromplace(String Fromplace){this.Fromplace = Fromplace;}
     public String getToplace(){return Toplace;}
     public void setToplace(String Toplace){this.Toplace = Toplace;}
-    public Date getDate() { return Date; }
-    public void setDate(Date date) { this.Date = date; }
-    public String getDateInString() {
-        return Date.toString();
+    public Date getDate() { return date; }
+    public void setDate(Date date) { this.date = date;
     }
-    public Time getTime() { return Time; }
+    public String getDateInString() {
+        return date.toString();
+    }
+    public Time getTime() { return time; }
     public String getTimeInString() {
         SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
-        return format.format(Time);
+        return format.format(time);
     }
     public String getName() {
         return Name;
     }
     public void setName(String Name){this.Name = Name;}
-    public void setTime(Time time) { this.Time = time; }
+    public void setTime(Time time) { this.time = time; }
     public Co_Traveller_Info(String transportation,int serviceno,String fromplace,String toplace,Date date,Time time,String name){
         setTransportation(transportation);setServiceno(serviceno);setFromplace(fromplace);setToplace(toplace);setDate(date);setTime(time);setName(name);}
 
