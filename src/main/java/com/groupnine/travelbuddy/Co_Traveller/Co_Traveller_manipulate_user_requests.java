@@ -30,7 +30,7 @@ public class Co_Traveller_manipulate_user_requests extends HttpServlet {
             if (webUserRequestStatus.equals("accept")) {
                 System.out.println("Accepted");
                 query1 = "UPDATE bt_base.Copassengersrequests SET status='accepted' WHERE senderid=? AND recieverid=?";
-                query3 = "DELETE FROM bt_base.autosharerequests WHERE sender_id=? AND status='pending'";
+                query3 = "DELETE FROM bt_base.Copassengersrequests WHERE senderid=? AND status='pending'";
             } else {
                 System.out.println("Rejected");
                 query1 = "DELETE FROM bt_base.Copassengersrequests WHERE senderid=? AND recieverid=?";
