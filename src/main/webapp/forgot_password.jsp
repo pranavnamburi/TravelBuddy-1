@@ -47,10 +47,10 @@
         }
         .wrapper{
             overflow: hidden;
-            max-width: 650px;
-            max-height: 650px;
+            width: 530px;
+            height: 530px;
             background: #fff;
-            padding: 100px;
+            padding: 175px 100px 100px 100px;
             border-radius: 50%;
             box-shadow: 0 15px 20px rgba(0,0,0,0.1);
         }

@@ -235,7 +235,7 @@
                 <div class="field">
                     <input type="password" name="password" placeholder="Password" required>
                 </div>
-                <div class="pass-link"><a href="forgetpass.jsp">Forgot password?</a></div>
+                <div class="pass-link"><a href="forgot_password.jsp">Forgot password?</a></div>
                 <div id="errorMessageDiv" style="display:none">
                     <p id="errorMessage"></p>
                 </div>
