@@ -18,7 +18,7 @@ System.out.println(a.getFullname());
     System.out.println(requestAcceptance);
     String userForReqCancel = "";
     Co_Traveller_Info acceptedUserObject = null;
-    if(coTravellerUserRequests.size() == 1) {
+    if(coTravellerUserRequests != null && coTravellerUserRequests.size() == 1) {
         userForReqCancel = coTravellerUserMadeRequests.get(0);
         for(Co_Traveller_Info user : coTravelersList) {
             if(user.getMail().equals(userForReqCancel)) {

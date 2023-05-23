@@ -5,7 +5,7 @@ public class Co_Traveller_Requests {
     private Integer serviceno;
     public String getFullname() { return fullname; }
     public Integer getServiceno() { return serviceno; }
-    public void setServiceno(Integer service) { this.serviceno = serviceno; }
+    public void setServiceno(Integer serviceno) { this.serviceno = serviceno; }
     public void setFullname(String fullname) { this.fullname = fullname; }
     public String getEmail() { return email; }
     public void setEmail(String email) { this.email = email; }
