@@ -6,6 +6,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.ws.rs.core.Request;
 import org.apache.commons.configuration2.ex.ConfigurationException;
 import java.io.IOException;
 import java.sql.*;
@@ -23,7 +24,7 @@ public class Co_Traveller_display_data_search_traveller extends HttpServlet {
         if (getTravelData.equals("true")) {
             System.out.println("Reached it");
             System.out.println(currentEmail);
-            allCoTravelersList = retrieveCoTravelers(currentEmail);
+            allCoTravelersList = retrieveCoTravelers(request, currentEmail);
             request.getSession().setAttribute("allCoTravelersList", allCoTravelersList);
         } else {
             String destination = request.getParameter("destination");
@@ -70,21 +71,25 @@ public class Co_Traveller_display_data_search_traveller extends HttpServlet {
 
         return coTravelersList;
     }
-    private List<Co_Traveller_Info> retrieveCoTravelers(String currentEmail){
+    private List<Co_Traveller_Info> retrieveCoTravelers(HttpServletRequest request, String currentEmail){
         List<Co_Traveller_Info> allCoTravelersList = new ArrayList<>();
         try {
             String query = "SELECT u.fullname, u.email, a.Serviceno, a.Date, a.Time FROM bt_base.Copassengers a JOIN bt_base.users u ON u.email = a.Mail WHERE NOT a.Mail = ?";
             Connection connection = new TBBaseConnection().getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
-
             statement.setString(1,currentEmail);
             ResultSet resultSet = statement.executeQuery();
+            request.getSession().setAttribute("isCoTravellerRegistered", false);
+            String user_email = (String) request.getSession().getAttribute("user_email");
             while (resultSet.next()) {
                 String name = resultSet.getString("fullname");
                 String email = resultSet.getString("email");
                 Integer serviceno = resultSet.getInt("Serviceno");
                 Date date = resultSet.getDate("Date");
                 Time time = resultSet.getTime("Time");
+                if (email.equals(user_email)) {
+                    request.getSession().setAttribute("isCoTravellerRegistered", true);
+                }
                 Co_Traveller_Info coTraveler = new Co_Traveller_Info(name, email, serviceno, date, time);
                 allCoTravelersList.add(coTraveler);
             }

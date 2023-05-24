@@ -3,7 +3,12 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="/co-traveller-display-add-journey"/>
-<% ArrayList<Co_Traveller_Info> journeyList = (ArrayList<Co_Traveller_Info>) session.getAttribute("journeyList");%>
+<jsp:include page="/co-traveller-search-traveller">
+    <jsp:param name="getalldata" value="true" />
+</jsp:include>
+<% ArrayList<Co_Traveller_Info> journeyList = (ArrayList<Co_Traveller_Info>) session.getAttribute("journeyList");
+    boolean isRegistered = (boolean) session.getAttribute("isCoTravellerRegistered");
+%>
 <html lang="en">
 <head>
     <meta charset="UTF-8"/>
@@ -30,11 +35,11 @@
         }
         .class_menu_bar_items_top{
             position: relative;
-            height: 80%;
+            height: 75%;
         }
         .class_menu_bar_items_bottom{
             position: relative;
-            height: 14%;
+            height: 20%;
         }
         .class_menu{
             height: 100%;
@@ -45,17 +50,15 @@
             /*box-shadow: 1px 5px 3px 1px #557321;*/
             border-right: 1px solid black;
             padding-right: 8px;
-            flex: 1;
         }
         @keyframes slide_left {
-            0% {}
+            0% {transform: translate(0%, 0); flex: 1;}
             100% {transform: translate(-100%, 0); flex: 0;}
         }
         @keyframes slide_right {
             0% {transform: translate(-100%, 0); flex: 0;}
             100% {transform: translate(0%, 0); flex: 1;}
         }
-
         .class_home_nav, .class_friend_pool, .class_co_travel, .class_share_auto, .class_profile{
             color: white;
             width: 93%;
@@ -75,7 +78,7 @@
             opacity: 75%;
             border: 1px solid white;
         }
-        .class_sos{
+        .class_sos, .class_logout{
             color: white;
             width: 93%;
             height: 32px;
@@ -89,7 +92,7 @@
             border-width: 2px;
             border-color: #1e7545;
         }
-        .class_sos:hover {
+        .class_sos:hover, .class_logout:hover {
             opacity: 75%;
             border: 1px solid white;
         }
@@ -262,12 +265,13 @@
         <div class="class_menu_bar_items_top">
             <button onclick="window.location.href='/../index.jsp';" class="class_home_nav">Home</button>
             <button onclick="window.location.href='/../profile.jsp';" class="class_profile">Profile</button><br>
-            <button onclick="window.location.href='friends_pool.jsp';" class="class_friend_pool">Friend Pooling</button><br>
-            <button onclick="window.location.href='co-traveller.jsp';" class="class_co_travel">Co-Traveller</button><br>
-            <button onclick="window.location.href='share_auto/auto_share.jsp';" class="class_share_auto">Auto Share</button><br>
+            <button onclick="window.location.href='/friend_pool/friend_pool.jsp';" class="class_friend_pool">Friend Pooling</button><br>
+            <button onclick="window.location.href='/display_journey.jsp';" class="class_co_travel">Co-Traveller</button><br>
+            <button onclick="window.location.href='/share_auto/auto_share.jsp';" class="class_share_auto">Auto Share</button><br>
         </div>
         <div class="class_menu_bar_items_bottom">
-            <button class="class_sos">SOS</button><br>
+            <button onclick="window.location.href='${pageContext.request.contextPath}/sos_button';" class="class_sos">SOS</button><br>
+            <button onclick="window.location.href='${pageContext.request.contextPath}/logout_button';" class="class_logout">Logout</button>
         </div>
     </div>
     <div class="class_contents">
@@ -275,7 +279,7 @@
             <h1>CO - TRAVELLER</h1>
             <div><button class="add-button" onclick="window.location.href='add_journey_form.jsp'">Add-journey</button></div>
             <div><button class="search-button" onclick="window.location.href='search_traveller.jsp'">Search-Traveller</button></div>
-            <div><button class="requests-button" onclick="window.location.href='/co_traveller/search_traveller_requests.jsp'">Requests</button></div>
+            <div><button id="requests_button" class="requests-button" onclick="window.location.href='/co_traveller/search_traveller_requests.jsp'">Requests</button></div>
             <div class="class_contents_body_table">
                 <h1>(${journeyList.size()}) CURRENT - JOURNEY(S)</h1>
                 <table>
@@ -328,6 +332,15 @@
         menu.style.setProperty("animation", "300ms linear 0s slide_right forwards");
     }
 
+</script>
+<script>
+    let isRegistered = <%=isRegistered%>;
+    let requests_button = document.getElementById("requests_button");
+    if(isRegistered) {
+        requests_button.style.display = "none";
+    } {
+        requests_button.style.display = "block";
+    }
 </script>
 </body>
 </html>

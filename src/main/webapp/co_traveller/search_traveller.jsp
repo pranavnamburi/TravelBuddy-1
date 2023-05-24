@@ -243,12 +243,13 @@
         <div class="class_menu_bar_items_top">
             <button onclick="window.location.href='/../index.jsp';" class="class_home_nav">Home</button>
             <button onclick="window.location.href='/../profile.jsp';" class="class_profile">Profile</button><br>
-            <button onclick="window.location.href='friends_pool.jsp';" class="class_friend_pool">Friend Pooling</button><br>
-            <button onclick="window.location.href='co-traveller.jsp';" class="class_co_travel">Co-Traveller</button><br>
-            <button onclick="window.location.href='share_auto/auto_share.jsp';" class="class_share_auto">Auto Share</button><br>
+            <button onclick="window.location.href='/friend_pool/friend_pool.jsp';" class="class_friend_pool">Friend Pooling</button><br>
+            <button onclick="window.location.href='/display_journey.jsp';" class="class_co_travel">Co-Traveller</button><br>
+            <button onclick="window.location.href='/share_auto/auto_share.jsp';" class="class_share_auto">Auto Share</button><br>
         </div>
         <div class="class_menu_bar_items_bottom">
-            <button class="class_sos">SOS</button><br>
+            <button onclick="window.location.href='${pageContext.request.contextPath}/sos_button';" class="class_sos">SOS</button><br>
+            <button onclick="window.location.href='${pageContext.request.contextPath}/logout_button';" class="class_logout">Logout</button>
         </div>
     </div>
     <div class="class_contents">
@@ -354,46 +355,6 @@
             request_not_accepted.style.display = "inline";
         }
     }
-</script>
-<script>
-    // Function to handle form submission
-    function searchCoTravelers() {
-        var form = document.getElementById('searchForm');
-        var destination = form.elements['destination'].value;
-        var date = form.elements['date'].value;
-        var time = form.elements['time'].value;
-
-        // Make an AJAX request to the servlet
-        var xhr = new XMLHttpRequest();
-        xhr.open('GET', '/co-traveller-search-traveller?destination=' + destination + '&date=' + date + '&time=' + time);
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-                // Parse the JSON response
-                var coTravelers = JSON.parse(xhr.responseText);
-
-                // Update the co-travelers' names on the page
-                var coTravelersContainer = document.getElementById('coTravelersContainer');
-                coTravelersContainer.innerHTML = ''; // Clear previous results
-
-                if (coTravelers.length > 0) {
-                    var names = '';
-                    for (var i = 0; i < coTravelers.length; i++) {
-                        names += coTravelers[i].Name + '<br>';
-                    }
-                    coTravelersContainer.innerHTML = names;
-                } else {
-                    coTravelersContainer.textContent = 'No co-travelers found.';
-                }
-            }
-        };
-        xhr.send();
-
-        return false; // Prevent form submission
-    }
-
-    // Add form submission event listener
-    var form = document.getElementById('searchForm');
-    form.addEventListener('submit', searchCoTravelers);
 </script>
 
 <script>
