@@ -405,39 +405,36 @@
                         <th>No Of Vacancies</th>
                         <th>Date</th>
                         <th><p>Timeframe</p></th>
-                        <c:if test="${!sessionScope.get(\"isAutoShareRegistered\")&&!sessionScope.get(\"requestAcceptance\")}">
+                        <% if(!isRegistered && !requestAcceptance){ %>
                             <th><p>Action</p></th>
-                        </c:if>
+                        <% } %>
                     </tr>
                 </table>
             </div>
             <div class="class_contents_body_table2">
                 <table>
-                    <c:forEach var="data" items="${autoShareInfos}">
+                    <% for(AutoShareInfo data : autoShareInfos) { %>
                         <tr>
-                            <td>${data.getFullname()}</td>
-                            <td>${data.getPlace()}</td>
-                            <td>${data.getNo_of_vacs()}</td>
-                            <td>${data.getDateInString()}</td>
-                            <td>${data.getTimeInString()}</td>
-                            <c:set var="userMadeRequestFound" value="false" />
-                            <c:if test="${!sessionScope.get(\"isAutoShareRegistered\")&&!sessionScope.get(\"requestAcceptance\")}">
-                                <c:forEach var="other_user_email" items="${autoShareUserMadeRequests}">
-                                    <c:if test="${data.getEmail().equals(other_user_email)}">
-                                        <c:set var="userMadeRequestFound" value="true" />
-                                    </c:if>
-                                </c:forEach>
-                                <c:choose>
-                                        <c:when test="${!userMadeRequestFound}">
-                                            <td><a href="${pageContext.request.contextPath}/auto_share_request_manager?email=${data.getEmail()}">Request</a></td>
-                                        </c:when>
-                                        <c:otherwise>
-                                            <td><a href="#">Requested</a></td>
-                                        </c:otherwise>
-                                </c:choose>
-                            </c:if>
+                            <td><%= data.getFullname() %></td>
+                            <td><%= data.getPlace() %></td>
+                            <td><%= data.getNo_of_vacs() %></td>
+                            <td><%= data.getDateInString() %></td>
+                            <td><%= data.getTimeInString() %></td>
+                            <% boolean userMadeRequestFound = false; %>
+                            <% if(!isRegistered && !requestAcceptance){ %>
+                                <% for(String other_user_email : autoShareUserMadeRequests) { %>
+                                    <% if(data.getEmail().equals(other_user_email)) { %>
+                                        <% userMadeRequestFound = true; %>
+                                    <% } %>
+                                <% } %>
+                                <% if(!userMadeRequestFound) { %>
+                                    <td><a href="${pageContext.request.contextPath}/auto_share_request_manager?email=<%= data.getEmail() %>">Request</a></td>
+                                <% } else { %>
+                                <td><a href="#">Requested</a></td>
+                                <% } %>
+                            <% } %>
                         </tr>
-                    </c:forEach>
+                    <% } %>
                 </table>
             </div>
         </div>

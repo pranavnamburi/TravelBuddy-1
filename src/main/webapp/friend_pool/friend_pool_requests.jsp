@@ -269,23 +269,20 @@
       Pool Requests
     </div>
     <div class="class_contents_requests_container">
-      <c:forEach var="data" items="${friendPoolUserRequests}">
+      <% for(FriendPoolRequest data : friendPoolUserRequests) { %>
         <div class="class_contents_request">
-          <div class="class_contents_request_name"><span style="font-weight: bold">Name</span><br>${data.getFullname()}</div>
-          <div class="class_contents_request_email"><span style="font-weight: bold">Email</span><br>${data.getEmail()}</div>
-          <div class="class_contents_request_mobile"><span style="font-weight: bold">Mobile</span><br>${data.getMobile()}</div>
-          <c:set var="dataStatus" value="${data.getStatus()}"/>
-          <c:choose>
-            <c:when test="${dataStatus == 'pending'}">
-              <div class="class_contents_request_accept"><a href="${pageContext.request.contextPath}/friend_pool_manipulate_user_request?status=accept&other_user_email=${data.getEmail()}">Accept</a></div>
-              <div class="class_contents_request_reject"><a href="${pageContext.request.contextPath}/friend_pool_manipulate_user_request?status=reject&other_user_email=${data.getEmail()}">Reject</a></div>
-            </c:when>
-            <c:otherwise>
+          <div class="class_contents_request_name"><span style="font-weight: bold">Name</span><br><%=data.getFullname()%></div>
+          <div class="class_contents_request_email"><span style="font-weight: bold">Email</span><br><%=data.getEmail()%></div>
+          <div class="class_contents_request_mobile"><span style="font-weight: bold">Mobile</span><br><%=data.getMobile()%></div>
+          <% String dataStatus = data.getStatus(); %>
+          <% if(dataStatus.equals("pending")) { %>
+              <div class="class_contents_request_accept"><a href="${pageContext.request.contextPath}/friend_pool_manipulate_user_request?status=accept&other_user_email=<%=data.getEmail()%>">Accept</a></div>
+              <div class="class_contents_request_reject"><a href="${pageContext.request.contextPath}/friend_pool_manipulate_user_request?status=reject&other_user_email=<%=data.getEmail()%>">Reject</a></div>
+          <% } else { %>
               <div class="class_contents_request_text"><span style="color:limegreen">Joined</span></div>
-            </c:otherwise>
-          </c:choose>
+          <% } %>
         </div>
-      </c:forEach>
+      <% } %>
     </div>
   </div>
 </div>
