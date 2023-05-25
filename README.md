@@ -36,21 +36,10 @@ To set up the Travel Buddy project locally, follow these steps:
 1. Clone the repository: `git clone https://github.com/AndysTMC/travel-buddy.git`
 2. Open the project in your preferred IDE (e.g., IntelliJ, Eclipse)
 3. Set up the required dependencies and build the project using Maven
-4. Configure the database connection in the `persistence.xml` file
+4. Configure the database connection in the `config.properties` file
 5. Run the project on a local server (e.g., Tomcat, Jetty)
-6. Access the application in your web browser at `http://localhost:8080/travel-buddy`
+6. Access the application in your web browser at `http://localhost:8080/`
 
-## Contributing
-
-We welcome contributions to the Travel Buddy project! If you would like to contribute, please follow these guidelines:
-
-1. Fork the repository
-2. Create a new branch for your feature or bug fix
-3. Commit your changes with descriptive commit messages
-4. Push your changes to your forked repository
-5. Submit a pull request to the main repository
-
-Please ensure that your code adheres to the project's coding standards and practices.
 
 ## License
 
